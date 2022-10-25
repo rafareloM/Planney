@@ -1,4 +1,4 @@
-# planney
+# Planney
 
 A new Flutter project.
 
