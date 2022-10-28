@@ -5,7 +5,6 @@ class InfoCard extends StatelessWidget {
   final String cardTitle;
   final String textButtonCTA;
   final String imagePath;
-
   const InfoCard(
       {Key? key,
       required this.cardTitle,
@@ -20,7 +19,6 @@ class InfoCard extends StatelessWidget {
       height: 280,
       child: Card(
         color: AppStyle.backgroundBuyColor,
-
         elevation: 10,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,

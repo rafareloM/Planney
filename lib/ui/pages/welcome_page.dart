@@ -61,7 +61,7 @@ class WelcomePageState extends State<WelcomePage> {
               height: deviceHeight * 0.025,
             ),
             Text(
-              Strings.LOGIN_TITLE,
+              Strings.WELCOME_TITLE,
               style: TextStyle(
                   color: AppStyle.backgroundBuyColor,
                   fontSize: 42,
@@ -71,7 +71,7 @@ class WelcomePageState extends State<WelcomePage> {
               height: deviceHeight * 0.0125,
             ),
             Text(
-              Strings.LOGIN_DESCRIPTION,
+              Strings.WELCOME_DESCRIPTION,
               style: TextStyle(
                   color: AppStyle.backgroundBuyColor,
                   fontWeight: FontWeight.w500,
