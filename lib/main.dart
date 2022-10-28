@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:planney/ui/pages/homepage.dart';
-import 'package:planney/ui/pages/login_page.dart';
-import 'package:planney/ui/pages/welcome_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,12 +14,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      initialRoute: '/welcomePage',
-      routes: {
-        '/': ((context) => const HomePage()),
-        '/welcomePage': ((context) => const WelcomePage()),
-        '/loginPage': ((context) => const LoginPage()),
-      },
+      initialRoute: '/',
+      routes: {'/': ((context) => const HomePage())},
     );
   }
 }
