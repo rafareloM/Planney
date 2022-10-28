@@ -121,7 +121,13 @@ class _LoginPageState extends State<LoginPage> {
                   height: 48,
                   child: ElevatedButton(
                     onPressed: () {
-                      if (_formKey.currentState!.validate()) {}
+                      if (_formKey.currentState!.validate()) {
+                        Navigator.popAndPushNamed(
+                          context,
+                          '/',
+                          arguments: _userCredential,
+                        );
+                      }
                     },
                     style: ButtonStyle(
                         backgroundColor:

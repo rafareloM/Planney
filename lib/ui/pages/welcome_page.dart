@@ -82,7 +82,9 @@ class WelcomePageState extends State<WelcomePage> {
             ),
             Center(
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.popAndPushNamed(context, '/loginPage');
+                },
                 style: ButtonStyle(
                   foregroundColor:
                       MaterialStateProperty.all(AppStyle.button1Color),
