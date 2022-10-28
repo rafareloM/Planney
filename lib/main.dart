@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:planney/ui/pages/homepage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,7 +14,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Container(),
+      initialRoute: '/',
+      home: HomePage(),
     );
   }
 }
