@@ -10,7 +10,7 @@ class Avatar extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.maxFinite,
-      height: 200,
+      height: 160,
       child: Card(
         color: AppStyle.backgroundBuyColor,
         elevation: 10,
