@@ -2,10 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:planney/style/style.dart';
 
 class PlanneyLogo extends StatelessWidget {
-  const PlanneyLogo({Key? key}) : super(key: key);
+
+  final double size;
+  const PlanneyLogo({Key? key, required this.size}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final double circleSize = size + 8;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -13,9 +17,9 @@ class PlanneyLogo extends StatelessWidget {
         Text(
           'Planney',
           style: TextStyle(
-              color: AppStyle.button1Color,
+              color: Theme.of(context).colorScheme.primary,
               fontWeight: FontWeight.bold,
-              fontSize: 52),
+              fontSize: size),
         ),
         const SizedBox(
           width: 6,
@@ -23,20 +27,21 @@ class PlanneyLogo extends StatelessWidget {
         Stack(
           children: [
             Container(
-              height: 64,
-              width: 64,
+
+              height: circleSize,
+              width: circleSize,
               decoration: BoxDecoration(
-                color: AppStyle.cardBackgroundColor,
+                color: AppStyle.fullWhite,
                 borderRadius: const BorderRadius.all(Radius.circular(100)),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 52),
+              padding: EdgeInsets.only(left: size),
               child: Container(
-                height: 64,
-                width: 64,
+                height: circleSize,
+                width: circleSize,
                 decoration: BoxDecoration(
-                  color: AppStyle.button1Color,
+                  color: Theme.of(context).colorScheme.primary,
                   borderRadius: const BorderRadius.all(Radius.circular(100)),
                 ),
               ),

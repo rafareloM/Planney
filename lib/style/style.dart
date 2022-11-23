@@ -1,13 +1,60 @@
 import 'package:flutter/material.dart';
 
-class AppStyle {
-  static Color backgroundColor = const Color(0xffd6d4d0);
-  static Color homepageColor = const Color(0xffefede9);
-  static Color button1Color = const Color(0xff46f8a3);
-  static Color backgroundBuyColor = const Color(0xff100607);
-  static Color icon1Color = const Color(0xff258afe);
-  static Color icon2Color = const Color(0xff3dffdc);
-  static Color icon3Color = const Color(0xff47f7a3);
-  static Color cardBackgroundColor = const Color(0xffffffff);
-  static Color icon4Color = const Color(0xff100705);
+abstract class AppStyle {
+  static MaterialColor primaryColor = Colors.orange;
+  static MaterialColor secondaryColor = Colors.lightBlue;
+  static Color backgroundColorDark = const Color(0xFF121212);
+  static Color errorDark = const Color(0xFFCF6679);
+  static Color errorLight = const Color(0xFFB00020);
+  static Color fullBlack = Colors.black;
+  static Color fullWhite = Colors.white;
+  /*---------------------------------------------------*/
+  static ColorScheme darkColorScheme = ColorScheme(
+      brightness: Brightness.dark,
+      primary: primaryColor[200]!,
+      primaryContainer: primaryColor[700],
+      onPrimary: fullBlack,
+      secondary: secondaryColor[300]!,
+      secondaryContainer: secondaryColor[200],
+      onSecondary: fullBlack,
+      error: errorDark,
+      onError: fullBlack,
+      background: backgroundColorDark,
+      onBackground: fullWhite,
+      surface: backgroundColorDark,
+      onSurface: fullWhite);
+  /*---------------------------------------------------*/
+  static ColorScheme lightColorScheme = ColorScheme(
+      brightness: Brightness.light,
+      primary: primaryColor[500]!,
+      primaryContainer: primaryColor[700],
+      onPrimary: fullWhite,
+      secondary: secondaryColor[200]!,
+      secondaryContainer: secondaryColor[900],
+      onSecondary: fullBlack,
+      error: errorLight,
+      onError: fullWhite,
+      background: fullWhite,
+      onBackground: fullBlack,
+      surface: fullWhite,
+      onSurface: fullBlack);
+  /*---------------------------------------------------*/
+  /*---------------------------------------------------*/
+  static ThemeData appThemeDark = ThemeData(
+    applyElevationOverlayColor: true,
+    colorScheme: darkColorScheme,
+    iconTheme: IconThemeData(
+      color: primaryColor,
+    ),
+    buttonTheme: ButtonThemeData(
+      buttonColor: primaryColor,
+    ),
+  );
+  /*---------------------------------------------------*/
+  static ThemeData appThemeLight = ThemeData(
+    colorScheme: lightColorScheme,
+    appBarTheme: AppBarTheme(
+      color: lightColorScheme.secondaryContainer,
+    ),
+  );
 }

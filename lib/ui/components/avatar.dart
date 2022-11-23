@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:planney/style/style.dart';
 
 class Avatar extends StatelessWidget {
   final String userName;
@@ -8,11 +7,11 @@ class Avatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var selectedTheme = Theme.of(context);
     return SizedBox(
       width: double.maxFinite,
       height: 160,
       child: Card(
-        color: AppStyle.backgroundBuyColor,
         elevation: 10,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -24,7 +23,7 @@ class Avatar extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  CircleAvatar(
+                  const CircleAvatar(
                     backgroundColor: Color(0xffeff1f5),
                     radius: 40,
                     child: Icon(
@@ -41,21 +40,23 @@ class Avatar extends StatelessWidget {
                         child: Text.rich(
                           TextSpan(
                             text: "Olá, ",
-                            style: TextStyle(color: AppStyle.cardBackgroundColor, fontSize: 28),
+                            style: const TextStyle(fontSize: 28),
                             children: [
                               TextSpan(
                                 text: "$userName!",
-                                style: TextStyle(color: AppStyle.button1Color, fontSize: 28),
+                                style: TextStyle(
+                                    color: selectedTheme.colorScheme.primary,
+                                    fontSize: 28),
                               ),
                             ],
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 10),
+                      const Padding(
+                        padding: EdgeInsets.only(left: 10),
                         child: Text(
                           'O seu balanço atual é:',
-                          style: TextStyle(color: AppStyle.cardBackgroundColor, fontSize: 18),
+                          style: TextStyle(fontSize: 18),
                         ),
                       ),
                     ],
@@ -65,7 +66,8 @@ class Avatar extends StatelessWidget {
             ),
             Text(
               "R\$ $userBalance",
-              style: TextStyle(color: AppStyle.button1Color, fontSize: 22),
+              style: TextStyle(
+                  color: selectedTheme.colorScheme.primary, fontSize: 22),
             ),
           ],
         ),
