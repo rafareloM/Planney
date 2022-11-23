@@ -3,7 +3,6 @@ import 'package:planney/ui/components/avatar.dart';
 import 'package:planney/ui/components/bottom_navigation_bar.dart';
 import 'package:planney/ui/components/info_card.dart';
 import 'package:planney/ui/components/planney_logo.dart';
-import 'package:planney/ui/pages/transactionPages/pages/transaction_add_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -14,12 +13,7 @@ class HomePage extends StatelessWidget {
 
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          showModalBottomSheet(
-              isScrollControlled: true,
-              context: context,
-              builder: (context) => const TransactionAddPage());
-        },
+        onPressed: () {},
         label: const Text(
           'Nova Transição',
         ),
