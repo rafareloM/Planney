@@ -47,6 +47,7 @@ abstract class AppStyle {
       secondary: secondaryColor,
       secondaryContainer: secondaryColor,
       onSecondary: fullBlack,
+      tertiary: userNameColor,
       error: errorLight,
       onError: fullWhite,
       background: fullWhite,
