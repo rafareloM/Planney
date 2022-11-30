@@ -17,7 +17,7 @@ class PlanneyLogo extends StatelessWidget {
         Text(
           'Planney',
           style: TextStyle(
-              color: Theme.of(context).colorScheme.primary,
+              color: Color.fromARGB(255, 247, 247, 247),
               fontWeight: FontWeight.bold,
               fontSize: size),
         ),

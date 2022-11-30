@@ -45,7 +45,7 @@ class Avatar extends StatelessWidget {
                               TextSpan(
                                 text: "$userName!",
                                 style: TextStyle(
-                                    color: selectedTheme.colorScheme.primary,
+                                    color: selectedTheme.colorScheme.tertiary,
                                     fontSize: 28),
                               ),
                             ],
@@ -67,7 +67,7 @@ class Avatar extends StatelessWidget {
             Text(
               "R\$ $userBalance",
               style: TextStyle(
-                  color: selectedTheme.colorScheme.primary, fontSize: 22),
+                  color: selectedTheme.colorScheme.tertiary, fontSize: 22),
             ),
           ],
         ),
