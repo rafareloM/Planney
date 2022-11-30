@@ -54,7 +54,6 @@ abstract class AppStyle {
       surface: fullWhite,
       onSurface: fullBlack);
   /*---------------------------------------------------*/
-  /*---------------------------------------------------*/
   static ThemeData appThemeDark = ThemeData(
     applyElevationOverlayColor: true,
     colorScheme: darkColorScheme,
@@ -64,6 +63,7 @@ abstract class AppStyle {
     buttonTheme: ButtonThemeData(
       buttonColor: primaryColor,
     ),
+    brightness: Brightness.dark,
   );
   /*---------------------------------------------------*/
   static ThemeData appThemeLight = ThemeData(
@@ -71,5 +71,6 @@ abstract class AppStyle {
     appBarTheme: AppBarTheme(
       color: lightColorScheme.secondaryContainer,
     ),
+    brightness: Brightness.light,
   );
 }
