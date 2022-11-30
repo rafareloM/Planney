@@ -5,7 +5,7 @@ class HomeBottomNavigationBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BottomNavigationBar(currentIndex: 0, items: const [
+    return BottomNavigationBar(currentIndex: 0, backgroundColor: Color.fromARGB(255, 0, 0, 0), items: const [
       BottomNavigationBarItem(
         icon: Icon(Icons.home),
         label: 'Home',

@@ -47,7 +47,7 @@ class WelcomePageState extends State<WelcomePage> {
                       height: 56,
                       width: 56,
                       decoration: BoxDecoration(
-                        color: AppStyle.primaryColor[200],
+                        color: AppStyle.primaryColor,
                         borderRadius:
                             const BorderRadius.all(Radius.circular(100)),
                       ),

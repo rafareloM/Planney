@@ -13,12 +13,14 @@ class HomePage extends StatelessWidget {
 
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
+        backgroundColor: const Color.fromARGB(255, 24, 107, 203),
         onPressed: () {},
         label: const Text(
           'Nova Transição',
         ),
       ),
       appBar: AppBar(
+        elevation: 5,
         title: ConstrainedBox(
           constraints: BoxConstraints.tight(
             const Size(150, 32),
@@ -43,9 +45,10 @@ class HomePage extends StatelessWidget {
                   userName: 'Marilene',
                   userBalance: 2365.96,
                 ),
-                const InfoCard(
+                  const InfoCard(
                     cardTitle: 'Fluxo do Saldo',
-                    textButtonCTA: 'Mais Detalhes',
+                    textButtonCTA: 'Mais Detalhes',      
+                                  
                     imagePath:
                         'lib/style/assets/img/Colorful Flower Fashion Sale Presentation (3).png'),
                 const InfoCard(
