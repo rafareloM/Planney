@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:planney/extensions/extensions_string.dart';
 import 'package:planney/model/user_credential.dart';
 import 'package:planney/strings.dart';
-import 'package:planney/ui/components/planney_logo.dart';
+import 'package:planney/ui/components/home/planney_logo.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);

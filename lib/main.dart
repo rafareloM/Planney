@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:planney/ui/controller/home.controller.dart';
 import 'package:planney/ui/controller/transaction.controller.dart';
@@ -20,16 +21,18 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = GetIt.instance.get<HomePageController>();
 
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Planney',
-      theme: controller.selectedAppTheme,
-      initialRoute: '/welcomePage',
-      routes: {
-        '/': ((context) => const HomePage()),
-        '/welcomePage': ((context) => const WelcomePage()),
-        '/loginPage': ((context) => const LoginPage()),
-      },
-    );
+    return Observer(builder: (context) {
+      return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Planney',
+        theme: controller.selectedAppTheme,
+        initialRoute: '/',
+        routes: {
+          '/': ((context) => const HomePage()),
+          '/welcomePage': ((context) => const WelcomePage()),
+          '/loginPage': ((context) => const LoginPage()),
+        },
+      );
+    });
   }
 }

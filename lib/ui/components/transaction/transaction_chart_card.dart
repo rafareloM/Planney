@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
-import 'package:planney/style/style.dart';
-import 'package:planney/ui/components/list_view_button.dart';
+import 'package:planney/ui/components/transaction/transaction_card_empty.dart';
+import 'package:planney/ui/components/transaction/list_view_button.dart';
+import 'package:planney/ui/components/transaction/transaction_card_filled.dart';
 import 'package:planney/ui/controller/home.controller.dart';
 import 'package:planney/ui/controller/transaction.controller.dart';
 
@@ -75,50 +76,15 @@ class TransactionChartCard extends StatelessWidget {
               ),
             ),
           ),
-          transactionList.isEmpty
-              ? Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Card(
-                    shape: const RoundedRectangleBorder(
-                        borderRadius:
-                            BorderRadius.vertical(bottom: Radius.circular(21))),
-                    margin: EdgeInsets.zero,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Stack(
-                        children: [
-                          Container(
-                            height: deviceHeight * 0.3,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: AppStyle.initialchartcolor,
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(36),
-                              child: Card(
-                                margin: EdgeInsets.zero,
-                                shape: const CircleBorder(),
-                                child: Center(
-                                  child: Text(
-                                    isExpence
-                                        ? 'Adicione\nsua Despesa'
-                                        : 'Adicione\nsua Renda',
-                                    textAlign: TextAlign.center,
-                                    style: const TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+          transactionList.isNotEmpty
+              ? TransactionCardEmpty(
+                  deviceHeight: deviceHeight,
+                  isExpence: isExpence,
                 )
-              : Container(),
+              : TransactionCardFilled(
+                  deviceHeight: deviceHeight,
+                  isExpence: isExpence,
+                ),
         ],
       );
     });
