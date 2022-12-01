@@ -19,6 +19,7 @@ class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+  
     final controller = GetIt.instance.get<HomePageController>();
 
     return Observer(builder: (context) {
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Planney',
         theme: controller.selectedAppTheme,
-        initialRoute: '/',
+        initialRoute: '/welcomePage',
         routes: {
           '/': ((context) => const HomePage()),
           '/welcomePage': ((context) => const WelcomePage()),
