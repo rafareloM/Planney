@@ -23,7 +23,7 @@ class _ValueFormState extends State<ValueForm> {
     return SizedBox(
       height: deviceHeight * 0.1,
       width: deviceWidth * 0.5,
-      child: TextField(
+      child: TextFormField(
         inputFormatters: [
           TextInputMask(
               mask: 'R!\$! !9+,999.99',

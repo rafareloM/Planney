@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:planney/model/transaction.model.dart';
-import 'package:planney/ui/components/avatar.dart';
-import 'package:planney/ui/components/bottom_navigation_bar.dart';
-import 'package:planney/ui/components/my_drawer.dart';
-import 'package:planney/ui/components/planney_logo.dart';
-import 'package:planney/ui/components/transaction_chart_card.dart';
+import 'package:planney/ui/components/home/avatar.dart';
+import 'package:planney/ui/components/home/bottom_navigation_bar.dart';
+import 'package:planney/ui/components/home/my_drawer.dart';
+import 'package:planney/ui/components/home/planney_logo.dart';
+import 'package:planney/ui/components/transaction/transaction_chart_card.dart';
 import 'package:planney/ui/controller/home.controller.dart';
 import 'package:planney/ui/pages/transaction/view/transaction_add_page.dart';
 

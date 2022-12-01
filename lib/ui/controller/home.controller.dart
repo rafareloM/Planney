@@ -11,4 +11,13 @@ abstract class HomePageControllerBase with Store {
 
   @observable
   ThemeData selectedAppTheme = AppStyle.appThemeDark;
+
+  @action
+  changeAppTheme() {
+    if (selectedAppTheme.brightness == Brightness.dark) {
+      selectedAppTheme = AppStyle.appThemeLight;
+    } else {
+      selectedAppTheme = AppStyle.appThemeDark;
+    }
+  }
 }
