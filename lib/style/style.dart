@@ -9,7 +9,7 @@ abstract class AppStyle {
   static Color iconsLight = const Color.fromARGB(255, 6, 16, 43);
   static Color errorDark = const Color(0xFFCF6679);
   static Color errorLight = const Color(0xFFB00020);
-  static Color fullBlack = const Color.fromARGB(255, 7, 7, 7);;
+  static Color fullBlack = const Color.fromARGB(255, 7, 7, 7);
   static Color fullWhite = Colors.white;
   static Color floatingActionButtomLight = const Color(0xFF32B8DA);
   static Color userNameColor = const Color(0xFFB8E5FF);
