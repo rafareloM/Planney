@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:planney/style/style.dart';
+import 'package:get_it/get_it.dart';
+import 'package:planney/ui/controller/home.controller.dart';
+import 'package:planney/ui/controller/transaction.controller.dart';
 import 'package:planney/ui/pages/home/homepage.dart';
 import 'package:planney/ui/pages/login/login_page.dart';
 import 'package:planney/ui/pages/onboarding/welcome_page.dart';
 
 void main() {
+  GetIt getIt = GetIt.instance;
+  getIt.registerSingleton(HomePageController());
+
+  getIt.registerSingleton(TransactionController());
   runApp(const MyApp());
 }
 
@@ -12,12 +18,12 @@ class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    ThemeData selectedAppTheme = AppStyle.appThemeDark;
+    final controller = GetIt.instance.get<HomePageController>();
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: selectedAppTheme,
+      title: 'Planney',
+      theme: controller.selectedAppTheme,
       initialRoute: '/welcomePage',
       routes: {
         '/': ((context) => const HomePage()),
