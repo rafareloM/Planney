@@ -6,12 +6,16 @@ class HomeBottomNavigationBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ColorScheme colorScheme = Theme.of(context).colorScheme;
     return BottomNavigationBar(
         currentIndex: 0,
-        backgroundColor: AppStyle.backgroundBuyColor,
-        fixedColor: AppStyle.button1Color,
-        unselectedItemColor: AppStyle.cardBackgroundColor,
-        items: [
+        backgroundColor: colorScheme.brightness == Brightness.dark
+            ? colorScheme.background
+            : AppStyle.chartcolor4,
+        selectedItemColor: colorScheme.brightness == Brightness.dark
+            ? colorScheme.primary
+            : colorScheme.tertiary,
+        items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Home',

@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:planney/ui/pages/homepage.dart';
-import 'package:planney/ui/pages/login_page.dart';
-import 'package:planney/ui/pages/welcome_page.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:get_it/get_it.dart';
+import 'package:planney/ui/controller/home.controller.dart';
+import 'package:planney/ui/controller/transaction.controller.dart';
+import 'package:planney/ui/pages/home/homepage.dart';
+import 'package:planney/ui/pages/login/login_page.dart';
+import 'package:planney/ui/pages/onboarding/welcome_page.dart';
 
 void main() {
+  GetIt getIt = GetIt.instance;
+  getIt.registerSingleton(HomePageController());
+
+  getIt.registerSingleton(TransactionController());
   runApp(const MyApp());
 }
 
@@ -11,17 +19,21 @@ class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      initialRoute: '/welcomePage',
-      routes: {
-        '/': ((context) => const HomePage()),
-        '/welcomePage': ((context) => const WelcomePage()),
-        '/loginPage': ((context) => const LoginPage()),
-      },
-    );
+  
+    final controller = GetIt.instance.get<HomePageController>();
+
+    return Observer(builder: (context) {
+      return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Planney',
+        theme: controller.selectedAppTheme,
+        initialRoute: '/welcomePage',
+        routes: {
+          '/': ((context) => const HomePage()),
+          '/welcomePage': ((context) => const WelcomePage()),
+          '/loginPage': ((context) => const LoginPage()),
+        },
+      );
+    });
   }
 }
