@@ -47,7 +47,9 @@ class InfoCard extends StatelessWidget {
             SizedBox(
               height: 40,
               child: TextButton(
-                style: TextButton.styleFrom(foregroundColor: const Color.fromARGB(255, 255, 255, 255)),
+                  style: TextButton.styleFrom(
+                      backgroundColor:
+                          const Color.fromARGB(255, 255, 255, 255)),
                   onPressed: () {},
                   child: Row(
                     children: [
