@@ -63,21 +63,21 @@ class HomePage extends StatelessWidget {
         bottomNavigationBar: const HomeBottomNavigationBar(),
         body: Column(
           children: [
-            const SizedBox(
-              height: 18,
+            const Padding(
+              padding: EdgeInsets.only(top: 6),
+              child: Avatar(
+                userName: 'Marilene',
+                userBalance: 2365.96,
+              ),
             ),
-            const Avatar(
-              userName: 'Marilene',
-              userBalance: 2365.96,
+            Padding(
+              padding: const EdgeInsets.only(top: 6),
+              child: TransactionChartCard(
+                isExpence: controller.isExpence,
+                controller: controller,
+                colorScheme: colorScheme,
+              ),
             ),
-            const SizedBox(
-              height: 16,
-            ),
-            TransactionChartCard(
-              isExpence: controller.isExpence,
-              controller: controller,
-              colorScheme: colorScheme,
-            )
           ],
         ),
       );
