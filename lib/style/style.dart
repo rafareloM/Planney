@@ -26,7 +26,7 @@ abstract class AppStyle {
       brightness: Brightness.dark,
       primary: primaryColor,
       primaryContainer: primaryColor,
-      onPrimary: fullBlack,
+      onPrimary: fullWhite,
       secondary: secondaryColor,
       secondaryContainer: secondaryColor,
       onSecondary: fullBlack,
