@@ -7,12 +7,16 @@ class Avatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var selectedTheme = Theme.of(context);
+    var colorScheme = Theme.of(context).colorScheme;
+
+    Color spanTextColor = colorScheme.tertiary;
+
     return SizedBox(
       width: double.maxFinite,
       height: 160,
       child: Card(
-        elevation: 10,
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(21))),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
@@ -45,8 +49,7 @@ class Avatar extends StatelessWidget {
                               TextSpan(
                                 text: "$userName!",
                                 style: TextStyle(
-                                    color: selectedTheme.colorScheme.tertiary,
-                                    fontSize: 28),
+                                    color: spanTextColor, fontSize: 28),
                               ),
                             ],
                           ),
@@ -66,8 +69,7 @@ class Avatar extends StatelessWidget {
             ),
             Text(
               "R\$ $userBalance",
-              style: TextStyle(
-                  color: selectedTheme.colorScheme.tertiary, fontSize: 22),
+              style: TextStyle(color: spanTextColor, fontSize: 22),
             ),
           ],
         ),

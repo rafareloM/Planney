@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 abstract class AppStyle {
   static Color primaryColor = const Color.fromARGB(255, 24, 107, 203);
   static Color secondaryColor = const Color.fromARGB(255, 247, 247, 247);
-  static Color backgroundColorDark = const Color.fromARGB(255, 0, 0, 0);
+  static Color backgroundColorDark = const Color.fromARGB(255, 23, 23, 23);
   static Color backgroundColorlight = const Color(0xFFEDF0F5);
   static Color inputlight = const Color(0xFFD3E4ED);
   static Color iconsLight = const Color.fromARGB(255, 6, 16, 43);
@@ -19,8 +19,6 @@ abstract class AppStyle {
   static Color chartcolor3 = const Color(0xFF8BDFD0);
   static Color chartcolor4 = const Color(0xFF2F498C);
   static Color graytextbox = const Color.fromARGB(255, 165, 165, 165);
-
-  
   /*---------------------------------------------------*/
   static ColorScheme darkColorScheme = ColorScheme(
       brightness: Brightness.dark,
@@ -37,7 +35,6 @@ abstract class AppStyle {
       onBackground: fullWhite,
       surface: backgroundColorDark,
       onSurface: fullWhite);
-
   /*---------------------------------------------------*/
   static ColorScheme lightColorScheme = ColorScheme(
       brightness: Brightness.light,
@@ -47,7 +44,7 @@ abstract class AppStyle {
       secondary: secondaryColor,
       secondaryContainer: secondaryColor,
       onSecondary: fullBlack,
-      tertiary: userNameColor,
+      tertiary: floatingActionButtomLight,
       error: errorLight,
       onError: fullWhite,
       background: fullWhite,
