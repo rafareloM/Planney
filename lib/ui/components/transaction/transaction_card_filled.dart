@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:planney/style/style.dart';
 import 'package:planney/ui/components/charts/pie_chart.dart';
 
 class TransactionCardFilled extends StatelessWidget {

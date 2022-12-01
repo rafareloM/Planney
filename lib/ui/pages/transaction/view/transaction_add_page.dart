@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:planney/model/transaction.model.dart';
-import 'package:planney/ui/components/date_picker.dart';
+import 'package:planney/ui/components/transaction/date_picker.dart';
 import 'package:planney/ui/controller/transaction.controller.dart';
 import 'package:planney/ui/pages/transaction/components/account_select_radio.dart';
 import 'package:planney/ui/pages/transaction/components/text_form.dart';
