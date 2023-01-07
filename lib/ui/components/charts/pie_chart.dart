@@ -17,7 +17,8 @@ class PieChartSample3State extends State {
     return AspectRatio(
       aspectRatio: 1.3,
       child: Card(
-        color: AppStyle.fullWhite,
+        elevation: 0,
+        color: Colors.transparent,
         child: AspectRatio(
           aspectRatio: 1,
           child: PieChart(

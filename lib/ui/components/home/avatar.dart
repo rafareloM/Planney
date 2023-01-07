@@ -27,14 +27,14 @@ class Avatar extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const CircleAvatar(
-                    backgroundColor: Color(0xffeff1f5),
+                  CircleAvatar(
                     radius: 40,
-                    child: Icon(
-                      Icons.person,
-                      size: 80,
-                      color: Color(0xffc1cdda),
-                    ),
+                    child: ClipOval(
+                        child: Image.asset(
+                      'lib/style/assets/img/userprofile.png',
+                      width: 80,
+                      height: 80,
+                    )),
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
