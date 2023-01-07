@@ -52,11 +52,11 @@ class HomePage extends StatelessWidget {
           backgroundColor: colorScheme.brightness == Brightness.dark
               ? colorScheme.background
               : colorScheme.primary,
-          title: ConstrainedBox(
-            constraints: BoxConstraints.tight(
-              const Size(150, 32),
+          title: LayoutBuilder(
+            builder: (context, constraints) => SizedBox(
+              width: constraints.maxWidth,
+              child: const PlanneyLogo(size: 24),
             ),
-            child: const PlanneyLogo(size: 24),
           ),
           centerTitle: true,
         ),
