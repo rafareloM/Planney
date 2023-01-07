@@ -23,7 +23,7 @@ class WelcomePageState extends State<WelcomePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              const Text(
                 'Planney',
                 style: TextStyle(fontWeight: FontWeight.w500, fontSize: 24),
               ),
@@ -58,14 +58,14 @@ class WelcomePageState extends State<WelcomePage> {
               SizedBox(
                 height: deviceHeight * 0.025,
               ),
-              Text(
+              const Text(
                 Strings.WELCOME_TITLE,
                 style: TextStyle(fontSize: 42, fontWeight: FontWeight.w600),
               ),
               SizedBox(
                 height: deviceHeight * 0.0125,
               ),
-              Text(
+              const Text(
                 Strings.WELCOME_DESCRIPTION,
                 style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
               ),
