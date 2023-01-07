@@ -13,18 +13,16 @@ class TransactionCardFilled extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+    return const Padding(
+      padding: EdgeInsets.symmetric(horizontal: 16),
       child: Card(
-        shape: const RoundedRectangleBorder(
+        shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(bottom: Radius.circular(21))),
         margin: EdgeInsets.zero,
-        child: ConstrainedBox(
-            constraints: BoxConstraints(
-              maxHeight: deviceHeight * 0.35,
-              minWidth: double.maxFinite,
-            ),
-            child: const PieChartSample3()),
+        child: Padding(
+          padding: EdgeInsets.all(8.0),
+          child: PieChartSample3(),
+        ),
       ),
     );
   }

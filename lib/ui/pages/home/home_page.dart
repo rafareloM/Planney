@@ -52,32 +52,32 @@ class HomePage extends StatelessWidget {
           backgroundColor: colorScheme.brightness == Brightness.dark
               ? colorScheme.background
               : colorScheme.primary,
-          title: ConstrainedBox(
-            constraints: BoxConstraints.tight(
-              const Size(150, 32),
+          title: LayoutBuilder(
+            builder: (context, constraints) => SizedBox(
+              width: constraints.maxWidth,
+              child: const PlanneyLogo(size: 24),
             ),
-            child: const PlanneyLogo(size: 22),
           ),
           centerTitle: true,
         ),
         bottomNavigationBar: const HomeBottomNavigationBar(),
         body: Column(
           children: [
-            const Padding(
-              padding: EdgeInsets.only(top: 6),
-              child: Avatar(
-                userName: 'Marilene',
-                userBalance: 2365.96,
-              ),
+            const SizedBox(
+              height: 18,
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 6),
-              child: TransactionChartCard(
-                isExpence: controller.isExpence,
-                controller: controller,
-                colorScheme: colorScheme,
-              ),
+            const Avatar(
+              userName: 'Marilene',
+              userBalance: 2365.96,
             ),
+            const SizedBox(
+              height: 16,
+            ),
+            TransactionChartCard(
+              isExpence: controller.isExpence,
+              controller: controller,
+              colorScheme: colorScheme,
+            )
           ],
         ),
       );
