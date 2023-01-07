@@ -56,7 +56,7 @@ class HomePage extends StatelessWidget {
             constraints: BoxConstraints.tight(
               const Size(150, 32),
             ),
-            child: const PlanneyLogo(size: 24),
+            child: const PlanneyLogo(size: 22),
           ),
           centerTitle: true,
         ),
