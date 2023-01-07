@@ -3,7 +3,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:planney/ui/controller/home.controller.dart';
 import 'package:planney/ui/controller/transaction.controller.dart';
-import 'package:planney/ui/pages/home/homepage.dart';
+import 'package:planney/ui/pages/home/home_page.dart';
 import 'package:planney/ui/pages/login/login_page.dart';
 import 'package:planney/ui/pages/onboarding/welcome_page.dart';
 
@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Planney',
         theme: controller.selectedAppTheme,
-        initialRoute: '/',
+        initialRoute: '/welcomePage',
         routes: {
           '/': ((context) => const HomePage()),
           '/welcomePage': ((context) => const WelcomePage()),

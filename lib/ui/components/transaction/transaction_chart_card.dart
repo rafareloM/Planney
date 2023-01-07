@@ -76,7 +76,7 @@ class TransactionChartCard extends StatelessWidget {
               ),
             ),
           ),
-          transactionList.isNotEmpty
+          transactionList.isEmpty
               ? TransactionCardEmpty(
                   deviceHeight: deviceHeight,
                   isExpence: isExpence,
