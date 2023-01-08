@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:mobx/mobx.dart';
 import 'package:planney/model/transaction.model.dart';
 part 'transaction.controller.g.dart';
@@ -31,7 +32,7 @@ abstract class TransactionControllerBase with Store {
     selectedDate = DateTime.now();
     selectedExpenceCategory = {};
     selectedReceiptCategory = {};
-    formattedDate = '';
+    formattedDate = DateFormat('dd/MM/y').format(DateTime.now());
   }
 
   @observable
