@@ -24,15 +24,12 @@ class MyApp extends StatelessWidget {
 
     return Observer(builder: (context) {
       return MaterialApp(
-        localizationsDelegates: const [
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate
-        ],
+        localizationsDelegates: GlobalMaterialLocalizations.delegates,
         supportedLocales: const [Locale('pt', 'BR')],
         debugShowCheckedModeBanner: false,
         title: 'Planney',
         theme: controller.selectedAppTheme,
-        initialRoute: '/',
+        initialRoute: '/welcomePage',
         routes: {
           '/': ((context) => const HomePage()),
           '/welcomePage': ((context) => const WelcomePage()),
