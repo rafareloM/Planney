@@ -25,7 +25,7 @@ class DatePicker extends StatelessWidget {
             ) ??
             DateTime.now();
         controller.formattedDate =
-            DateFormat('d MMM y').format(controller.selectedDate);
+            DateFormat('dd/MM/y').format(controller.selectedDate);
       },
       icon: Icon(
         Icons.calendar_today_outlined,
