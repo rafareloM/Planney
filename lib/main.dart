@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:planney/ui/controller/home.controller.dart';
@@ -31,10 +32,15 @@ class MyApp extends StatelessWidget {
 
     return Observer(builder: (context) {
       return MaterialApp(
+        localizationsDelegates: const [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate
+        ],
+        supportedLocales: const [Locale('pt', 'BR')],
         debugShowCheckedModeBanner: false,
         title: 'Planney',
         theme: controller.selectedAppTheme,
-        initialRoute: '/welcomePage',
+        initialRoute: '/',
         routes: {
           '/': ((context) => const HomePage()),
           '/welcomePage': ((context) => const WelcomePage()),
