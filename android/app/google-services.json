@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "776936991877",
+    "project_id": "planney-1d548",
+    "storage_bucket": "planney-1d548.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:776936991877:android:5bd1f42b94ba259b6b4dec",
+        "android_client_info": {
+          "package_name": "com.example.planney"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "776936991877-ofqid9em35d9vn95m62nu7mf76drt3jr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCjMiuFxsiQVg4WTdAdo-h-VtctZ3km-og"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "776936991877-ofqid9em35d9vn95m62nu7mf76drt3jr.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "776936991877-iqtrjs39f1hl3udmbt6u459us3abo658.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.planney"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
