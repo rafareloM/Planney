@@ -65,7 +65,7 @@ class MyDrawer extends StatelessWidget {
               style: TextStyle(color: buttonColor),
             ),
             onTap: () {
-              Navigator.pop(context);
+              Navigator.popAndPushNamed(context, '/detailPage');
             },
           ),
           ListTile(

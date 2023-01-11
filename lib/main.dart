@@ -14,6 +14,7 @@ import 'package:planney/ui/controller/register.controller.dart';
 import 'package:planney/ui/controller/transaction.controller.dart';
 import 'package:planney/ui/pages/home/home_page.dart';
 import 'package:planney/ui/pages/login/login_page.dart';
+import 'package:planney/ui/pages/new_category/detail.category.dart';
 import 'package:planney/ui/pages/onboarding/welcome_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:planney/ui/pages/register/register_page.dart';
@@ -21,6 +22,7 @@ import 'package:planney/ui/pages/splash/splash_page.dart';
 import 'firebase_options.dart';
 
 void main() async {
+
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -31,6 +33,7 @@ void main() async {
   GetIt getIt = GetIt.instance;
   getIt.registerLazySingleton(() => HomePageController());
   getIt.registerLazySingleton(() => TransactionController());
+  getIt.registerLazySingleton(() => DetailCategoryPageController());
 
   GetIt.instance.registerFactory(
     () => LoginController(AuthRepositoryImpl(AuthService()),
@@ -57,13 +60,14 @@ class MyApp extends StatelessWidget {
         title: 'Planney',
         theme: controller.selectedAppTheme,
         navigatorKey: navigatorKey,
-        initialRoute: '/loginPage',
+        initialRoute: '/welcomePage',
         routes: {
-          '/': (context) => const HomePage(),
+          '/': ((context) => const HomePage()),
+          '/welcomePage': ((context) => const WelcomePage()),
           '/splashPage': (context) => const SplashPage(),
-          '/welcomePage': (context) => const WelcomePage(),
           '/loginPage': (context) => LoginPage(),
           '/registerPage': (context) => RegisterPage(),
+          '/detailPage': ((context) => const DetailCategoryPage())
         },
       );
     });
