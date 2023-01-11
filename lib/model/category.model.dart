@@ -1,26 +1,26 @@
 import 'package:flutter/material.dart';
 
-abstract class ExpenseCategory {
-  static List<Map<String, IconData>> categories = [
-    {'Transporte': Icons.directions_car},
-    {'Casa': Icons.home_filled},
-    {'Lazer': Icons.mood_outlined},
-    {'Outros': Icons.bar_chart},
+class TransactionCategories {
+  static List<Map<String, int>> expenseCategoriesList = [
+    {'Transporte': Icons.directions_car.codePoint},
+    {'Casa': Icons.home_filled.codePoint},
+    {'Lazer': Icons.mood_outlined.codePoint},
+    {'Outros': Icons.bar_chart.codePoint},
   ];
-  static addCategory({required String name, required IconData icon}) {
-    categories.add({name: icon});
+
+  static List<Map<String, int>> receiptCategoriesList = [
+    {'Juros': Icons.local_atm.codePoint},
+    {'Presente': Icons.redeem.codePoint},
+    {'Salário': Icons.payments.codePoint},
+    {'Outros': Icons.bar_chart.codePoint},
+  ];
+
+  static addExpenseCategory(
+      {required String name, required int iconCodePoint}) {
+    expenseCategoriesList.add({name: iconCodePoint});
   }
-}
 
-abstract class ReceiptCategory {
-  static List<Map<String, IconData>> categories = [
-    {'Juros': Icons.local_atm},
-    {'Presente': Icons.redeem},
-    {'Salário': Icons.payments},
-    {'Outros': Icons.bar_chart},
-  ];
-
-  static addCategory({required String name, required IconData icon}) {
-    categories.add({name: icon});
+  static addReceiptCategory({required String name, required int iconHash}) {
+    receiptCategoriesList.add({name: iconHash});
   }
 }
