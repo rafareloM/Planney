@@ -1,14 +1,16 @@
 class PlanneyUser {
-  final String fullName;
-  final String email;
+  String fullName = "";
+  String email = "";
+
+  bool get isValid => fullName.isNotEmpty;
 
   PlanneyUser({
-    required this.fullName,
-    required this.email,
+    this.fullName = "",
+    this.email = "",
   });
 
   Map<String, dynamic> toMap() {
-    return <String, dynamic>{
+    return {
       'fullName': fullName,
       'email': email,
     };
