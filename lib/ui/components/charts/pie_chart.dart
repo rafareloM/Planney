@@ -1,15 +1,18 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:planney/model/transaction.model.dart';
 import 'package:planney/style/style.dart';
+import 'package:planney/ui/components/charts/charts_helper.dart';
 
-class PieChartSample3 extends StatefulWidget {
-  const PieChartSample3({super.key});
+class PieChartPlaney extends StatefulWidget {
+  final List<Transaction> transactionsList;
+  const PieChartPlaney({super.key, required this.transactionsList});
 
   @override
-  State<StatefulWidget> createState() => PieChartSample3State();
+  State<StatefulWidget> createState() => PieChartPlaneyState();
 }
 
-class PieChartSample3State extends State {
+class PieChartPlaneyState extends State<PieChartPlaney> {
   int touchedIndex = 0;
 
   @override
@@ -42,7 +45,7 @@ class PieChartSample3State extends State {
               ),
               sectionsSpace: 0,
               centerSpaceRadius: 0,
-              sections: showingSections(),
+              sections: showingSections(widget.transactionsList),
             ),
           ),
         ),
@@ -50,93 +53,53 @@ class PieChartSample3State extends State {
     );
   }
 
-  List<PieChartSectionData> showingSections() {
-    return List.generate(4, (i) {
+  List<PieChartSectionData> showingSections(
+      List<Transaction> transactionsList) {
+    List<String> categoryList = ChartsHelper.getCategoryNames(transactionsList);
+    List<PieChartSectionData> sectionsList = [];
+    int i = 0;
+
+    for (var category in categoryList) {
       final isTouched = i == touchedIndex;
       final fontSize = isTouched ? 20.0 : 16.0;
-      final radius = isTouched ? 110.0 : 100.0;
-      final widgetSize = isTouched ? 55.0 : 40.0;
+      final radius = isTouched ? 107.0 : 100.0;
+      final widgetSize = isTouched ? 46.0 : 40.0;
 
-      switch (i) {
-        case 0:
-          return PieChartSectionData(
-            color: AppStyle.chartcolor1,
-            value: 40,
-            title: '40%',
-            radius: radius,
-            titleStyle: TextStyle(
-              fontSize: fontSize,
-              fontWeight: FontWeight.bold,
-              color: AppStyle.fullWhite,
-            ),
-            badgeWidget: _Badge(
-              size: widgetSize,
-              borderColor: AppStyle.chartcolor1,
-            ),
-            badgePositionPercentageOffset: .98,
-          );
-        case 1:
-          return PieChartSectionData(
-            color: AppStyle.chartcolor2,
-            value: 30,
-            title: '30%',
-            radius: radius,
-            titleStyle: TextStyle(
-              fontSize: fontSize,
-              fontWeight: FontWeight.bold,
-              color: AppStyle.fullWhite,
-            ),
-            badgeWidget: _Badge(
-              size: widgetSize,
-              borderColor: AppStyle.chartcolor2,
-            ),
-            badgePositionPercentageOffset: .98,
-          );
-        case 2:
-          return PieChartSectionData(
-            color: AppStyle.chartcolor3,
-            value: 16,
-            title: '16%',
-            radius: radius,
-            titleStyle: TextStyle(
-              fontSize: fontSize,
-              fontWeight: FontWeight.bold,
-              color: AppStyle.fullWhite,
-            ),
-            badgeWidget: _Badge(
-              size: widgetSize,
-              borderColor: AppStyle.chartcolor3,
-            ),
-            badgePositionPercentageOffset: .98,
-          );
-        case 3:
-          return PieChartSectionData(
-            color: AppStyle.chartcolor4,
-            value: 15,
-            title: '15%',
-            radius: radius,
-            titleStyle: TextStyle(
-              fontSize: fontSize,
-              fontWeight: FontWeight.bold,
-              color: AppStyle.fullWhite,
-            ),
-            badgeWidget: _Badge(
-              size: widgetSize,
-              borderColor: AppStyle.chartcolor4,
-            ),
-            badgePositionPercentageOffset: .98,
-          );
-        default:
-          throw Exception('Ih, deu ruim');
-      }
-    });
+      sectionsList.add(PieChartSectionData(
+        color: ChartsHelper.setColorByIndex(i),
+        value: ChartsHelper.totalCategoryValue(transactionsList, category),
+        title: category,
+        radius: radius,
+        titleStyle: TextStyle(
+          fontSize: fontSize,
+          fontWeight: FontWeight.bold,
+          color: AppStyle.fullWhite,
+        ),
+        badgeWidget: _Badge(
+          codePoint: transactionsList
+              .firstWhere((element) => element.category.keys.first == category)
+              .category
+              .values
+              .first
+              .codePoint,
+          size: widgetSize,
+          borderColor: AppStyle.chartcolor1,
+        ),
+        badgePositionPercentageOffset: .98,
+      ));
+      i++;
+    }
+    return sectionsList;
   }
 }
 
 class _Badge extends StatelessWidget {
+  final int codePoint;
+
   const _Badge({
     required this.size,
     required this.borderColor,
+    required this.codePoint,
   });
   final double size;
   final Color borderColor;
@@ -163,10 +126,10 @@ class _Badge extends StatelessWidget {
         ],
       ),
       padding: EdgeInsets.all(size * .15),
-      child: const Center(
+      child: Center(
         child: Icon(
-          Icons.touch_app,
-          color: Colors.deepPurpleAccent,
+          IconData(codePoint, fontFamily: 'MaterialIcons'),
+          color: AppStyle.primaryColor,
         ),
       ),
     );
