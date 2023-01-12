@@ -133,7 +133,6 @@ class PieChartSample3State extends State {
   }
 }
 
-// a
 class _Badge extends StatelessWidget {
   const _Badge({
     required this.size,
