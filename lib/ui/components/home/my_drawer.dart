@@ -1,13 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
+import 'package:planney/navigator_key.dart';
+import 'package:planney/stores/category.store.dart';
 import 'package:planney/ui/controller/home.controller.dart';
 
-class MyDrawer extends StatelessWidget {
+class MyDrawer extends StatefulWidget {
   const MyDrawer({super.key});
 
   @override
+  State<MyDrawer> createState() => _MyDrawerState();
+}
+
+class _MyDrawerState extends State<MyDrawer> {
+  final _controller = GetIt.instance.get<HomePageController>();
+
+  @override
   Widget build(BuildContext context) {
+    final store = GetIt.instance.get<CategoryStore>();
     final controller = GetIt.instance.get<HomePageController>();
     ColorScheme colorScheme = Theme.of(context).colorScheme;
     Color buttonColor =
@@ -39,6 +49,7 @@ class MyDrawer extends StatelessWidget {
               style: TextStyle(color: buttonColor),
             ),
             onTap: () {
+              store.getCategoriesByType(false);
               Navigator.pop(context);
             },
           ),
@@ -115,12 +126,15 @@ class MyDrawer extends StatelessWidget {
               'Sair',
               style: TextStyle(color: buttonColor),
             ),
-            onTap: () {
-              Navigator.pop(context);
-            },
+            onTap: doLogout,
           ),
         ],
       ),
     );
+  }
+
+  doLogout() async {
+    await _controller.logout();
+    Navigator.pushReplacementNamed(navigatorKey.currentContext!, '/loginPage');
   }
 }

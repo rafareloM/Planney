@@ -79,7 +79,6 @@ class TransactionAddPage extends StatelessWidget {
                           child: Column(
                             children: [
                               ValueForm(
-                                controller: controller.valueController,
                                 icon: isExpense
                                     ? Icons.arrow_downward_rounded
                                     : Icons.arrow_upward_rounded,
@@ -142,7 +141,6 @@ class TransactionAddPage extends StatelessWidget {
                                 padding: EdgeInsets.fromLTRB(
                                     28, 10, deviceWidth * 0.1, 0),
                                 child: TextForm(
-                                  textController: controller.textController,
                                   height: deviceHeight * 0.08,
                                   hint: 'Escreva um comentário',
                                   hintFontSize: 16,
@@ -186,12 +184,7 @@ class TransactionAddPage extends StatelessWidget {
                                         shape: MaterialStateProperty.all(
                                             const StadiumBorder())),
                                     onPressed: () {
-                                      controller.transactionValue =
-                                          double.tryParse(controller
-                                                  .valueController.value
-                                                  .toString()) ??
-                                              0;
-                                      controller.addTransaction(isExpense);
+                                      controller.registerTransaction(isExpense);
                                       Navigator.pop(context);
                                     },
                                     child: Padding(

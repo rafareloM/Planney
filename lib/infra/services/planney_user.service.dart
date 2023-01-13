@@ -19,7 +19,7 @@ class PlanneyUserService {
 
     final db = FirebaseFirestore.instance;
 
-    await db.collection('users').doc(planneyUserStore.uid).set(map);
+    await db.collection('users').doc(planneyUserStore.uid).update(map);
 
     return true;
   }

@@ -25,6 +25,7 @@ class TransactionChartCard extends StatelessWidget {
     Color activeColor = Theme.of(context).brightness == Brightness.dark
         ? colorScheme.tertiary
         : colorScheme.primary;
+
     return Observer(builder: (context) {
       return Column(
         children: [

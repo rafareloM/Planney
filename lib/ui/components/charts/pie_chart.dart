@@ -14,7 +14,6 @@ class PieChartPlaney extends StatefulWidget {
 
 class PieChartPlaneyState extends State<PieChartPlaney> {
   int touchedIndex = 0;
-
   @override
   Widget build(BuildContext context) {
     return AspectRatio(
@@ -77,10 +76,8 @@ class PieChartPlaneyState extends State<PieChartPlaney> {
         ),
         badgeWidget: _Badge(
           codePoint: transactionsList
-              .firstWhere((element) => element.category.keys.first == category)
+              .firstWhere((element) => element.category.name == category)
               .category
-              .values
-              .first
               .codePoint,
           size: widgetSize,
           borderColor: AppStyle.chartcolor1,

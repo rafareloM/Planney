@@ -220,13 +220,18 @@ class RegisterPage extends StatelessWidget {
 
   _doRegister() async {
     _progressDialog.show("Cadastrando...");
-    final response = await _controller.doRegister();
-    if (response.isSuccess) {
+    try {
+      final response = await _controller.doRegister();
+      if (response.isSuccess) {
+        _progressDialog.hide();
+        Navigator.pushReplacementNamed(navigatorKey.currentContext!, "/");
+      } else {
+        _progressDialog.hide();
+        _alertDialog.showInfo(title: "Ops!", message: response.message!);
+      }
+    } catch (e) {
       _progressDialog.hide();
-      Navigator.pushReplacementNamed(navigatorKey.currentContext!, "/");
-    } else {
-      _progressDialog.hide();
-      _alertDialog.showInfo(title: "Ops!", message: response.message!);
+      _alertDialog.showInfo(title: "Ops!", message: "Ops Algo deu errado!");
     }
   }
 }

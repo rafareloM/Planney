@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthService {
   Future<String?> register(
-      String fullName, String email, String password) async {
+      String fullName, String email, String password, List list) async {
     UserCredential userCredential = await FirebaseAuth.instance
         .createUserWithEmailAndPassword(email: email, password: password);
 
@@ -12,9 +12,9 @@ class AuthService {
     await FirebaseFirestore.instance.collection("users").doc(uid).set({
       'full_name': fullName,
       'email': email,
+      'categories': list,
       'created_at': FieldValue.serverTimestamp(),
     });
-
     return uid;
   }
 

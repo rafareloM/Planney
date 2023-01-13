@@ -1,6 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:planney/infra/repositories/planney_user.repository.dart';
 import 'package:planney/infra/services/planney_user.service.dart';
+import 'package:planney/model/category.model.dart';
 import 'package:planney/model/planney_user.dart';
 import 'package:planney/model/api_response.model.dart';
 
@@ -26,5 +26,13 @@ class PlanneyUserRepositoryImpl implements PlanneyUserRepository {
     } else {
       return APIResponse.error('Ops! Falha na atualização');
     }
+  }
+
+  @override
+  Future<APIResponse<List<Category>>> getCategories() async {
+    final documentSnapshot = await _service.get();
+    final planneyUser = PlanneyUser.fromFirestore(
+        documentSnapshot.data() as Map<String, dynamic>);
+    return APIResponse.success(planneyUser.categories);
   }
 }

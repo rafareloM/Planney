@@ -2,6 +2,7 @@ import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 import 'package:planney/infra/repositories/auth.repository.dart';
 import 'package:planney/model/api_response.model.dart';
+import 'package:planney/model/category.model.dart';
 import 'package:planney/model/planney_user.dart';
 import 'package:planney/stores/planney_user.store.dart';
 part 'register.controller.g.dart';
@@ -54,7 +55,8 @@ abstract class RegisterControllerBase with Store {
     if (_password != _repeatPassword) {
       return APIResponse.error("Senhas precisam ser iguais.");
     }
-    final result = await _authRepository.register(_fullName, _email, _password);
+    final result = await _authRepository.register(
+        _fullName, _email, _password, CategoryHelper.defaultCategoriesToMap());
     if (result.data != null) {
       planneyUserStore.setUser(result.data!, _email);
       final planneyUser = PlanneyUser(
@@ -62,6 +64,7 @@ abstract class RegisterControllerBase with Store {
         email: _email,
       );
       planneyUserStore.setPlanneyUser(planneyUser);
+
       return APIResponse.success(true);
     } else {
       return APIResponse.error("Ops! Algum problema aconteceu!");
