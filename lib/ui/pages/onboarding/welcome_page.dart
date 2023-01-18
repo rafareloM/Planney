@@ -14,6 +14,7 @@ class WelcomePageState extends State<WelcomePage> {
     double deviceWidht = MediaQuery.of(context).size.width;
     double deviceHeight = MediaQuery.of(context).size.height;
     return Material(
+      color: Theme.of(context).backgroundColor,
       child: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(

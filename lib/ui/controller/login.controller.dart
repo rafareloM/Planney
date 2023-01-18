@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 import 'package:planney/infra/repositories/auth.repository.dart';
@@ -32,6 +31,8 @@ abstract class LoginControllerBase with Store {
 
   Future<APIResponse<bool>> login() async {
     final userResponse = await _authRepository.login(_email, _password);
+    _email = '';
+    _password = '';
     if (userResponse.isSuccess) {
       planneyUserStore.setUser(
           userResponse.data!.uid, userResponse.data!.email!);

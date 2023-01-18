@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:planney/extensions/extensions_string.dart';
 import 'package:planney/navigator_key.dart';
@@ -24,6 +25,7 @@ class LoginPage extends StatelessWidget {
     double deviceHeight = MediaQuery.of(context).size.height;
     double deviceWidth = MediaQuery.of(context).size.width;
     return Scaffold(
+      backgroundColor: Theme.of(context).backgroundColor,
       resizeToAvoidBottomInset: true,
       body: SingleChildScrollView(
         child: Form(
@@ -40,76 +42,80 @@ class LoginPage extends StatelessWidget {
               SizedBox(height: deviceHeight * 0.08),
               SizedBox(
                 width: deviceWidth * 0.9,
-                child: TextFormField(
-                  onChanged: _controller.changeEmail,
-                  decoration: const InputDecoration(
-                    border: UnderlineInputBorder(
-                      borderSide:
-                          BorderSide(width: 1, style: BorderStyle.solid),
-                      borderRadius: BorderRadius.vertical(
-                        top: Radius.circular(12.5),
+                child: Observer(builder: (_) {
+                  return TextFormField(
+                    onChanged: _controller.changeEmail,
+                    decoration: const InputDecoration(
+                      border: UnderlineInputBorder(
+                        borderSide:
+                            BorderSide(width: 1, style: BorderStyle.solid),
+                        borderRadius: BorderRadius.vertical(
+                          top: Radius.circular(12.5),
+                        ),
                       ),
+                      labelText: Strings.LOGIN_FORM_EMAIL_LABEL,
+                      labelStyle: TextStyle(
+                        fontSize: 18,
+                      ),
+                      errorStyle: TextStyle(
+                        fontSize: 14,
+                      ),
+                      filled: true,
                     ),
-                    labelText: Strings.LOGIN_FORM_EMAIL_LABEL,
-                    labelStyle: TextStyle(
-                      fontSize: 18,
-                    ),
-                    errorStyle: TextStyle(
-                      fontSize: 14,
-                    ),
-                    filled: true,
-                  ),
-                  validator: ((value) {
-                    if (!value!.isValidEmail) {
-                      return Strings.LOGIN_FORM_EMAIL_ERROR;
-                    }
-                    return null;
-                  }),
-                ),
+                    validator: ((value) {
+                      if (!value!.isValidEmail) {
+                        return Strings.LOGIN_FORM_EMAIL_ERROR;
+                      }
+                      return null;
+                    }),
+                  );
+                }),
               ),
               SizedBox(height: deviceHeight * 0.04),
               SizedBox(
                 width: deviceWidth * 0.9,
-                child: TextFormField(
-                  onChanged: _controller.changePassword,
-                  obscureText: !_controller.canShowPassword,
-                  decoration: InputDecoration(
-                    border: const UnderlineInputBorder(
-                      borderSide:
-                          BorderSide(width: 1, style: BorderStyle.solid),
-                      borderRadius: BorderRadius.vertical(
-                        bottom: Radius.circular(12.5),
+                child: Observer(builder: (_) {
+                  return TextFormField(
+                    onChanged: _controller.changePassword,
+                    obscureText: !_controller.canShowPassword,
+                    decoration: InputDecoration(
+                      border: const UnderlineInputBorder(
+                        borderSide:
+                            BorderSide(width: 1, style: BorderStyle.solid),
+                        borderRadius: BorderRadius.vertical(
+                          bottom: Radius.circular(12.5),
+                        ),
+                      ),
+                      labelText: Strings.LOGIN_FORM_PASSWORD_LABEL,
+                      labelStyle: const TextStyle(
+                        fontSize: 18,
+                      ),
+                      helperText: Strings.LOGIN_FORM_PASSWORD_HELPER,
+                      helperStyle: const TextStyle(
+                        fontSize: 14,
+                      ),
+                      errorStyle: const TextStyle(
+                        fontSize: 14,
+                      ),
+                      filled: true,
+                      suffixIcon: IconButton(
+                        onPressed: () {
+                          _controller.canShowPassword =
+                              !_controller.canShowPassword;
+                        },
+                        icon: Icon(_controller.canShowPassword
+                            ? Icons.visibility
+                            : Icons.visibility_off),
                       ),
                     ),
-                    labelText: Strings.LOGIN_FORM_PASSWORD_LABEL,
-                    labelStyle: const TextStyle(
-                      fontSize: 18,
-                    ),
-                    helperText: Strings.LOGIN_FORM_PASSWORD_HELPER,
-                    helperStyle: const TextStyle(
-                      fontSize: 14,
-                    ),
-                    errorStyle: const TextStyle(
-                      fontSize: 14,
-                    ),
-                    filled: true,
-                    suffixIcon: IconButton(
-                      onPressed: () {
-                        _controller.canShowPassword =
-                            !_controller.canShowPassword;
-                      },
-                      icon: Icon(_controller.canShowPassword
-                          ? Icons.visibility
-                          : Icons.visibility_off),
-                    ),
-                  ),
-                  validator: ((value) {
-                    if (!value!.isValidPassword) {
-                      return Strings.LOGIN_FORM_PASSWORD_ERROR;
-                    }
-                    return null;
-                  }),
-                ),
+                    validator: ((value) {
+                      if (!value!.isValidPassword) {
+                        return Strings.LOGIN_FORM_PASSWORD_ERROR;
+                      }
+                      return null;
+                    }),
+                  );
+                }),
               ),
               SizedBox(height: deviceHeight * 0.08),
               SizedBox(
@@ -149,13 +155,18 @@ class LoginPage extends StatelessWidget {
 
   _doLogin() async {
     _progressDialog.show("Autenticando...");
-    final response = await _controller.login();
-    if (response.isSuccess) {
-      //TODO: FIX NAVIGATION:
-      Navigator.pushReplacementNamed(navigatorKey.currentContext!, "/");
-    } else {
+
+    try {
+      final response = await _controller.login();
+      if (response.isSuccess) {
+        Navigator.pushReplacementNamed(navigatorKey.currentContext!, "/");
+      } else {
+        _progressDialog.hide();
+        _alertDialog.showInfo(title: "Ops!", message: response.message!);
+      }
+    } catch (e) {
       _progressDialog.hide();
-      _alertDialog.showInfo(title: "Ops!", message: response.message!);
+      _alertDialog.showInfo(title: "Ops!", message: 'Algo deu errado!');
     }
   }
 }

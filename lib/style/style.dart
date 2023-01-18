@@ -48,7 +48,7 @@ abstract class AppStyle {
       tertiary: floatingActionButtomLight,
       error: errorLight,
       onError: fullWhite,
-      background: fullWhite,
+      background: backgroundColorlight,
       onBackground: fullBlack,
       surface: fullWhite,
       onSurface: fullBlack);

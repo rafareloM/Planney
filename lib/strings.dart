@@ -1,5 +1,3 @@
-
-
 // ignore_for_file: constant_identifier_names
 
 abstract class Strings {
@@ -21,4 +19,11 @@ abstract class Strings {
   static const LOGIN_DIALOG_AUTH_FAILED_DESCRIPTION =
       "Email/Senha está(ão) inválido(s)!";
   static const LOGIN_DIALOG_AUTH_FAILED_BUTTON = "Entendi";
+  static const REGISTER_FORM_USERNAME_LABEL = 'Nome do Usuário';
+  static const REGISTER_FORM_USERNAME_ERROR = 'Insira um nome';
+  static const REGISTER_FORM_REPEAT_PASSWORD_LABEL = 'Repita sua Senha';
+  static const REGISTER_FORM_REPEAT_PASSWORD_ERROR = 'As senhas não coincidem!';
+  static const REGISTE_FORM_REPEAT_PASSWORD_HELPER =
+      "As senhas devem ser iguais";
+  static const REGISTER_BUTTON_REGISTER = 'Cadastre-se';
 }
