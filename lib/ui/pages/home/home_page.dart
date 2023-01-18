@@ -2,15 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:planney/model/transaction.model.dart';
-import 'package:planney/stores/category.store.dart';
 import 'package:planney/stores/planney_user.store.dart';
-import 'package:planney/stores/transactions.store.dart';
-import 'package:planney/ui/components/custom_alert_dialog.dart';
 import 'package:planney/ui/components/home/avatar.dart';
 import 'package:planney/ui/components/home/bottom_navigation_bar.dart';
 import 'package:planney/ui/components/home/my_drawer.dart';
 import 'package:planney/ui/components/home/planney_logo.dart';
-import 'package:planney/ui/components/progress_dialog.dart';
 import 'package:planney/ui/components/transaction/transaction_chart_card.dart';
 import 'package:planney/ui/controller/home.controller.dart';
 import 'package:planney/ui/pages/transaction/view/transaction_add_page.dart';
@@ -25,8 +21,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final _controller = GetIt.instance.get<HomePageController>();
   final _userStore = GetIt.instance.get<PlanneyUserStore>();
-  final _transactionsStore = GetIt.instance.get<TransactionsStore>();
-  final CategoryStore _categoryStore = GetIt.instance.get<CategoryStore>();
 
   @override
   void initState() {
@@ -35,8 +29,10 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future preload() async {
+    _controller.isLoading = true;
     await _controller.getTransactionsList();
     await _controller.getCategoriesList();
+    _controller.isLoading = false;
   }
 
   @override
@@ -85,44 +81,33 @@ class _HomePageState extends State<HomePage> {
           centerTitle: true,
         ),
         bottomNavigationBar: const HomeBottomNavigationBar(),
-        body: Column(
-          children: [
-            const Padding(
-              padding: EdgeInsets.only(top: 6),
-              child: Avatar(
-                userName: 'Marilene',
-                userBalance: 2365.96,
+        body: _controller.isLoading
+            ? const Center(child: CircularProgressIndicator())
+            : Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 6),
+                    child: Avatar(
+                      userName: _userStore.planneyUser != null
+                          ? _userStore.planneyUser?.fullName.split(' ').first
+                          : '',
+                      userBalance: _controller.getTotalValue(),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 6),
+                    child: Observer(builder: (_) {
+                      return TransactionChartCard(
+                        isExpence: _controller.isExpence,
+                        controller: _controller,
+                        colorScheme: colorScheme,
+                        transactionList: _controller.getCategoriesByType(),
+                      );
+                    }),
+                  ),
+                ],
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 6),
-              child: Observer(builder: (_) {
-                return TransactionChartCard(
-                  isExpence: _controller.isExpence,
-                  controller: _controller,
-                  colorScheme: colorScheme,
-                  transactionList: getCategoriesByType(
-                      _controller.isExpence, _transactionsStore.list),
-                );
-              }),
-            ),
-          ],
-        ),
       );
     });
-  }
-
-  List<Transaction> getCategoriesByType(
-      bool isExpence, List<Transaction> list) {
-    List<Transaction> finalList = [];
-    finalList.addAll(list);
-    if (isExpence) {
-      finalList
-          .removeWhere((element) => element.type != TransactionType.expence);
-    } else if (!isExpence) {
-      finalList
-          .removeWhere((element) => element.type != TransactionType.receipt);
-    }
-    return finalList;
   }
 }

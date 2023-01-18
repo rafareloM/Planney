@@ -29,11 +29,16 @@ abstract class HomePageControllerBase with Store {
         _currentDateTime.year, _currentDateTime.month, _currentDateTime.day);
   }
 
+  final _transactionStore = GetIt.instance.get<TransactionsStore>();
+
   @readonly
   DateTime _currentDateTime = DateTime.now();
 
   @observable
   bool isExpence = true;
+
+  @observable
+  bool isLoading = true;
 
   @observable
   ThemeData selectedAppTheme = AppStyle.appThemeDark;
@@ -54,6 +59,31 @@ abstract class HomePageControllerBase with Store {
       store.replaceList(response.data!);
     }
     return response;
+  }
+
+  List<Transaction> getCategoriesByType() {
+    List<Transaction> finalList = [];
+    finalList.addAll(_transactionStore.list);
+    if (isExpence) {
+      finalList
+          .removeWhere((element) => element.type != TransactionType.expence);
+    } else if (!isExpence) {
+      finalList
+          .removeWhere((element) => element.type != TransactionType.receipt);
+    }
+    return finalList;
+  }
+
+  double getTotalValue() {
+    double result = 0;
+    for (var transaction in _transactionStore.list) {
+      if (transaction.type == TransactionType.expence) {
+        result -= transaction.value;
+      } else if (transaction.type == TransactionType.receipt) {
+        result += transaction.value;
+      }
+    }
+    return result;
   }
 
   @action
