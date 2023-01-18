@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Avatar extends StatelessWidget {
-  final String userName;
+  final String? userName;
   final double userBalance;
   const Avatar({super.key, required this.userName, required this.userBalance});
 

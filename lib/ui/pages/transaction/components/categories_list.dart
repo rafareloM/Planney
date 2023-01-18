@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
-import 'package:planney/model/category.model.dart';
+import 'package:planney/stores/category.store.dart';
 import 'package:planney/ui/controller/home.controller.dart';
 import 'package:planney/ui/controller/transaction.controller.dart';
+import 'package:planney/ui/pages/transaction/components/category_button.dart';
 
-class CategoriesList extends StatelessWidget {
+class CategoriesList extends StatefulWidget {
   final double height;
   final double width;
   final TransactionController controller;
@@ -22,91 +23,33 @@ class CategoriesList extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<CategoriesList> createState() => _CategoriesListState();
+}
+
+class _CategoriesListState extends State<CategoriesList> {
+  final CategoryStore _categoryStore = GetIt.instance.get<CategoryStore>();
+  final bool isExpense = GetIt.instance.get<HomePageController>().isExpence;
+
+  @override
   Widget build(BuildContext context) {
-    bool isExpense = GetIt.instance.get<HomePageController>().isExpence;
-    return Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: isExpense
-            ? ExpenseCategory.categories.map((e) {
-                return Observer(builder: (_) {
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        e.entries.first.key.toUpperCase(),
-                        style: const TextStyle(
-                          fontSize: 14,
-                        ),
-                      ),
-                      IconButton(
-                          iconSize: 64,
-                          padding: EdgeInsets.zero,
-                          icon: Icon(
-                            e.entries.first.value,
-                            color: controller.selectedKey == e.entries.first.key
-                                ? selectedColor
-                                : color,
-                            semanticLabel: e.entries.first.key,
-                          ),
-                          onPressed: () {
-                            controller.selectedKey = e.entries
-                                .firstWhere(
-                                  (element) =>
-                                      element.key == e.entries.first.key,
-                                )
-                                .key;
-                            controller.selectedExpenceCategory =
-                                ExpenseCategory.categories.firstWhere(
-                              (element) =>
-                                  controller.selectedKey ==
-                                  element.entries.first.key,
-                            );
-                          }),
-                    ],
-                  );
-                });
-              }).toList()
-            : ReceiptCategory.categories.map((e) {
-                return Observer(builder: (_) {
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        e.entries.first.key.toUpperCase(),
-                        style: const TextStyle(
-                          fontSize: 14,
-                        ),
-                      ),
-                      IconButton(
-                          iconSize: 64,
-                          padding: EdgeInsets.zero,
-                          icon: Icon(
-                            e.entries.first.value,
-                            color: controller.selectedKey == e.entries.first.key
-                                ? selectedColor
-                                : color,
-                            semanticLabel: e.entries.first.key,
-                          ),
-                          onPressed: () {
-                            controller.selectedKey = e.entries
-                                .firstWhere(
-                                  (element) =>
-                                      element.key == e.entries.first.key,
-                                )
-                                .key;
-                            controller.selectedReceiptCategory =
-                                ReceiptCategory.categories.firstWhere(
-                              (element) =>
-                                  controller.selectedKey ==
-                                  element.entries.first.key,
-                            );
-                          }),
-                    ],
-                  );
-                });
-              }).toList());
+    return SingleChildScrollView(
+        primary: false,
+        scrollDirection: Axis.horizontal,
+        child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: _categoryStore.getCategoriesByType(isExpense).map((e) {
+              return Observer(builder: (_) {
+                return CategoryButton(
+                    name: e.name.toUpperCase(),
+                    color: widget.controller.selectedCategory == e
+                        ? widget.selectedColor
+                        : widget.color,
+                    icon: IconData(e.codePoint, fontFamily: 'MaterialIcons'),
+                    onPressed: () {
+                      widget.controller.selectedCategory = e;
+                    });
+              });
+            }).toList()));
   }
 }

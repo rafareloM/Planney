@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:planney/model/transaction.model.dart';
 import 'package:planney/ui/components/charts/pie_chart.dart';
 
 class TransactionCardFilled extends StatelessWidget {
   final double deviceHeight;
+  final List<Transaction> transactionList;
   final bool isExpence;
 
   const TransactionCardFilled({
     Key? key,
     required this.deviceHeight,
     required this.isExpence,
+    required this.transactionList,
   }) : super(key: key);
 
   @override
@@ -24,7 +27,7 @@ class TransactionCardFilled extends StatelessWidget {
               maxHeight: deviceHeight * 0.35,
               minWidth: double.maxFinite,
             ),
-            child: const PieChartSample3()),
+            child: PieChartPlaney(transactionsList: transactionList)),
       ),
     );
   }

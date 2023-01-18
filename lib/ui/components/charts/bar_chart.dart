@@ -13,7 +13,7 @@ class _BarChart extends StatelessWidget {
         titlesData: titlesData,
         borderData: borderData,
         barGroups: barGroups,
-        gridData: FlGridData(verticalInterval: 15),
+        gridData: FlGridData(verticalInterval: 3),
         alignment: BarChartAlignment.spaceEvenly,
         maxY: 25,
       ),
@@ -102,7 +102,7 @@ class _BarChart extends StatelessWidget {
           x: 0,
           barRods: [
             BarChartRodData(
-              width: 55,
+              width: 35,
               toY: 8,
               color: AppStyle.chartcolor1,
             )
@@ -113,7 +113,7 @@ class _BarChart extends StatelessWidget {
           x: 1,
           barRods: [
             BarChartRodData(
-              width: 55,
+              width: 35,
               toY: 4,
               color: AppStyle.chartcolor3,
             )
@@ -124,7 +124,7 @@ class _BarChart extends StatelessWidget {
           x: 2,
           barRods: [
             BarChartRodData(
-              width: 55,
+              width: 35,
               toY: 14,
               color: AppStyle.chartcolor2,
             )
@@ -135,7 +135,7 @@ class _BarChart extends StatelessWidget {
           x: 3,
           barRods: [
             BarChartRodData(
-              width: 55,
+              width: 35,
               toY: 19,
               color: AppStyle.chartcolor4,
             )
@@ -160,7 +160,7 @@ class BarChartSample3State extends State<BarChartSample3> {
       child: Card(
         elevation: 0,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-        color: AppStyle.fullWhite,
+        color: Colors.transparent,
         child: const _BarChart(),
       ),
     );
