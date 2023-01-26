@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
-import 'package:planney/model/transaction.model.dart';
 import 'package:planney/stores/category.store.dart';
 import 'package:planney/ui/components/home/bottom_navigation_bar.dart';
 import 'package:planney/ui/components/home/my_drawer.dart';
 import 'package:planney/ui/components/transaction/list_view_button.dart';
 import 'package:planney/ui/controller/home.controller.dart';
+import 'package:planney/ui/pages/category_charts/views/charts_page.dart';
 import 'package:planney/ui/pages/transaction/components/category_button.dart';
 
 class DetailCategoryPage extends StatelessWidget {
@@ -107,7 +107,7 @@ class DetailCategoryPage extends StatelessWidget {
                       padding: const EdgeInsets.all(4),
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2),
+                              crossAxisCount: 3),
                       primary: false,
                       shrinkWrap: false,
                       itemCount: categoryStore
@@ -123,7 +123,17 @@ class DetailCategoryPage extends StatelessWidget {
                               color: colorScheme.primary,
                               icon: IconData(e.codePoint,
                                   fontFamily: "MaterialIcons"),
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => CategoryChartsPage(
+                                          categoryName: e.name,
+                                          transactions: controller
+                                              .getTransactionsByCategory(
+                                                  e.name)),
+                                    ));
+                              },
                             );
                           },
                         ).toList()[index];
