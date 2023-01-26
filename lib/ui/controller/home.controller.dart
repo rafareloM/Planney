@@ -52,6 +52,17 @@ abstract class HomePageControllerBase with Store {
     return response;
   }
 
+  List<Transaction> getTransactionsByCategory(String category) {
+    List<Transaction> filteredList = [];
+
+    for (var item in _transactionStore.list) {
+      if (item.category.name == category) {
+        filteredList.add(item);
+      }
+    }
+    return filteredList;
+  }
+
   Future<APIResponse<List<Category>?>> getCategoriesList() async {
     final response = await _planneyUserRepository.getCategories();
     if (response.isSuccess) {
@@ -98,5 +109,10 @@ abstract class HomePageControllerBase with Store {
   @action
   logout() async {
     await _authRepository.logout();
+  }
+
+  @action
+  setLoading(bool status) {
+    isLoading = status;
   }
 }
