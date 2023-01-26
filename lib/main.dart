@@ -82,7 +82,7 @@ class MyApp extends StatelessWidget {
           '/splashPage': (context) => const SplashPage(),
           '/loginPage': (context) => LoginPage(),
           '/registerPage': (context) => RegisterPage(),
-          '/detailPage': ((context) => const DetailCategoryPage())
+          '/detailPage': ((context) => const DetailCategoryPage()),
         },
       );
     });
