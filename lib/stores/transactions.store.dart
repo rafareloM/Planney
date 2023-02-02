@@ -6,7 +6,8 @@ part 'transactions.store.g.dart';
 class TransactionsStore = TransactionsStoreBase with _$TransactionsStore;
 
 abstract class TransactionsStoreBase with Store {
-  final ObservableList<Transaction> list = ObservableList();
+  @observable
+  ObservableList<Transaction> list = ObservableList<Transaction>();
 
   @computed
   int get count => list.length;
