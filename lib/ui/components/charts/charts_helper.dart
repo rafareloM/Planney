@@ -77,6 +77,14 @@ abstract class ChartsHelper {
     return result;
   }
 
+  static double getTotalValue(List<Transaction> transactionsList) {
+    double result = 0;
+    for (var transaction in transactionsList) {
+      result += transaction.value;
+    }
+    return result;
+  }
+
   static weekdayToString(int weekday) {
     switch (weekday) {
       case 1:
