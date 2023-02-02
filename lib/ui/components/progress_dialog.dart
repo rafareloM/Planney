@@ -1,16 +1,12 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+
 import 'package:planney/navigator_key.dart';
 
 class ProgressDialog {
   bool _isShowing = false;
 
-  final Color? color;
-  final Color? onSurface;
-
-  ProgressDialog({
-    required this.color,
-    required this.onSurface,
-  });
+  ProgressDialog();
 
   show(String message) {
     if (_isShowing) return;
@@ -19,21 +15,17 @@ class ProgressDialog {
         context: navigatorKey.currentContext!,
         barrierDismissible: false,
         builder: (_) => AlertDialog(
-              backgroundColor: color,
               content: SizedBox(
                 height: 140,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    CircularProgressIndicator(
-                      color: onSurface,
-                    ),
+                    const CircularProgressIndicator(),
                     const SizedBox(
                       height: 4,
                     ),
                     Text(
                       message,
-                      style: TextStyle(color: onSurface),
                     )
                   ],
                 ),
