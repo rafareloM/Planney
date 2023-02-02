@@ -24,6 +24,9 @@ class PieChartCategoryState extends State<PieChartCategory> {
         child: AspectRatio(
           aspectRatio: 1,
           child: PieChart(
+            swapAnimationDuration:
+                const Duration(milliseconds: 200), // Optional
+            swapAnimationCurve: Curves.ease,
             PieChartData(
               pieTouchData: PieTouchData(
                 touchCallback: (FlTouchEvent event, pieTouchResponse) {
@@ -67,7 +70,7 @@ class PieChartCategoryState extends State<PieChartCategory> {
 
     do {
       final isTouched = i == touchedIndex;
-      final fontSize = isTouched ? 20.0 : 16.0;
+      final fontSize = isTouched ? 22.0 : 16.0;
       final radius = isTouched ? 107.0 : 100.0;
       final widgetSize = isTouched ? 46.0 : 40.0;
       if (transactionsList.any((element) => element.date.weekday == weekday)) {
@@ -138,7 +141,7 @@ class _Badge extends StatelessWidget {
                 style: TextStyle(
                     color: buttonColor,
                     fontWeight: FontWeight.bold,
-                    fontSize: fontSize),
+                    fontSize: fontSize - 6),
               )
             : const SizedBox(),
       ]),

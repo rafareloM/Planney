@@ -1,7 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:planney/mocks/transaction_mock.model.dart';
 import 'package:planney/model/transaction.model.dart';
 import 'package:planney/ui/components/charts/charts_helper.dart';
 
@@ -120,7 +119,9 @@ class _BarChart extends StatelessWidget {
 
 class BarChartSample3 extends StatefulWidget {
   final Color textColor;
-  const BarChartSample3({super.key, required this.textColor});
+  final List<Transaction> transactions;
+  const BarChartSample3(
+      {super.key, required this.textColor, required this.transactions});
 
   @override
   State<StatefulWidget> createState() => BarChartSample3State();
@@ -137,7 +138,7 @@ class BarChartSample3State extends State<BarChartSample3> {
           child: Padding(
             padding: const EdgeInsets.fromLTRB(8, 24, 8, 8),
             child: _BarChart(
-              transactionsList: TransactionMock.transactionsMock,
+              transactionsList: widget.transactions,
               textColor: widget.textColor,
             ),
           ),
