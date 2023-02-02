@@ -6,9 +6,8 @@ import 'package:mask/mask/mask.dart';
 import 'package:planney/extensions/extensions_string.dart';
 import 'package:planney/navigator_key.dart';
 import 'package:planney/strings.dart';
-import 'package:planney/style/style.dart';
 import 'package:planney/ui/components/custom_alert_dialog.dart';
-import 'package:planney/ui/components/home/planney_logo.dart';
+import 'package:planney/ui/components/login/planney_logo_login.dart';
 import 'package:planney/ui/components/progress_dialog.dart';
 import 'package:planney/ui/controller/register.controller.dart';
 
@@ -16,9 +15,7 @@ class RegisterPage extends StatelessWidget {
   final RegisterController _controller =
       GetIt.instance.get<RegisterController>();
 
-  final _progressDialog = ProgressDialog(
-      color: AppStyle.backgroundColorDark,
-      onSurface: AppStyle.darkColorScheme.onSurface);
+  final _progressDialog = ProgressDialog();
   final _alertDialog = CustomAlertDialog();
 
   RegisterPage({super.key});
@@ -40,7 +37,7 @@ class RegisterPage extends StatelessWidget {
               ),
               ConstrainedBox(
                   constraints: BoxConstraints(maxWidth: deviceWidth),
-                  child: const PlanneyLogo(size: 48)),
+                  child: const PlanneyLogoLogin(size: 48)),
               SizedBox(height: deviceHeight * 0.04),
               SizedBox(
                 width: deviceWidth * 0.9,

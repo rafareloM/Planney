@@ -29,16 +29,16 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future preload() async {
-    _controller.isLoading = true;
+    _controller.setLoading(true);
     await _controller.getTransactionsList();
     await _controller.getCategoriesList();
-    _controller.isLoading = false;
+    _controller.setLoading(false);
   }
 
   @override
   Widget build(BuildContext context) {
     ColorScheme colorScheme = Theme.of(context).colorScheme;
-
+    double deviceHeight = MediaQuery.of(context).size.height;
     return Observer(builder: (context) {
       return Scaffold(
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -49,7 +49,9 @@ class _HomePageState extends State<HomePage> {
           foregroundColor: colorScheme.onPrimary,
           onPressed: () {
             showModalBottomSheet(
+              isDismissible: true,
               isScrollControlled: true,
+              constraints: BoxConstraints(maxHeight: deviceHeight * 0.9),
               context: context,
               builder: ((context) => TransactionAddPage(
                     type: _controller.isExpence
@@ -91,7 +93,7 @@ class _HomePageState extends State<HomePage> {
                       userName: _userStore.planneyUser != null
                           ? _userStore.planneyUser?.fullName.split(' ').first
                           : '',
-                      userBalance: _controller.getTotalValue(),
+                      userBalance: _controller.totalValue,
                     ),
                   ),
                   Padding(
@@ -101,7 +103,9 @@ class _HomePageState extends State<HomePage> {
                         isExpence: _controller.isExpence,
                         controller: _controller,
                         colorScheme: colorScheme,
-                        transactionList: _controller.getCategoriesByType(),
+                        transactionList: _controller.isExpence
+                            ? _controller.finalListExpence
+                            : _controller.finalListReceipt,
                       );
                     }),
                   ),
