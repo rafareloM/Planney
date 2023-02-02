@@ -1,13 +1,17 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:planney/style/style.dart';
 
 class CategoryButton extends StatelessWidget {
   final String name;
   final Color color;
   final IconData icon;
+  final bool paintBackground;
   final void Function() onPressed;
+
   const CategoryButton({
     Key? key,
+    required this.paintBackground,
     required this.name,
     required this.color,
     required this.icon,
@@ -16,27 +20,59 @@ class CategoryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.end,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Text(
-          name.toUpperCase(),
-          style: const TextStyle(
-            fontSize: 14,
+    Brightness brightness = Theme.of(context).colorScheme.brightness;
+    return Padding(
+      padding: const EdgeInsets.only(left: 8),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(bottom: 4),
+            child: Text(
+              name.toUpperCase(),
+              style: TextStyle(
+                fontSize: 13,
+                color: brightness == Brightness.dark
+                    ? AppStyle.fullWhite
+                    : AppStyle.chartcolor1,
+              ),
+            ),
           ),
-        ),
-        IconButton(
-          iconSize: 64,
-          padding: EdgeInsets.zero,
-          icon: Icon(
-            icon,
-            color: color,
-            semanticLabel: name,
-          ),
-          onPressed: onPressed,
-        ),
-      ],
+          paintBackground
+              ? Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: brightness == Brightness.dark
+                        ? AppStyle.fullWhite
+                        : AppStyle.chartcolor1,
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: IconButton(
+                      iconSize: 48,
+                      padding: EdgeInsets.zero,
+                      icon: Icon(
+                        icon,
+                        color: color,
+                        semanticLabel: name,
+                      ),
+                      onPressed: onPressed,
+                    ),
+                  ),
+                )
+              : IconButton(
+                  iconSize: 48,
+                  padding: EdgeInsets.zero,
+                  icon: Icon(
+                    icon,
+                    color: color,
+                    semanticLabel: name,
+                  ),
+                  onPressed: onPressed,
+                ),
+        ],
+      ),
     );
   }
 }

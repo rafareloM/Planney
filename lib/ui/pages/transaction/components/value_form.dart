@@ -17,25 +17,22 @@ class ValueForm extends StatefulWidget {
 class _ValueFormState extends State<ValueForm> {
   @override
   Widget build(BuildContext context) {
-    final TransactionController _controller =
+    final TransactionController controller =
         GetIt.instance.get<TransactionController>();
     double deviceHeight = MediaQuery.of(context).size.height;
     double deviceWidth = MediaQuery.of(context).size.width;
     return SizedBox(
-      height: deviceHeight * 0.1,
-      width: deviceWidth * 0.5,
+      height: deviceHeight * 0.12,
+      width: deviceWidth * 0.8,
       child: TextFormField(
-        validator: ((value) {
-          if (value == null) {
-            return 'Insira um valor!';
-          }
-        }),
-        onChanged: (value) => _controller.transactionValue =
-            double.parse(value.replaceAll('R\$', '').replaceAll(',', '.')),
+        onChanged: (value) => controller.transactionValue = double.parse(value
+            .replaceAll('R\$', '')
+            .replaceAll(',', '.')
+            .replaceAll('.', '')),
         inputFormatters: [Mask.money()],
         textAlign: TextAlign.end,
         style: const TextStyle(
-          fontSize: 24,
+          fontSize: 36,
         ),
         textAlignVertical: TextAlignVertical.bottom,
         maxLines: null,
@@ -48,7 +45,7 @@ class _ValueFormState extends State<ValueForm> {
           suffix: Icon(
             widget.icon,
             color: Theme.of(context).hintColor,
-            size: 24,
+            size: 36,
           ),
         ),
         keyboardType: const TextInputType.numberWithOptions(),
