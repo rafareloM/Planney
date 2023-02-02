@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:planney/navigator_key.dart';
 import 'package:planney/stores/category.store.dart';
@@ -50,7 +49,11 @@ class _MyDrawerState extends State<MyDrawer> {
             ),
             onTap: () {
               store.getCategoriesByType(false);
-              Navigator.pop(context);
+              Navigator.pushNamedAndRemoveUntil(
+                navigatorKey.currentContext!,
+                '/',
+                (route) => false,
+              );
             },
           ),
           ListTile(
@@ -93,26 +96,24 @@ class _MyDrawerState extends State<MyDrawer> {
             },
           ),
           Builder(builder: (context) {
-            return Observer(builder: (context) {
-              return ListTile(
-                trailing: Switch(
-                  value: colorScheme.brightness == Brightness.dark,
-                  onChanged: (value) {
-                    controller.changeAppTheme();
-                  },
-                  activeColor: colorScheme.primary,
-                ),
-                title: Text(
-                  colorScheme.brightness == Brightness.dark
-                      ? 'Desativar modo Dark'
-                      : 'Ativar modo Dark',
-                  style: TextStyle(color: buttonColor),
-                ),
-                onTap: () {
+            return ListTile(
+              trailing: Switch(
+                value: colorScheme.brightness == Brightness.dark,
+                onChanged: (value) {
                   controller.changeAppTheme();
                 },
-              );
-            });
+                activeColor: colorScheme.primary,
+              ),
+              title: Text(
+                colorScheme.brightness == Brightness.dark
+                    ? 'Desativar modo Dark'
+                    : 'Ativar modo Dark',
+                style: TextStyle(color: buttonColor),
+              ),
+              onTap: () {
+                controller.changeAppTheme();
+              },
+            );
           }),
           const Expanded(
             child: SizedBox(),
@@ -135,6 +136,10 @@ class _MyDrawerState extends State<MyDrawer> {
 
   doLogout() async {
     await _controller.logout();
-    Navigator.pushReplacementNamed(navigatorKey.currentContext!, '/loginPage');
+    Navigator.pushNamedAndRemoveUntil(
+      navigatorKey.currentContext!,
+      '/loginPage',
+      (route) => false,
+    );
   }
 }
