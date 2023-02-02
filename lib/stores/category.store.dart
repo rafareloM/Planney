@@ -6,7 +6,8 @@ part 'category.store.g.dart';
 class CategoryStore = CategoryStoreBase with _$CategoryStore;
 
 abstract class CategoryStoreBase with Store {
-  final ObservableList<Category> list = ObservableList();
+  @observable
+  ObservableList<Category> list = ObservableList();
 
   @action
   replaceList(List<Category> categories) {
