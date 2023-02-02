@@ -1,75 +1,70 @@
 import 'package:flutter/material.dart';
 
 class InfoCard extends StatelessWidget {
-  final String cardTitle;
-  final String textButtonCTA;
-  final String imagePath;
+  final String? textButtonCTA;
+  final Widget content;
+
+  final void Function()? onPressed;
+
+  final Color buttonColor;
+  final double height;
   const InfoCard(
       {Key? key,
-      required this.cardTitle,
-      required this.textButtonCTA,
-      required this.imagePath})
+      this.textButtonCTA,
+      required this.onPressed,
+      required this.content,
+      required this.buttonColor,
+      required this.height})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
+      height: height,
       width: double.maxFinite,
-      height: 280,
       child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(14),
+        ),
         elevation: 10,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(12, 4, 0, 0),
-              child: Text(
-                cardTitle,
-                style: const TextStyle(
-                  fontWeight: FontWeight.normal,
-                  fontSize: 18,
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 184,
-              width: MediaQuery.of(context).size.width,
-              child: Image.asset(
-                imagePath,
-                fit: BoxFit.fill,
-              ),
-            ),
-            const Divider(
-              height: 0,
-              thickness: 1,
-            ),
-            SizedBox(
-              height: 40,
-              child: TextButton(
-                  style: TextButton.styleFrom(
-                      backgroundColor:
-                          const Color.fromARGB(255, 255, 255, 255)),
-                  onPressed: () {},
-                  child: Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 6),
-                        child: Text(
-                          textButtonCTA,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
+            Expanded(child: content),
+            textButtonCTA != null
+                ? const Divider(
+                    height: 0,
+                    thickness: 1,
+                  )
+                : const SizedBox(),
+            textButtonCTA != null
+                ? SizedBox(
+                    height: 36,
+                    child: TextButton(
+                      onPressed: onPressed,
+                      child: Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 6),
+                            child: Text(
+                              textButtonCTA!,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                  color: buttonColor),
+                            ),
                           ),
-                        ),
+                          Icon(
+                            Icons.arrow_forward,
+                            size: 16,
+                            color: buttonColor,
+                          )
+                        ],
                       ),
-                      const Icon(
-                        Icons.arrow_forward,
-                        size: 16,
-                      )
-                    ],
-                  )),
-            )
+                    ),
+                  )
+                : const SizedBox()
           ],
         ),
       ),
