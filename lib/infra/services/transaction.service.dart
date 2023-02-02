@@ -52,8 +52,10 @@ class TransactionService {
 
     final db = FirebaseFirestore.instance;
 
-    final beginMonth = DateTime(dateSelected.year, dateSelected.month, 1);
-    final nextMonth = DateTime(dateSelected.year, dateSelected.month + 1);
+    final beginMonth = DateTime(dateSelected.year, dateSelected.month, 1)
+        .millisecondsSinceEpoch;
+    final nextMonth = DateTime(dateSelected.year, dateSelected.month + 1)
+        .millisecondsSinceEpoch;
 
     final querySnapshot = await db
         .collection("users")
