@@ -4,7 +4,7 @@ class InfoCard extends StatelessWidget {
   final String? textButtonCTA;
   final Widget content;
 
-  final void Function() onPressed;
+  final void Function()? onPressed;
 
   final Color buttonColor;
   final double height;
