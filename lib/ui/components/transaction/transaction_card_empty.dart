@@ -21,7 +21,7 @@ class TransactionCardEmpty extends StatelessWidget {
           child: Stack(
             children: [
               Container(
-                height: deviceHeight * 0.3,
+                height: deviceHeight * 0.326,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: AppStyle.initialchartcolor,

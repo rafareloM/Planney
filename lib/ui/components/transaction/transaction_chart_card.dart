@@ -42,7 +42,10 @@ class TransactionChartCard extends StatelessWidget {
                 children: [
                   ListViewButton(
                     onPressed: () {
-                      controller.isExpence = true;
+                      if (controller.isExpence = true) {
+                        return;
+                      }
+                      controller.setIsExpence(true);
                     },
                     buttonLabel: 'Despesa',
                     buttonColor: controller.isExpence
@@ -58,7 +61,10 @@ class TransactionChartCard extends StatelessWidget {
                   ),
                   ListViewButton(
                     onPressed: () {
-                      controller.isExpence = false;
+                      if (controller.isExpence = false) {
+                        return;
+                      }
+                      controller.setIsExpence(false);
                     },
                     buttonLabel: 'Receita',
                     buttonColor: !controller.isExpence
