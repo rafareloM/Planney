@@ -13,6 +13,17 @@ abstract class ChartsHelper {
     return totalValue;
   }
 
+  static double totalDayValue(List<Transaction> list, int weekday) {
+    double totalValue = 0;
+
+    for (var item in list) {
+      if (item.date.weekday == weekday) {
+        totalValue += item.value;
+      }
+    }
+    return totalValue;
+  }
+
   static List<Transaction> getTransactionsByCategory(
       List<Transaction> lista, String category) {
     List<Transaction> filteredList = [];
@@ -54,6 +65,44 @@ abstract class ChartsHelper {
         return AppStyle.chartcolor4;
       default:
         return AppStyle.primaryColor;
+    }
+  }
+
+  static double getHighestDayValue(List<Transaction> transactionsList) {
+    double result = 0;
+    for (var weekday = 1; weekday < 8; weekday++) {
+      double actualDayValue = totalDayValue(transactionsList, weekday);
+      actualDayValue > result ? result = actualDayValue : result;
+    }
+    return result;
+  }
+
+  static double getTotalValue(List<Transaction> transactionsList) {
+    double result = 0;
+    for (var transaction in transactionsList) {
+      result += transaction.value;
+    }
+    return result;
+  }
+
+  static weekdayToString(int weekday) {
+    switch (weekday) {
+      case 1:
+        return 'SEG';
+      case 2:
+        return 'TER';
+      case 3:
+        return 'QUA';
+      case 4:
+        return 'QUI';
+      case 5:
+        return 'SEX';
+      case 6:
+        return 'SAB';
+      case 7:
+        return 'DOM';
+      default:
+        null;
     }
   }
 }

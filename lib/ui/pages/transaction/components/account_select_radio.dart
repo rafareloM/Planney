@@ -39,9 +39,11 @@ class AccountSelectRadio extends StatelessWidget {
               dense: true,
               title: Text(
                 UserAccounts.values
-                    .firstWhere((element) => element.index == e.index)
-                    .name
-                    .toUpperCase(),
+                            .firstWhere((element) => element.index == e.index)
+                            .name ==
+                        'principal'
+                    ? 'PRINCIPAL'
+                    : 'OUTRAS',
                 style: const TextStyle(fontSize: 16),
               ),
               leading: Radio<UserAccounts>(

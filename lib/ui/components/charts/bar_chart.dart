@@ -1,23 +1,35 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:planney/style/style.dart';
+import 'package:planney/model/transaction.model.dart';
+import 'package:planney/ui/components/charts/charts_helper.dart';
 
 class _BarChart extends StatelessWidget {
-  const _BarChart();
+  final List<Transaction> transactionsList;
+  final Color textColor;
+  const _BarChart({
+    Key? key,
+    required this.transactionsList,
+    required this.textColor,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return BarChart(
-      BarChartData(
-        barTouchData: barTouchData,
-        titlesData: titlesData,
-        borderData: borderData,
-        barGroups: barGroups,
-        gridData: FlGridData(verticalInterval: 3),
-        alignment: BarChartAlignment.spaceEvenly,
-        maxY: 25,
+    return BarChart(BarChartData(
+      baselineY: 0,
+      barTouchData: barTouchData,
+      titlesData: titlesData,
+      borderData: borderData,
+      barGroups: barGroups,
+      gridData: FlGridData(
+        verticalInterval: 1,
+        getDrawingHorizontalLine: (value) {
+          return FlLine(color: textColor, strokeWidth: 0);
+        },
       ),
-    );
+      alignment: BarChartAlignment.spaceEvenly,
+      maxY: ChartsHelper.getHighestDayValue(transactionsList),
+    ));
   }
 
   BarTouchData get barTouchData => BarTouchData(
@@ -25,7 +37,7 @@ class _BarChart extends StatelessWidget {
         touchTooltipData: BarTouchTooltipData(
           tooltipBgColor: Colors.transparent,
           tooltipPadding: EdgeInsets.zero,
-          tooltipMargin: 8,
+          tooltipMargin: 2,
           getTooltipItem: (
             BarChartGroupData group,
             int groupIndex,
@@ -33,10 +45,9 @@ class _BarChart extends StatelessWidget {
             int rodIndex,
           ) {
             return BarTooltipItem(
-              rod.toY.round().toString(),
-              const TextStyle(
-                color: Color(0xff7589a2),
-                fontWeight: FontWeight.bold,
+              rod.toY.round().toStringAsFixed(2),
+              TextStyle(
+                color: textColor,
               ),
             );
           },
@@ -44,32 +55,15 @@ class _BarChart extends StatelessWidget {
       );
 
   Widget getTitles(double value, TitleMeta meta) {
-    const style = TextStyle(
-      color: Color(0xFF76B4D8),
+    TextStyle style = TextStyle(
+      color: textColor,
       fontWeight: FontWeight.bold,
       fontSize: 14,
     );
-    String text;
-    switch (value.toInt()) {
-      case 0:
-        text = 'JUL';
-        break;
-      case 1:
-        text = 'AGO';
-        break;
-      case 2:
-        text = 'SET';
-        break;
-      case 3:
-        text = 'OUT';
-        break;
-      default:
-        text = '';
-        break;
-    }
+    String text = ChartsHelper.weekdayToString(value.toInt() + 1) ?? '';
     return SideTitleWidget(
       axisSide: meta.axisSide,
-      space: 6,
+      space: 3,
       child: Text(text, style: style),
     );
   }
@@ -79,13 +73,10 @@ class _BarChart extends StatelessWidget {
         bottomTitles: AxisTitles(
           sideTitles: SideTitles(
             showTitles: true,
-            reservedSize: 50,
             getTitlesWidget: getTitles,
           ),
         ),
-        leftTitles: AxisTitles(
-          sideTitles: SideTitles(showTitles: false),
-        ),
+        leftTitles: AxisTitles(sideTitles: sideTitles),
         topTitles: AxisTitles(
           sideTitles: SideTitles(showTitles: false),
         ),
@@ -94,59 +85,43 @@ class _BarChart extends StatelessWidget {
         ),
       );
 
+  SideTitles get sideTitles {
+    return SideTitles(
+      showTitles: false,
+      interval: 5,
+    );
+  }
+
   FlBorderData get borderData => FlBorderData(
         show: false, // adiciona uma borda na base das barras do gráfico
       );
-  List<BarChartGroupData> get barGroups => [
-        BarChartGroupData(
-          x: 0,
+  List<BarChartGroupData> get barGroups {
+    List<BarChartGroupData> barChartGroupDataList = [];
+    for (var x = 0; x < 7; x++) {
+      if (ChartsHelper.totalDayValue(transactionsList, x + 1) > 0) {
+        barChartGroupDataList.add(BarChartGroupData(
+          x: x,
           barRods: [
             BarChartRodData(
-              width: 35,
-              toY: 8,
-              color: AppStyle.chartcolor1,
-            )
+                width: 42,
+                toY: ChartsHelper.totalDayValue(transactionsList, x + 1),
+                color: ChartsHelper.setColorByIndex(x),
+                borderRadius:
+                    const BorderRadius.vertical(top: Radius.circular(12)))
           ],
           showingTooltipIndicators: [0],
-        ),
-        BarChartGroupData(
-          x: 1,
-          barRods: [
-            BarChartRodData(
-              width: 35,
-              toY: 4,
-              color: AppStyle.chartcolor3,
-            )
-          ],
-          showingTooltipIndicators: [0],
-        ),
-        BarChartGroupData(
-          x: 2,
-          barRods: [
-            BarChartRodData(
-              width: 35,
-              toY: 14,
-              color: AppStyle.chartcolor2,
-            )
-          ],
-          showingTooltipIndicators: [0],
-        ),
-        BarChartGroupData(
-          x: 3,
-          barRods: [
-            BarChartRodData(
-              width: 35,
-              toY: 19,
-              color: AppStyle.chartcolor4,
-            )
-          ],
-          showingTooltipIndicators: [0],
-        ),
-      ];
+        ));
+      }
+    }
+    return barChartGroupDataList;
+  }
 }
 
 class BarChartSample3 extends StatefulWidget {
-  const BarChartSample3({super.key});
+  final Color textColor;
+  final List<Transaction> transactions;
+  const BarChartSample3(
+      {super.key, required this.textColor, required this.transactions});
 
   @override
   State<StatefulWidget> createState() => BarChartSample3State();
@@ -156,12 +131,18 @@ class BarChartSample3State extends State<BarChartSample3> {
   @override
   Widget build(BuildContext context) {
     return AspectRatio(
-      aspectRatio: 1.7,
-      child: Card(
-        elevation: 0,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-        color: Colors.transparent,
-        child: const _BarChart(),
+      aspectRatio: 1.5,
+      child: SizedBox(
+        child: AspectRatio(
+          aspectRatio: 1,
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(8, 24, 8, 8),
+            child: _BarChart(
+              transactionsList: widget.transactions,
+              textColor: widget.textColor,
+            ),
+          ),
+        ),
       ),
     );
   }

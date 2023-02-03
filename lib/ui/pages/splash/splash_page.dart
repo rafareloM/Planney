@@ -18,9 +18,9 @@ class _SplashPageState extends State<SplashPage> {
   Future preload() async {
     FirebaseAuth.instance.authStateChanges().listen((user) {
       if (user == null) {
-        Navigator.pushNamed(context, '/login');
+        Navigator.popAndPushNamed(context, '/welcomePage');
       } else {
-        Navigator.pushNamed(context, '/');
+        Navigator.popAndPushNamed(context, '/');
       }
     });
   }

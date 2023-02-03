@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:planney/model/category.model.dart';
 
 class PlanneyUser {
@@ -17,7 +18,7 @@ class PlanneyUser {
     return {
       'fullName': fullName,
       'email': email,
-      'categories': categories!.map((e) => e.toMap()),
+      'categories': categories!.map((e) => e.toMap()).toList(),
     };
   }
 
@@ -27,6 +28,18 @@ class PlanneyUser {
       email: map['email'] ?? '',
       categories: List<Category>.from(
           map['categories'].map((x) => Category.fromFirestore(x))),
+    );
+  }
+
+  PlanneyUser copyWith({
+    String? fullName,
+    String? email,
+    List<Category>? categories,
+  }) {
+    return PlanneyUser(
+      fullName: fullName ?? this.fullName,
+      email: email ?? this.email,
+      categories: categories ?? this.categories,
     );
   }
 }

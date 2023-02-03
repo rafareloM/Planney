@@ -8,6 +8,7 @@ import 'package:planney/model/api_response.model.dart';
 import 'package:planney/model/category.model.dart';
 import 'package:planney/model/transaction.model.dart';
 import 'package:planney/stores/category.store.dart';
+import 'package:planney/stores/planney_user.store.dart';
 import 'package:planney/stores/transactions.store.dart';
 import 'package:planney/style/style.dart';
 part 'home.controller.g.dart';
@@ -31,6 +32,8 @@ abstract class HomePageControllerBase with Store {
 
   final _transactionStore = GetIt.instance.get<TransactionsStore>();
 
+  final _planneyUserStore = GetIt.instance.get<PlanneyUserStore>();
+
   @readonly
   DateTime _currentDateTime = DateTime.now();
 
@@ -38,7 +41,16 @@ abstract class HomePageControllerBase with Store {
   bool isExpence = true;
 
   @observable
-  bool isLoading = true;
+  bool isLoading = false;
+
+  @observable
+  ObservableList<Transaction> finalListReceipt = ObservableList<Transaction>();
+
+  @observable
+  ObservableList<Transaction> finalListExpence = ObservableList<Transaction>();
+
+  @observable
+  List<Transaction> filteredList = ObservableList<Transaction>();
 
   @observable
   ThemeData selectedAppTheme = AppStyle.appThemeDark;
@@ -48,8 +60,26 @@ abstract class HomePageControllerBase with Store {
     if (response.isSuccess) {
       final store = GetIt.instance.get<TransactionsStore>();
       store.replaceList(response.data!);
+      for (var transaction in store.list) {
+        if (transaction.type == TransactionType.expence) {
+          finalListExpence.add(transaction);
+        } else {
+          finalListReceipt.add(transaction);
+        }
+      }
     }
     return response;
+  }
+
+  @action
+  List<Transaction> getTransactionsByCategory(String category) {
+    filteredList.clear();
+    for (var item in _transactionStore.list) {
+      if (item.category.name == category) {
+        filteredList.add(item);
+      }
+    }
+    return filteredList;
   }
 
   Future<APIResponse<List<Category>?>> getCategoriesList() async {
@@ -61,20 +91,8 @@ abstract class HomePageControllerBase with Store {
     return response;
   }
 
-  List<Transaction> getCategoriesByType() {
-    List<Transaction> finalList = [];
-    finalList.addAll(_transactionStore.list);
-    if (isExpence) {
-      finalList
-          .removeWhere((element) => element.type != TransactionType.expence);
-    } else if (!isExpence) {
-      finalList
-          .removeWhere((element) => element.type != TransactionType.receipt);
-    }
-    return finalList;
-  }
-
-  double getTotalValue() {
+  @computed
+  double get totalValue {
     double result = 0;
     for (var transaction in _transactionStore.list) {
       if (transaction.type == TransactionType.expence) {
@@ -97,6 +115,32 @@ abstract class HomePageControllerBase with Store {
 
   @action
   logout() async {
+    _planneyUserStore.unloadPlanneyUser();
+
     await _authRepository.logout();
+  }
+
+  @action
+  setLoading(bool status) {
+    isLoading = status;
+  }
+
+  @action
+  setIsExpence(bool status) {
+    isExpence = status;
+  }
+
+  @action
+  removeTransaction(Transaction transaction) {
+    filteredList.removeWhere((e) => e.uid == transaction.uid);
+    finalListExpence.removeWhere((e) => e.uid == transaction.uid);
+    finalListReceipt.removeWhere((e) => e.uid == transaction.uid);
+  }
+
+  @action
+  Future<void> remove(Transaction transaction) async {
+    await _transactionRepository.remove(transaction);
+    _transactionStore.removeTransaction(transaction);
+    removeTransaction(transaction);
   }
 }

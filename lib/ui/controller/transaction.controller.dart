@@ -5,6 +5,7 @@ import 'package:planney/infra/repositories/transaction.repository.dart';
 import 'package:planney/model/category.model.dart';
 import 'package:planney/model/transaction.model.dart';
 import 'package:planney/stores/transactions.store.dart';
+import 'package:planney/ui/controller/home.controller.dart';
 part 'transaction.controller.g.dart';
 
 class TransactionController = TransactionControllerBase
@@ -17,9 +18,11 @@ abstract class TransactionControllerBase with Store {
 
   final _store = GetIt.instance.get<TransactionsStore>();
 
+  final _homeController = GetIt.instance.get<HomePageController>();
+
   Future<bool> registerTransaction(bool isExpense) async {
     Transaction transaction = Transaction(
-        date: DateTime.now(),
+        date: selectedDate,
         description: description,
         value: transactionValue,
         category: selectedCategory,
@@ -29,6 +32,11 @@ abstract class TransactionControllerBase with Store {
     final response = await _repository.add(transaction);
     if (response.isSuccess) {
       _store.addTransaction(response.data!);
+      if (isExpense) {
+        _homeController.finalListExpence.add(transaction);
+      } else {
+        _homeController.finalListReceipt.add(transaction);
+      }
       dispose();
       return true;
     } else {
@@ -43,7 +51,11 @@ abstract class TransactionControllerBase with Store {
     selectedUserAccount = UserAccounts.principal;
     description = '';
     formattedDate = '';
-    //selectedCategory = null;
+    selectedCategory = Category(
+        name: '',
+        type: TransactionType.expence,
+        codePoint: 0,
+        color: Colors.black);
   }
 
   @observable

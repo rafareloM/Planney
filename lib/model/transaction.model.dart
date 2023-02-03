@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:planney/model/category.model.dart';
 
@@ -14,7 +15,7 @@ enum UserAccounts {
 class Transaction {
   String? uid;
   final TransactionType type;
-  final double value;
+  final num value;
   final UserAccounts userAccount;
   final Category category;
   final String description;
@@ -37,7 +38,7 @@ class Transaction {
       'userAccount': userAccount.name,
       'category': category.toMap(),
       'description': description,
-      'date': date.millisecondsSinceEpoch,
+      'date': Timestamp.fromDate(date),
     };
   }
 
@@ -46,13 +47,13 @@ class Transaction {
       type: EnumToString.fromString(
               [TransactionType.expence, TransactionType.receipt], map['type'])
           as TransactionType,
-      value: map['value'] as double,
+      value: map['value'] as num,
       userAccount: EnumToString.fromString(
-              [UserAccounts.principal, UserAccounts.others], map['type'])
+              [UserAccounts.principal, UserAccounts.others], map['userAccount'])
           as UserAccounts,
       category: Category.fromFirestore(map['category']),
       description: map['description'] as String,
-      date: DateTime.fromMicrosecondsSinceEpoch(map['date'] as int),
+      date: (map['date'] as Timestamp).toDate(),
     );
   }
 

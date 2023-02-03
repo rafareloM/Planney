@@ -12,14 +12,13 @@ import 'package:planney/navigator_key.dart';
 import 'package:planney/stores/category.store.dart';
 import 'package:planney/stores/planney_user.store.dart';
 import 'package:planney/stores/transactions.store.dart';
-import 'package:planney/ui/controller/detail.category.controller.dart';
 import 'package:planney/ui/controller/home.controller.dart';
 import 'package:planney/ui/controller/login.controller.dart';
 import 'package:planney/ui/controller/register.controller.dart';
 import 'package:planney/ui/controller/transaction.controller.dart';
 import 'package:planney/ui/pages/home/home_page.dart';
 import 'package:planney/ui/pages/login/login_page.dart';
-import 'package:planney/ui/pages/new_category/detail.category.dart';
+import 'package:planney/ui/pages/category_charts/views/detail.category.dart';
 import 'package:planney/ui/pages/onboarding/welcome_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:planney/ui/pages/register/register_page.dart';
@@ -48,13 +47,12 @@ void main() async {
   );
   getIt.registerLazySingleton(() =>
       TransactionController(TransactionRepositoryImpl(TransactionService())));
-  getIt.registerLazySingleton(() => DetailCategoryPageController());
 
-  GetIt.instance.registerFactory(
+  getIt.registerFactory(
     () => LoginController(AuthRepositoryImpl(AuthService()),
         PlanneyUserRepositoryImpl(PlanneyUserService())),
   );
-  GetIt.instance.registerFactory(() => RegisterController(
+  getIt.registerFactory(() => RegisterController(
         AuthRepositoryImpl(AuthService()),
       ));
 
@@ -75,14 +73,14 @@ class MyApp extends StatelessWidget {
         title: 'Planney',
         theme: controller.selectedAppTheme,
         navigatorKey: navigatorKey,
-        initialRoute: '/welcomePage',
+        initialRoute: '/splashPage',
         routes: {
           '/': ((context) => const HomePage()),
           '/welcomePage': ((context) => const WelcomePage()),
           '/splashPage': (context) => const SplashPage(),
           '/loginPage': (context) => LoginPage(),
           '/registerPage': (context) => RegisterPage(),
-          '/detailPage': ((context) => const DetailCategoryPage())
+          '/detailPage': ((context) => const DetailCategoryPage()),
         },
       );
     });

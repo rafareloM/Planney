@@ -13,7 +13,7 @@ class PieChartPlaney extends StatefulWidget {
 }
 
 class PieChartPlaneyState extends State<PieChartPlaney> {
-  int touchedIndex = 0;
+  int touchedIndex = 10;
   @override
   Widget build(BuildContext context) {
     return AspectRatio(
@@ -24,6 +24,9 @@ class PieChartPlaneyState extends State<PieChartPlaney> {
         child: AspectRatio(
           aspectRatio: 1,
           child: PieChart(
+            swapAnimationDuration:
+                const Duration(milliseconds: 500), // Optional
+            swapAnimationCurve: Curves.ease,
             PieChartData(
               pieTouchData: PieTouchData(
                 touchCallback: (FlTouchEvent event, pieTouchResponse) {
@@ -57,7 +60,7 @@ class PieChartPlaneyState extends State<PieChartPlaney> {
     List<String> categoryList = ChartsHelper.getCategoryNames(transactionsList);
     List<PieChartSectionData> sectionsList = [];
     int i = 0;
-
+    double totalValue = ChartsHelper.getTotalValue(transactionsList);
     for (var category in categoryList) {
       final isTouched = i == touchedIndex;
       final fontSize = isTouched ? 20.0 : 16.0;
@@ -67,7 +70,9 @@ class PieChartPlaneyState extends State<PieChartPlaney> {
       sectionsList.add(PieChartSectionData(
         color: ChartsHelper.setColorByIndex(i),
         value: ChartsHelper.totalCategoryValue(transactionsList, category),
-        title: category,
+        title: isTouched
+            ? '${((ChartsHelper.totalCategoryValue(transactionsList, category) / totalValue) * 100).toStringAsFixed(1)}%'
+            : '',
         radius: radius,
         titleStyle: TextStyle(
           fontSize: fontSize,
@@ -75,6 +80,7 @@ class PieChartPlaneyState extends State<PieChartPlaney> {
           color: AppStyle.fullWhite,
         ),
         badgeWidget: _Badge(
+          title: category,
           codePoint: transactionsList
               .firstWhere((element) => element.category.name == category)
               .category
@@ -82,7 +88,7 @@ class PieChartPlaneyState extends State<PieChartPlaney> {
           size: widgetSize,
           borderColor: AppStyle.chartcolor1,
         ),
-        badgePositionPercentageOffset: .98,
+        badgePositionPercentageOffset: 1,
       ));
       i++;
     }
@@ -92,11 +98,13 @@ class PieChartPlaneyState extends State<PieChartPlaney> {
 
 class _Badge extends StatelessWidget {
   final int codePoint;
+  final String title;
 
   const _Badge({
     required this.size,
     required this.borderColor,
     required this.codePoint,
+    required this.title,
   });
   final double size;
   final Color borderColor;
@@ -124,9 +132,13 @@ class _Badge extends StatelessWidget {
       ),
       padding: EdgeInsets.all(size * .15),
       child: Center(
-        child: Icon(
-          IconData(codePoint, fontFamily: 'MaterialIcons'),
-          color: AppStyle.primaryColor,
+        child: Column(
+          children: [
+            Icon(
+              IconData(codePoint, fontFamily: 'MaterialIcons'),
+              color: AppStyle.primaryColor,
+            ),
+          ],
         ),
       ),
     );

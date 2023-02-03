@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:planney/style/style.dart';
 
-class PlanneyLogo extends StatelessWidget {
+class PlanneyLogoLogin extends StatelessWidget {
   final double size;
-  const PlanneyLogo({Key? key, required this.size}) : super(key: key);
+  const PlanneyLogoLogin({Key? key, required this.size}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,9 @@ class PlanneyLogo extends StatelessWidget {
         Text(
           'Planney',
           style: TextStyle(
-              color: colorScheme.onPrimary,
+              color: colorScheme.brightness == Brightness.dark
+                  ? colorScheme.onSurface
+                  : colorScheme.primary,
               fontWeight: FontWeight.bold,
               fontSize: size),
         ),
