@@ -71,5 +71,6 @@ abstract class AppStyle {
       color: lightColorScheme.secondaryContainer,
     ),
     brightness: Brightness.light,
+    scaffoldBackgroundColor: backgroundColorlight,
   );
 }
