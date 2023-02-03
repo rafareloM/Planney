@@ -8,6 +8,7 @@ import 'package:planney/model/api_response.model.dart';
 import 'package:planney/model/category.model.dart';
 import 'package:planney/model/transaction.model.dart';
 import 'package:planney/stores/category.store.dart';
+import 'package:planney/stores/planney_user.store.dart';
 import 'package:planney/stores/transactions.store.dart';
 import 'package:planney/style/style.dart';
 part 'home.controller.g.dart';
@@ -30,6 +31,8 @@ abstract class HomePageControllerBase with Store {
   }
 
   final _transactionStore = GetIt.instance.get<TransactionsStore>();
+
+  final _planneyUserStore = GetIt.instance.get<PlanneyUserStore>();
 
   @readonly
   DateTime _currentDateTime = DateTime.now();
@@ -112,6 +115,8 @@ abstract class HomePageControllerBase with Store {
 
   @action
   logout() async {
+    _planneyUserStore.unloadPlanneyUser();
+
     await _authRepository.logout();
   }
 
