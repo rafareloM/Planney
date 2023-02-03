@@ -68,8 +68,10 @@ class Avatar extends StatelessWidget {
               ),
             ),
             Text(
-              "R\$ $userBalance",
-              style: TextStyle(color: spanTextColor, fontSize: 22),
+              "R\$ ${userBalance.toStringAsFixed(2).replaceAll('.', ',')}",
+              style: TextStyle(
+                  color: userBalance >= 0 ? spanTextColor : Colors.redAccent,
+                  fontSize: 22),
             ),
           ],
         ),
