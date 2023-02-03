@@ -49,6 +49,8 @@ dependencies:
   enum_to_string: ^2.0.1
   flutter_slidable: ^2.0.0
   flutter_colorpicker: ^1.0.3
+  firebase_auth_mocks: ^0.10.3
+  fake_cloud_firestore: ^2.3.0+3
 dev_dependencies:
   flutter_test:
     sdk: flutter
