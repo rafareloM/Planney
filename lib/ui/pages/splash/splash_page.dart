@@ -1,8 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
-import 'package:planney/navigator_key.dart';
-import 'package:planney/ui/controller/splash.controller.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({Key? key}) : super(key: key);
@@ -19,15 +16,13 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   Future preload() async {
-    final auth = FirebaseAuth.instance;
-    if (auth.currentUser != null) {
-      final SplashController controller = GetIt.instance.get();
-      await controller.loadUser();
-      Navigator.pushReplacementNamed(navigatorKey.currentContext!, '/');
-    } else {
-      Navigator.pushReplacementNamed(
-          navigatorKey.currentContext!, '/welcomePage');
-    }
+    FirebaseAuth.instance.authStateChanges().listen((user) {
+      if (user == null) {
+        Navigator.popAndPushNamed(context, '/welcomePage');
+      } else {
+        Navigator.popAndPushNamed(context, '/');
+      }
+    });
   }
 
   @override
