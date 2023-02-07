@@ -15,6 +15,7 @@ import 'package:planney/stores/transactions.store.dart';
 import 'package:planney/ui/controller/home.controller.dart';
 import 'package:planney/ui/controller/login.controller.dart';
 import 'package:planney/ui/controller/register.controller.dart';
+import 'package:planney/ui/controller/splash.controller.dart';
 import 'package:planney/ui/controller/transaction.controller.dart';
 import 'package:planney/ui/pages/home/home_page.dart';
 import 'package:planney/ui/pages/login/login_page.dart';
@@ -55,6 +56,7 @@ void main() async {
   getIt.registerFactory(() => RegisterController(
         AuthRepositoryImpl(AuthService()),
       ));
+  getIt.registerFactory(() => SplashController(getIt.get(param1: getIt.get())));
 
   runApp(const MyApp());
 }
