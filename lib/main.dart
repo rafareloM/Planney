@@ -12,13 +12,16 @@ import 'package:planney/navigator_key.dart';
 import 'package:planney/stores/category.store.dart';
 import 'package:planney/stores/planney_user.store.dart';
 import 'package:planney/stores/transactions.store.dart';
+import 'package:planney/ui/controller/add_category.controller.dart';
 import 'package:planney/ui/controller/home.controller.dart';
 import 'package:planney/ui/controller/login.controller.dart';
 import 'package:planney/ui/controller/register.controller.dart';
+import 'package:planney/ui/controller/splash.controller.dart';
 import 'package:planney/ui/controller/transaction.controller.dart';
 import 'package:planney/ui/pages/home/home_page.dart';
 import 'package:planney/ui/pages/login/login_page.dart';
 import 'package:planney/ui/pages/category_charts/views/detail.category.dart';
+import 'package:planney/ui/pages/new_category/add_category_page.dart';
 import 'package:planney/ui/pages/onboarding/welcome_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:planney/ui/pages/register/register_page.dart';
@@ -56,6 +59,11 @@ void main() async {
         AuthRepositoryImpl(AuthService()),
       ));
 
+  getIt.registerFactory(() => AddCategoryPageController(
+      PlanneyUserRepositoryImpl(PlanneyUserService())));
+
+  getIt.registerFactory(() => SplashController(getIt.get(param1: getIt.get())));
+
   runApp(const MyApp());
 }
 
@@ -81,6 +89,7 @@ class MyApp extends StatelessWidget {
           '/loginPage': (context) => LoginPage(),
           '/registerPage': (context) => RegisterPage(),
           '/detailPage': ((context) => const DetailCategoryPage()),
+          '/addCategoryPage': (context) => const AddCategoryPage(),
         },
       );
     });
