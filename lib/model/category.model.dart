@@ -107,6 +107,24 @@ abstract class CategoryHelper {
         color: AppStyle.chartcolor4,
         type: TransactionType.receipt),
   ];
+  static List<Icon> icons = const [
+    Icon(Icons.abc),
+    Icon(Icons.abc),
+    Icon(Icons.abc),
+    Icon(Icons.abc),
+    Icon(Icons.abc),
+    Icon(Icons.abc),
+    Icon(Icons.abc),
+    Icon(Icons.abc),
+    Icon(Icons.abc),
+    Icon(Icons.abc),
+    Icon(Icons.abc),
+    Icon(Icons.abc),
+    Icon(Icons.abc),
+    Icon(Icons.abc),
+    Icon(Icons.abc),
+    Icon(Icons.abc),
+  ];
 
   static List<Map<String, dynamic>> defaultCategoriesToMap() {
     return defaultCategories.map((e) => e.toMap()).toList();
