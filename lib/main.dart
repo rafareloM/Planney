@@ -16,6 +16,7 @@ import 'package:planney/ui/controller/add_category.controller.dart';
 import 'package:planney/ui/controller/home.controller.dart';
 import 'package:planney/ui/controller/login.controller.dart';
 import 'package:planney/ui/controller/register.controller.dart';
+import 'package:planney/ui/controller/splash.controller.dart';
 import 'package:planney/ui/controller/transaction.controller.dart';
 import 'package:planney/ui/pages/home/home_page.dart';
 import 'package:planney/ui/pages/login/login_page.dart';
@@ -58,8 +59,10 @@ void main() async {
         AuthRepositoryImpl(AuthService()),
       ));
 
-  GetIt.instance.registerFactory(() => AddCategoryPageController(
+  getIt.registerFactory(() => AddCategoryPageController(
       PlanneyUserRepositoryImpl(PlanneyUserService())));
+
+  getIt.registerFactory(() => SplashController(getIt.get(param1: getIt.get())));
 
   runApp(const MyApp());
 }
