@@ -24,6 +24,7 @@ import 'package:planney/ui/pages/login/login_page.dart';
 import 'package:planney/ui/pages/category_charts/views/detail.category.dart';
 import 'package:planney/ui/pages/onboarding/welcome_page.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:planney/ui/pages/home/profile_page.dart';
 import 'package:planney/ui/pages/register/register_page.dart';
 import 'package:planney/ui/pages/splash/splash_page.dart';
 import 'firebase_options.dart';
@@ -64,8 +65,6 @@ void main() async {
       PlanneyUserRepositoryImpl(PlanneyUserService())));
 
   getIt.registerFactory(() => SplashController(getIt.get(param1: getIt.get())));
-
-  getIt.registerFactory(() => DetailCategoryController());
 
   getIt.registerFactory(() => DetailCategoryController());
 
