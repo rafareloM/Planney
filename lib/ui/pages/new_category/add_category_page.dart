@@ -4,20 +4,23 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:planney/model/category.model.dart';
 import 'package:planney/navigator_key.dart';
+import 'package:planney/ui/components/custom_alert_dialog.dart';
+import 'package:planney/ui/components/progress_dialog.dart';
 import 'package:planney/ui/controller/add_category.controller.dart';
 import 'package:planney/ui/controller/home.controller.dart';
-import 'package:planney/ui/pages/transaction/components/category_button.dart';
-import 'package:planney/ui/pages/transaction/components/text_form.dart';
 
 class AddCategoryPage extends StatelessWidget {
-  const AddCategoryPage({super.key});
+  AddCategoryPage({super.key});
+
+  final _progressDialog = ProgressDialog();
+  final _alertDialog = CustomAlertDialog();
+  final controller = GetIt.instance.get<AddCategoryPageController>();
   @override
   Widget build(BuildContext context) {
     ColorScheme colorScheme = Theme.of(context).colorScheme;
     double deviceHeight = MediaQuery.of(context).size.height;
-    double deviceWidth = MediaQuery.of(context).size.width;
-    final AddCategoryPageController controller = GetIt.instance.get();
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(
         toolbarHeight: 80,
         backgroundColor: colorScheme.brightness == Brightness.dark
@@ -27,50 +30,56 @@ class AddCategoryPage extends StatelessWidget {
         title: const Text('NOVA CATEGORIA'),
         centerTitle: true,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: SizedBox(
-          height: deviceHeight * 0.8,
-          child: Card(
-            child: Column(
-              children: [
-                Expanded(
-                  child: GridView.builder(
-                    primary: false,
-                    shrinkWrap: false,
-                    padding: const EdgeInsets.all(16),
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 4),
-                    itemCount: CategoryHelper.icons.length,
-                    itemBuilder: (context, index) {
-                      return CategoryHelper.icons
-                          .map((e) => Observer(builder: (context) {
-                                return CategoryButton(
-                                  onPressed: () {
-                                    controller.selectIcon(e);
-                                  },
-                                  icon: IconData(e.icon!.codePoint,
-                                      fontFamily: 'MaterialIcons'),
-                                  color: controller.selectedIcon == e
-                                      ? controller.color
-                                      : colorScheme.brightness ==
-                                              Brightness.dark
-                                          ? colorScheme.onBackground
-                                          : colorScheme.tertiary,
-                                  name: '',
-                                  paintBackground: false,
-                                );
-                              }))
-                          .toList()[index];
-                    },
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: SizedBox(
+            height: deviceHeight * 0.8,
+            child: Card(
+              margin: EdgeInsets.zero,
+              child: Column(
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: GridView.builder(
+                        primary: false,
+                        shrinkWrap: true,
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 4,
+                                mainAxisSpacing: 8,
+                                crossAxisSpacing: 8,
+                                childAspectRatio: 2),
+                        itemCount: CategoryHelper.icons.length,
+                        itemBuilder: (context, index) {
+                          return CategoryHelper.icons
+                              .map((e) => Observer(builder: (context) {
+                                    return IconButton(
+                                      iconSize: 42,
+                                      onPressed: () {
+                                        controller.selectIcon(e);
+                                      },
+                                      icon: Icon(
+                                        e.icon,
+                                      ),
+                                      color: controller.selectedIcon == e
+                                          ? controller.color
+                                          : colorScheme.brightness ==
+                                                  Brightness.dark
+                                              ? colorScheme.onBackground
+                                              : colorScheme.tertiary,
+                                    );
+                                  }))
+                              .toList()[index];
+                        },
+                      ),
+                    ),
                   ),
-                ),
-                Expanded(
-                  child: Column(
+                  Column(
                     children: [
                       const Padding(
-                        padding: EdgeInsets.fromLTRB(32, 17, 0, 0),
+                        padding: EdgeInsets.only(left: 32),
                         child: Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
@@ -83,13 +92,33 @@ class AddCategoryPage extends StatelessWidget {
                         ),
                       ),
                       Padding(
-                        padding:
-                            EdgeInsets.fromLTRB(32, 10, deviceWidth * 0.1, 0),
-                        child: TextForm(
-                          height: deviceHeight * 0.05,
-                          hint: 'Dê um nome à categoria',
-                          hintFontSize: 14,
-                        ),
+                        padding: const EdgeInsets.fromLTRB(32, 32, 32, 0),
+                        child: SizedBox(
+                            height: deviceHeight * 0.025,
+                            child: TextField(
+                                onChanged: (value) =>
+                                    controller.changeCategoryName(value),
+                                decoration: const InputDecoration(
+                                    hintText: 'Escolha um nome',
+                                    hintStyle: TextStyle(fontSize: 16)),
+                                textAlignVertical: TextAlignVertical.bottom,
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                ))
+                            // TextFormField(
+                            //   onChanged: (value) =>
+                            //       controller.changeCategoryName(value),
+                            //   textAlignVertical: TextAlignVertical.bottom,
+                            //   style: TextStyle(
+                            //     fontSize: 12,
+                            //   ),
+                            //   expands: true,
+                            //   maxLines: null,
+                            //   decoration: InputDecoration(
+                            //       hintText: 'Escolha um nome',
+                            //       hintStyle: TextStyle(fontSize: 12)),
+                            // ),
+                            ),
                       ),
                       const Padding(
                         padding: EdgeInsets.fromLTRB(32, 17, 0, 0),
@@ -105,11 +134,17 @@ class AddCategoryPage extends StatelessWidget {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(16),
+                        padding: const EdgeInsets.only(left: 32),
                         child: Align(
                           alignment: Alignment.centerLeft,
                           child: Observer(builder: (context) {
-                            return ElevatedButton(
+                            return IconButton(
+                              padding: EdgeInsets.zero,
+                              icon: Icon(
+                                Icons.circle,
+                                color: controller.color,
+                              ),
+                              iconSize: 42,
                               style: ButtonStyle(
                                   shape: MaterialStateProperty.all(
                                       const CircleBorder())),
@@ -141,12 +176,6 @@ class AddCategoryPage extends StatelessWidget {
                                   },
                                 );
                               },
-                              child: Container(
-                                width: 42,
-                                decoration: BoxDecoration(
-                                  color: controller.color,
-                                ),
-                              ),
                             );
                           }),
                         ),
@@ -166,12 +195,35 @@ class AddCategoryPage extends StatelessWidget {
                       )
                     ],
                   ),
-                )
-              ],
+                  const SizedBox(
+                    height: 16,
+                  ),
+                ],
+              ),
             ),
           ),
         ),
       ),
     );
+  }
+
+  registerTransaction() async {
+    _progressDialog.show("Salvando...");
+
+    try {
+      final response = await controller
+          .registerCategory(GetIt.instance.get<HomePageController>().isExpence);
+      if (response.isSuccess) {
+        Navigator.pop(
+          navigatorKey.currentContext!,
+        );
+      } else {
+        _progressDialog.hide();
+        _alertDialog.showInfo(title: "Ops!", message: response.message!);
+      }
+    } catch (e) {
+      _progressDialog.hide();
+      _alertDialog.showInfo(title: "Ops!", message: 'Algo deu errado!');
+    }
   }
 }
