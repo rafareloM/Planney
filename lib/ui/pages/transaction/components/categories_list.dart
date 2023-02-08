@@ -54,16 +54,18 @@ class CategoriesList extends StatelessWidget {
 
     for (var category in list) {
       widgets.add(CategoryButton(
+          size: 42,
           paintBackground: paintBackground,
           name: category.name.toUpperCase(),
           color:
               controller.selectedCategory == category ? selectedColor : color,
-          icon: IconData(category.codePoint, fontFamily: 'MaterialIcons'),
+          icon: category.icon,
           onPressed: () {
             controller.selectedCategory = category;
           }));
     }
     widgets.add(CategoryButton(
+      size: 42,
       paintBackground: false,
       name: 'Nova Categoria',
       color: color,

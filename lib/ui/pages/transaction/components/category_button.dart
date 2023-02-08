@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:planney/style/style.dart';
 
 class CategoryButton extends StatelessWidget {
-  final String name;
+  final String? name;
   final Color color;
   final IconData icon;
   final bool paintBackground;
   final void Function() onPressed;
+  final double size;
 
   const CategoryButton({
     Key? key,
@@ -16,6 +17,7 @@ class CategoryButton extends StatelessWidget {
     required this.color,
     required this.icon,
     required this.onPressed,
+    required this.size,
   }) : super(key: key);
 
   @override
@@ -27,18 +29,20 @@ class CategoryButton extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Padding(
-            padding: const EdgeInsets.only(bottom: 4),
-            child: Text(
-              name.toUpperCase(),
-              style: TextStyle(
-                fontSize: 13,
-                color: brightness == Brightness.dark
-                    ? AppStyle.fullWhite
-                    : AppStyle.chartcolor1,
-              ),
-            ),
-          ),
+          name == null
+              ? const SizedBox()
+              : Padding(
+                  padding: const EdgeInsets.only(bottom: 4),
+                  child: Text(
+                    name!.toUpperCase(),
+                    style: TextStyle(
+                      fontSize: 13,
+                      color: brightness == Brightness.dark
+                          ? AppStyle.fullWhite
+                          : AppStyle.chartcolor1,
+                    ),
+                  ),
+                ),
           paintBackground
               ? Container(
                   decoration: BoxDecoration(
@@ -62,7 +66,7 @@ class CategoryButton extends StatelessWidget {
                   ),
                 )
               : IconButton(
-                  iconSize: 48,
+                  iconSize: size,
                   padding: EdgeInsets.zero,
                   icon: Icon(
                     icon,

@@ -27,8 +27,8 @@ class _ValueFormState extends State<ValueForm> {
       child: TextFormField(
         onChanged: (value) => controller.transactionValue = double.parse(value
             .replaceAll('R\$', '')
-            .replaceAll(',', '.')
-            .replaceAll('.', '')),
+            .replaceAll('.', '')
+            .replaceAll(',', '.')),
         inputFormatters: [Mask.money()],
         textAlign: TextAlign.end,
         style: const TextStyle(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:planney/navigator_key.dart';
 import 'package:planney/stores/category.store.dart';
+import 'package:planney/stores/planney_user.store.dart';
 import 'package:planney/ui/controller/home.controller.dart';
 
 class MyDrawer extends StatefulWidget {
@@ -16,6 +17,7 @@ class _MyDrawerState extends State<MyDrawer> {
 
   @override
   Widget build(BuildContext context) {
+    final userStore = GetIt.instance.get<PlanneyUserStore>();
     final store = GetIt.instance.get<CategoryStore>();
     final controller = GetIt.instance.get<HomePageController>();
     ColorScheme colorScheme = Theme.of(context).colorScheme;
@@ -29,8 +31,9 @@ class _MyDrawerState extends State<MyDrawer> {
         children: [
           UserAccountsDrawerHeader(
             margin: EdgeInsets.zero,
-            accountEmail: const Text('marilene@gmail.com'),
-            accountName: const Text('Marilene'),
+            accountEmail: Text(userStore.email ?? ''),
+            accountName:
+                Text(userStore.planneyUser?.fullName.split(' ').first ?? ''),
             currentAccountPicture: ClipOval(
                 child: Image.asset(
               'lib/style/assets/img/userprofile.png',
@@ -83,38 +86,23 @@ class _MyDrawerState extends State<MyDrawer> {
             },
           ),
           ListTile(
-            leading: Icon(
-              Icons.mail,
-              color: buttonColor,
+            trailing: Switch(
+              value: colorScheme.brightness == Brightness.dark,
+              onChanged: (value) {
+                controller.changeAppTheme();
+              },
+              activeColor: colorScheme.primary,
             ),
             title: Text(
-              'Fale conosco',
+              colorScheme.brightness == Brightness.dark
+                  ? 'Desativar modo Dark'
+                  : 'Ativar modo Dark',
               style: TextStyle(color: buttonColor),
             ),
             onTap: () {
-              Navigator.pop(context);
+              controller.changeAppTheme();
             },
           ),
-          Builder(builder: (context) {
-            return ListTile(
-              trailing: Switch(
-                value: colorScheme.brightness == Brightness.dark,
-                onChanged: (value) {
-                  controller.changeAppTheme();
-                },
-                activeColor: colorScheme.primary,
-              ),
-              title: Text(
-                colorScheme.brightness == Brightness.dark
-                    ? 'Desativar modo Dark'
-                    : 'Ativar modo Dark',
-                style: TextStyle(color: buttonColor),
-              ),
-              onTap: () {
-                controller.changeAppTheme();
-              },
-            );
-          }),
           const Expanded(
             child: SizedBox(),
           ),
