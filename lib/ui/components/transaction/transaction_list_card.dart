@@ -34,8 +34,8 @@ class TransactionListCard extends StatelessWidget {
                 showModalBottomSheet(
                   isDismissible: true,
                   isScrollControlled: true,
-                  constraints: BoxConstraints(maxHeight: deviceHeight * 0.9),
                   context: context,
+                  constraints: BoxConstraints(maxHeight: deviceHeight * 0.9),
                   builder: ((context) => TransactionUpdatePage(
                         transaction: transaction,
                         type: transaction.type,

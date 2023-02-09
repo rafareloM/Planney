@@ -50,7 +50,6 @@ class _HomePageState extends State<HomePage> {
             showModalBottomSheet(
               isDismissible: true,
               isScrollControlled: true,
-              constraints: BoxConstraints(maxHeight: deviceHeight * 0.9),
               context: context,
               builder: ((context) => TransactionAddPage(
                     type: _controller.isExpence
@@ -87,13 +86,15 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(top: 6),
-                    child: Avatar(
-                      userName: _userStore.planneyUser != null
-                          ? _userStore.planneyUser?.fullName.split(' ').first
-                          : '',
-                      userBalance: _controller.totalValue,
-                      path: _userStore.user?.photoURL,
-                    ),
+                    child: Observer(builder: (_) {
+                      return Avatar(
+                        userName: _userStore.planneyUser != null
+                            ? _userStore.planneyUser?.fullName.split(' ').first
+                            : '',
+                        userBalance: _controller.totalValue,
+                        path: _userStore.user?.photoURL,
+                      );
+                    }),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 6),

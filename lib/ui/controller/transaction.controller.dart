@@ -33,10 +33,6 @@ abstract class TransactionControllerBase with Store {
       return APIResponse.error('O campo de descrição é obrigatório.');
     }
 
-    if (formattedDate == '') {
-      return APIResponse.error('Escolha uma data.');
-    }
-
     Transaction transaction = Transaction(
         date: selectedDate,
         description: description,

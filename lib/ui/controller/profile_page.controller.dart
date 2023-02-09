@@ -69,6 +69,9 @@ abstract class ProfilePageControllerBase with Store {
   }
 
   Future<APIResponse<bool>> updateUser() async {
+    if (_password == '' && _email == '' && _fullName == '') {
+      return APIResponse.success(true);
+    }
     final auth = FirebaseAuth.instance;
     if (_password == '') {
       return APIResponse.error('É obrigatório informar a senha');
@@ -94,6 +97,9 @@ abstract class ProfilePageControllerBase with Store {
       if (_newPassword != '') {
         await auth.currentUser!.updatePassword(_newPassword);
       }
+      canShowNewPassword = false;
+      canShowPassword = false;
+      showChangePassword = false;
       return APIResponse.success(true);
     } else {
       return APIResponse.error('Algo deu errado!');

@@ -72,7 +72,7 @@ class RelatoryPage extends StatelessWidget {
               padding: EdgeInsets.fromLTRB(
                   deviceWidth * 0.015, 8, deviceWidth * 0.015, 0),
               child: Observer(builder: (_) {
-                return _transactionStore.list.isEmpty
+                return _controller.finalListReceipt.isEmpty
                     ? InfoCard(
                         height: deviceHeight * 0.48,
                         content: Center(
@@ -91,7 +91,7 @@ class RelatoryPage extends StatelessWidget {
                                     shape: CircleBorder(),
                                     child: Center(
                                       child: Text(
-                                        'A categoria\nestá vazia!',
+                                        'Adcione\numa Receita!',
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
                                           fontSize: 15,
@@ -139,7 +139,7 @@ class RelatoryPage extends StatelessWidget {
               padding: EdgeInsets.fromLTRB(
                   deviceWidth * 0.015, 8, deviceWidth * 0.015, 0),
               child: Observer(builder: (_) {
-                return _transactionStore.list.isEmpty
+                return _controller.finalListExpence.isEmpty
                     ? InfoCard(
                         height: deviceHeight * 0.48,
                         content: Center(
@@ -158,7 +158,7 @@ class RelatoryPage extends StatelessWidget {
                                     shape: CircleBorder(),
                                     child: Center(
                                       child: Text(
-                                        'A categoria\nestá vazia!',
+                                        'Adicione\nsua Renda!',
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
                                           fontSize: 15,

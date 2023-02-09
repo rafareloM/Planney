@@ -147,6 +147,8 @@ class DetailCategoryPage extends StatelessWidget {
                             Navigator.pushNamed(navigatorKey.currentContext!,
                                 '/addCategoryPage');
                           } else {
+                            controller.getTransactionsByCategory(category.name);
+
                             Navigator.push(
                                 navigatorKey.currentContext!,
                                 MaterialPageRoute(
