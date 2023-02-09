@@ -25,6 +25,14 @@ abstract class CategoryStoreBase with Store {
     list.removeWhere((e) => e.uid == category.uid);
   }
 
+  @computed
+  List<Category>? get getListExpence =>
+      list.where((element) => element.type == TransactionType.expence).toList();
+
+  @computed
+  List<Category>? get getListReceipt =>
+      list.where((element) => element.type == TransactionType.receipt).toList();
+
   @action
   List<Category> getCategoriesByType(bool isExpence) {
     List<Category> finalList = [];

@@ -16,11 +16,12 @@ import 'package:planney/ui/controller/add_category.controller.dart';
 import 'package:planney/ui/controller/detail_category.controller.dart';
 import 'package:planney/ui/controller/home.controller.dart';
 import 'package:planney/ui/controller/login.controller.dart';
+import 'package:planney/ui/controller/profile_page.controller.dart';
 import 'package:planney/ui/controller/register.controller.dart';
 import 'package:planney/ui/controller/splash.controller.dart';
 import 'package:planney/ui/controller/transaction.controller.dart';
 import 'package:planney/ui/pages/home/home_page.dart';
-import 'package:planney/ui/pages/home/profile_page.dart';
+import 'package:planney/ui/pages/profile/profile_page.dart';
 import 'package:planney/ui/pages/login/login_page.dart';
 import 'package:planney/ui/pages/category_charts/views/detail.category.dart';
 import 'package:planney/ui/pages/onboarding/welcome_page.dart';
@@ -70,6 +71,8 @@ void main() async {
 
   getIt.registerFactory(() => DetailCategoryController());
 
+  getIt.registerLazySingleton(() => ProfilePageController());
+
   runApp(const MyApp());
 }
 
@@ -96,7 +99,7 @@ class MyApp extends StatelessWidget {
           '/registerPage': (context) => RegisterPage(),
           '/detailPage': ((context) => const DetailCategoryPage()),
           '/addCategoryPage': (context) => AddCategoryPage(),
-          '/profile': (context) => const ProfilePage(),
+          '/profile': (context) => ProfilePage(),
           '/relatory': (context) => RelatoryPage(),
         },
       );

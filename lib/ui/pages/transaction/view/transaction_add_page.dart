@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
+import 'package:intl/intl.dart';
 import 'package:planney/model/transaction.model.dart';
 import 'package:planney/navigator_key.dart';
 import 'package:planney/ui/components/custom_alert_dialog.dart';
@@ -129,17 +130,18 @@ class TransactionAddPage extends StatelessWidget {
                                       colorScheme.brightness == Brightness.dark
                                           ? onSurface
                                           : colorScheme.tertiary,
-                                  selectedColor: colorScheme.primary,
+                                  selectedColor:
+                                      controller.selectedCategory!.color,
                                   controller: controller,
                                   height: deviceHeight * 1,
                                   width: deviceWidth * 1,
                                 ),
                                 const Padding(
-                                  padding: EdgeInsets.fromLTRB(32, 17, 0, 0),
+                                  padding: EdgeInsets.fromLTRB(24, 17, 0, 0),
                                   child: Align(
                                     alignment: Alignment.centerLeft,
                                     child: Text(
-                                      'COMENTÁRIO',
+                                      'DESCRIÇÃO',
                                       style: TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.bold,
@@ -181,7 +183,10 @@ class TransactionAddPage extends StatelessWidget {
                                           color: colorScheme.tertiary,
                                         ),
                                       ),
-                                      Text(controller.formattedDate),
+                                      Text(controller.formattedDate == ''
+                                          ? DateFormat('dd/MM/yyyy')
+                                              .format(DateTime.now())
+                                          : controller.formattedDate),
                                     ],
                                   ),
                                 ),

@@ -15,10 +15,12 @@ abstract class AppStyle {
   static Color userNameColor = const Color(0xFFB8E5FF);
   //
   static Color initialchartcolor = const Color(0xFFA8BCC7);
-  static Color chartcolor1 = const Color(0xFF76B4D8);
   static Color chartcolor2 = const Color(0xFF9D7AD4);
+  static Color chartcolor1 = const Color(0xFF76B4D8);
   static Color chartcolor3 = const Color(0xFF8BDFD0);
   static Color chartcolor4 = const Color(0xFF2F498C);
+  static Color chartcolor5 = const Color(0xFFB8BEDD);
+  static Color chartcolor6 = const Color(0xFFBDE0FE);
   static Color graytextbox = const Color(0xFFA5A5A5);
   /*---------------------------------------------------*/
   static ColorScheme darkColorScheme = ColorScheme(

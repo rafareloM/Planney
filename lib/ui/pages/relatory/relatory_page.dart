@@ -52,6 +52,7 @@ class RelatoryPage extends StatelessWidget {
                     ? _userStore.planneyUser?.fullName.split(' ').first
                     : '',
                 userBalance: _controller.totalValue,
+                path: _userStore.user?.photoURL,
               ),
             ),
             Padding(

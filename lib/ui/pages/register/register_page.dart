@@ -186,7 +186,7 @@ class RegisterPage extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: _doRegister,
                   child: const Text(
-                    Strings.REGISTER_BUTTON_REGISTER,
+                    Strings.REGISTER_BUTTON_LABEL,
                     style: TextStyle(fontSize: 18),
                   ),
                 ),

@@ -92,6 +92,7 @@ class _HomePageState extends State<HomePage> {
                           ? _userStore.planneyUser?.fullName.split(' ').first
                           : '',
                       userBalance: _controller.totalValue,
+                      path: _userStore.user?.photoURL,
                     ),
                   ),
                   Padding(

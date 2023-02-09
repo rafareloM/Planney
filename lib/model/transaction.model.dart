@@ -5,6 +5,7 @@ import 'package:planney/model/category.model.dart';
 enum TransactionType {
   expence,
   receipt,
+  operation,
 }
 
 enum UserAccounts {
