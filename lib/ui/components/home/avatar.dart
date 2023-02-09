@@ -43,7 +43,7 @@ class Avatar extends StatelessWidget {
                               controller.profilePhoto == null
                           ? const Icon(
                               Icons.person,
-                              size: 100,
+                              size: 70,
                               color: Color.fromARGB(255, 211, 209, 209),
                             )
                           : userStore.user?.photoURL == null &&

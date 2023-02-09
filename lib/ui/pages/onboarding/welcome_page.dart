@@ -87,7 +87,7 @@ class WelcomePageState extends State<WelcomePage> {
                     ),
                   ),
                   child: const Text(
-                    'SIGN UP',
+                    'ENTRAR',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                   ),
                 ),

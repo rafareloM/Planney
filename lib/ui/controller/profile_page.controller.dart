@@ -20,6 +20,7 @@ abstract class ProfilePageControllerBase with Store {
 
   final storage = FirebaseStorage.instance;
 
+  @observable
   File? profilePhoto;
 
   @observable

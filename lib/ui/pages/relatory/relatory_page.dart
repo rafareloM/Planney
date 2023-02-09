@@ -75,7 +75,6 @@ class RelatoryPage extends StatelessWidget {
                 return _transactionStore.list.isEmpty
                     ? InfoCard(
                         height: deviceHeight * 0.48,
-                        textButtonCTA: 'Mais detalhes',
                         content: Center(
                           child: Stack(
                             children: [
@@ -143,7 +142,6 @@ class RelatoryPage extends StatelessWidget {
                 return _transactionStore.list.isEmpty
                     ? InfoCard(
                         height: deviceHeight * 0.48,
-                        textButtonCTA: 'Mais detalhes',
                         content: Center(
                           child: Stack(
                             children: [
@@ -191,33 +189,41 @@ class RelatoryPage extends StatelessWidget {
                       );
               }),
             ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(16, 8, 0, 16),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text('DETALHAMENTO',
-                    style: TextStyle(
-                        color: textColor,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18)),
-              ),
-            ),
-            Card(
-              elevation: 10,
-              child: Column(
-                children: _transactionStore.list.map((e) {
-                  return TransactionListCard(
-                    showLeading: false,
-                    transaction: e,
-                    positiveAction: (e) async {
-                      _controller.setLoading(true);
-                      await _controller.remove(e);
-                      _controller.setLoading(false);
-                    },
-                  );
-                }).toList(),
-              ),
-            ),
+            _transactionStore.list.isEmpty
+                ? SizedBox(
+                    height: deviceHeight * 0.02,
+                  )
+                : Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(16, 8, 0, 16),
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text('DETALHAMENTO',
+                              style: TextStyle(
+                                  color: textColor,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18)),
+                        ),
+                      ),
+                      Card(
+                        elevation: 10,
+                        child: Column(
+                          children: _transactionStore.list.map((e) {
+                            return TransactionListCard(
+                              showLeading: false,
+                              transaction: e,
+                              positiveAction: (e) async {
+                                _controller.setLoading(true);
+                                await _controller.remove(e);
+                                _controller.setLoading(false);
+                              },
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                    ],
+                  ),
           ],
         ),
       );
