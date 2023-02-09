@@ -63,7 +63,8 @@ void main() async {
   getIt.registerSingleton(AddCategoryPageController(
       PlanneyUserRepositoryImpl(PlanneyUserService())));
 
-  getIt.registerFactory(() => SplashController(getIt.get(param1: getIt.get())));
+  getIt.registerFactory<SplashController>(
+      () => SplashController(PlanneyUserRepositoryImpl(PlanneyUserService())));
 
   getIt.registerFactory(() => DetailCategoryController());
 
