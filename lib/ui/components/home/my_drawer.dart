@@ -51,11 +51,9 @@ class _MyDrawerState extends State<MyDrawer> {
               style: TextStyle(color: buttonColor),
             ),
             onTap: () {
-              store.getCategoriesByType(false);
-              Navigator.pushNamedAndRemoveUntil(
+              Navigator.pushReplacementNamed(
                 navigatorKey.currentContext!,
                 '/',
-                (route) => false,
               );
             },
           ),
@@ -69,7 +67,7 @@ class _MyDrawerState extends State<MyDrawer> {
               style: TextStyle(color: buttonColor),
             ),
             onTap: () {
-              Navigator.pop(context);
+              Navigator.popAndPushNamed(context, '/relatory');
             },
           ),
           ListTile(

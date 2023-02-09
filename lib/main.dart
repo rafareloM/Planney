@@ -26,6 +26,7 @@ import 'package:planney/ui/pages/category_charts/views/detail.category.dart';
 import 'package:planney/ui/pages/onboarding/welcome_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:planney/ui/pages/register/register_page.dart';
+import 'package:planney/ui/pages/relatory/relatory_page.dart';
 import 'package:planney/ui/pages/splash/splash_page.dart';
 import 'firebase_options.dart';
 import 'ui/pages/new_category/add_category_page.dart';
@@ -96,6 +97,7 @@ class MyApp extends StatelessWidget {
           '/detailPage': ((context) => const DetailCategoryPage()),
           '/addCategoryPage': (context) => AddCategoryPage(),
           '/profile': (context) => const ProfilePage(),
+          '/relatory': (context) => RelatoryPage(),
         },
       );
     });

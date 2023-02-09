@@ -60,6 +60,33 @@ abstract class TransactionControllerBase with Store {
     }
   }
 
+  Future<APIResponse<bool>> updateTransaction(Transaction transaction) async {
+    Transaction newTransaction = transaction.copyWith(
+        category: selectedCategory,
+        date: selectedDate,
+        description: description,
+        userAccount: selectedUserAccount,
+        value: transactionValue);
+    final response = await _repository.update(transaction, newTransaction);
+    if (response.isSuccess) {
+      _store.list[_store.list
+              .indexWhere((element) => element.uid == transaction.uid)] =
+          newTransaction;
+      dispose();
+      return APIResponse.success(true);
+    } else {
+      return APIResponse.error('Algo deu errado');
+    }
+  }
+
+  setTransaction(Transaction transaction) {
+    description = transaction.description;
+    transactionValue = double.parse(transaction.value.toString());
+    selectedDate = transaction.date;
+    selectedCategory = transaction.category;
+    selectedUserAccount = transaction.userAccount;
+  }
+
   dispose() {
     formattedDate = '';
     selectedDate = DateTime.now();

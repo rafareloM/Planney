@@ -43,8 +43,9 @@ class TransactionRepositoryImpl implements TransactionRepository {
   }
 
   @override
-  Future<APIResponse<bool>> update(Transaction item) async {
-    final result = await _service.update(item.uid!, item.toMap());
+  Future<APIResponse<bool>> update(
+      Transaction item, Transaction newItem) async {
+    final result = await _service.update(item.uid!, newItem.toMap());
     if (result) {
       return APIResponse.success(result);
     } else {

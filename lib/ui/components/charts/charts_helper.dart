@@ -24,6 +24,20 @@ abstract class ChartsHelper {
     return totalValue;
   }
 
+  static double dayBalance(List<Transaction> list, int weekday) {
+    double result = 0;
+    for (var transaction in list) {
+      if (transaction.date.weekday == weekday) {
+        if (transaction.type == TransactionType.expence) {
+          result -= transaction.value;
+        } else if (transaction.type == TransactionType.receipt) {
+          result += transaction.value;
+        }
+      }
+    }
+    return result;
+  }
+
   static List<Transaction> getTransactionsByCategory(
       List<Transaction> lista, String category) {
     List<Transaction> filteredList = [];
@@ -72,6 +86,15 @@ abstract class ChartsHelper {
     double result = 0;
     for (var weekday = 1; weekday < 8; weekday++) {
       double actualDayValue = totalDayValue(transactionsList, weekday);
+      actualDayValue > result ? result = actualDayValue : result;
+    }
+    return result;
+  }
+
+  static double getLowestDayValue(List<Transaction> transactionsList) {
+    double result = 0;
+    for (var weekday = 1; weekday < 8; weekday++) {
+      double actualDayValue = dayBalance(transactionsList, weekday);
       actualDayValue > result ? result = actualDayValue : result;
     }
     return result;

@@ -4,7 +4,6 @@ import 'package:get_it/get_it.dart';
 import 'package:planney/model/transaction.model.dart';
 import 'package:planney/navigator_key.dart';
 import 'package:planney/ui/components/custom_alert_dialog.dart';
-import 'package:planney/ui/components/progress_dialog.dart';
 import 'package:planney/ui/components/transaction/date_picker.dart';
 import 'package:planney/ui/controller/transaction.controller.dart';
 import 'package:planney/ui/pages/transaction/components/account_select_radio.dart';
@@ -19,7 +18,6 @@ class TransactionAddPage extends StatelessWidget {
   TransactionAddPage({Key? key, required this.type, required this.isExpense})
       : super(key: key);
 
-  final _progressDialog = ProgressDialog();
   final _alertDialog = CustomAlertDialog();
   final controller = GetIt.instance.get<TransactionController>();
 
@@ -108,7 +106,7 @@ class TransactionAddPage extends StatelessWidget {
                                 ),
                                 AccountSelectRadio(
                                   controller: controller,
-                                  width: deviceWidth * 0.3,
+                                  width: deviceWidth * 0.5,
                                   height: deviceHeight * 0.05,
                                   color: colorScheme.primary,
                                 ),
@@ -151,9 +149,9 @@ class TransactionAddPage extends StatelessWidget {
                                 ),
                                 Padding(
                                   padding: EdgeInsets.fromLTRB(
-                                      28, 10, deviceWidth * 0.1, 0),
+                                      28, 0, deviceWidth * 0.1, 0),
                                   child: TextForm(
-                                    height: deviceHeight * 0.08,
+                                    height: deviceHeight * 0.06,
                                     hint: 'Escreva um comentário',
                                     hintFontSize: 16,
                                   ),
@@ -226,21 +224,16 @@ class TransactionAddPage extends StatelessWidget {
   }
 
   registerTransaction() async {
-    _progressDialog.show("Salvando...");
-
     try {
       final response = await controller.registerTransaction(isExpense);
       if (response.isSuccess) {
-        _progressDialog.hide();
         Navigator.pop(
           navigatorKey.currentContext!,
         );
       } else {
-        _progressDialog.hide();
         _alertDialog.showInfo(title: "Ops!", message: response.message!);
       }
     } catch (e) {
-      _progressDialog.hide();
       _alertDialog.showInfo(title: "Ops!", message: 'Algo deu errado!');
     }
   }

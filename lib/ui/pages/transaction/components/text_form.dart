@@ -33,6 +33,7 @@ class TextForm extends StatelessWidget {
             return null;
           },
           textAlignVertical: TextAlignVertical.bottom,
+          textAlign: TextAlign.start,
           style: TextStyle(fontSize: hintFontSize),
           expands: true,
           maxLines: null,
