@@ -81,10 +81,10 @@ class PieChartPlaneyState extends State<PieChartPlaney> {
         ),
         badgeWidget: _Badge(
           title: category,
-          codePoint: transactionsList
+          icon: Icon(transactionsList
               .firstWhere((element) => element.category.name == category)
               .category
-              .codePoint,
+              .icon),
           size: widgetSize,
           borderColor: AppStyle.chartcolor1,
         ),
@@ -97,13 +97,13 @@ class PieChartPlaneyState extends State<PieChartPlaney> {
 }
 
 class _Badge extends StatelessWidget {
-  final int codePoint;
+  final Icon icon;
   final String title;
 
   const _Badge({
     required this.size,
     required this.borderColor,
-    required this.codePoint,
+    required this.icon,
     required this.title,
   });
   final double size;
@@ -134,10 +134,7 @@ class _Badge extends StatelessWidget {
       child: Center(
         child: Column(
           children: [
-            Icon(
-              IconData(codePoint, fontFamily: 'MaterialIcons'),
-              color: AppStyle.primaryColor,
-            ),
+            icon,
           ],
         ),
       ),

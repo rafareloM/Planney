@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
 
@@ -10,13 +8,13 @@ class Category {
   String? uid;
   final String name;
   final TransactionType type;
-  final int codePoint;
+  final IconData icon;
   final Color color;
   Category({
     this.uid,
     required this.name,
     required this.type,
-    required this.codePoint,
+    required this.icon,
     required this.color,
   });
 
@@ -25,13 +23,13 @@ class Category {
   Category copyWith({
     String? name,
     TransactionType? type,
-    int? codePoint,
+    IconData? icon,
     Color? color,
   }) {
     return Category(
       name: name ?? this.name,
       type: type ?? this.type,
-      codePoint: codePoint ?? this.codePoint,
+      icon: icon ?? this.icon,
       color: color ?? this.color,
     );
   }
@@ -40,7 +38,7 @@ class Category {
     return <String, dynamic>{
       'name': name,
       'type': type.name,
-      'code_point': codePoint,
+      'icon': icon.codePoint,
       'color': color.value,
     };
   }
@@ -51,16 +49,14 @@ class Category {
       type: EnumToString.fromString(
               [TransactionType.expence, TransactionType.receipt], map['type'])
           as TransactionType,
-      codePoint: map['code_point'] as int,
+      icon: IconData(map['icon'] as int, fontFamily: 'MaterialIcons'),
       color: Color(map['color'] as int),
     );
   }
 
-  String toJson() => json.encode(toMap());
-
   @override
   String toString() {
-    return 'Category(name: $name, type: $type, codePoint: $codePoint, color: $color)';
+    return 'Category(name: $name, type: $type, icon: $icon, color: $color)';
   }
 }
 
@@ -68,44 +64,70 @@ abstract class CategoryHelper {
   static List<Category> defaultCategories = [
     Category(
         name: 'Transporte',
-        codePoint: Icons.directions_car.codePoint,
+        icon: Icons.directions_car,
         color: AppStyle.chartcolor1,
         type: TransactionType.expence),
     Category(
         name: 'Casa',
-        codePoint: Icons.home_filled.codePoint,
+        icon: Icons.home_filled,
         color: AppStyle.chartcolor2,
         type: TransactionType.expence),
     Category(
         name: 'Lazer',
-        codePoint: Icons.mood_outlined.codePoint,
+        icon: Icons.mood_outlined,
         color: AppStyle.chartcolor3,
         type: TransactionType.expence),
     Category(
         name: 'Outros',
-        codePoint: Icons.bar_chart.codePoint,
+        icon: Icons.bar_chart,
         color: AppStyle.chartcolor4,
         type: TransactionType.expence),
     Category(
         name: 'Juros',
-        codePoint: Icons.local_atm.codePoint,
+        icon: Icons.local_atm,
         color: AppStyle.chartcolor1,
         type: TransactionType.receipt),
     Category(
         name: 'Presente',
-        codePoint: Icons.redeem.codePoint,
+        icon: Icons.redeem,
         color: AppStyle.chartcolor2,
         type: TransactionType.receipt),
     Category(
         name: 'Salário',
-        codePoint: Icons.payments.codePoint,
+        icon: Icons.payments,
         color: AppStyle.chartcolor3,
         type: TransactionType.receipt),
     Category(
         name: 'Outros',
-        codePoint: Icons.bar_chart.codePoint,
+        icon: Icons.bar_chart,
         color: AppStyle.chartcolor4,
         type: TransactionType.receipt),
+  ];
+  static List<Icon> icons = const [
+    Icon(Icons.percent),
+    Icon(Icons.account_balance_wallet),
+    Icon(Icons.card_giftcard),
+    Icon(Icons.favorite),
+    Icon(Icons.attach_money),
+    Icon(Icons.restaurant),
+    Icon(Icons.shopping_cart),
+    Icon(Icons.flight_takeoff),
+    Icon(Icons.directions_car),
+    Icon(Icons.home_filled),
+    Icon(Icons.build),
+    Icon(Icons.store),
+    Icon(Icons.videogame_asset),
+    Icon(Icons.more_horiz),
+    Icon(Icons.face),
+    Icon(Icons.theater_comedy),
+    Icon(Icons.laptop),
+    Icon(Icons.palette),
+    Icon(Icons.content_cut),
+    Icon(Icons.volunteer_activism),
+    Icon(Icons.music_note),
+    Icon(Icons.local_hotel),
+    Icon(Icons.medical_services),
+    Icon(Icons.school),
   ];
 
   static List<Map<String, dynamic>> defaultCategoriesToMap() {

@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
+import 'package:mobx/mobx.dart';
 import 'package:planney/model/category.model.dart';
 import 'package:planney/navigator_key.dart';
 import 'package:planney/stores/category.store.dart';
 import 'package:planney/ui/components/home/bottom_navigation_bar.dart';
 import 'package:planney/ui/components/home/my_drawer.dart';
 import 'package:planney/ui/components/transaction/list_view_button.dart';
+import 'package:planney/ui/controller/detail_category.controller.dart';
 import 'package:planney/ui/controller/home.controller.dart';
 import 'package:planney/ui/pages/category_charts/views/charts_page.dart';
 import 'package:planney/ui/pages/transaction/components/category_button.dart';
@@ -23,17 +25,18 @@ class DetailCategoryPage extends StatelessWidget {
         ? colorScheme.tertiary
         : colorScheme.primary;
     double deviceHeight = MediaQuery.of(context).size.height;
-
-    List<Widget> createList(List<Category> list) {
-      List<Widget> widgets = [];
+    final detailController = GetIt.instance.get<DetailCategoryController>();
+    ObservableList createList(List<Category> list) {
+      detailController.widgets.clear();
       for (var category in list) {
-        widgets.add(CategoryButton(
+        detailController.widgets.add(CategoryButton(
+          size: 42,
           paintBackground: true,
           name: category.name.toUpperCase(),
           color: colorScheme.brightness == Brightness.dark
               ? const Color(0xFF454545)
               : colorScheme.secondaryContainer,
-          icon: IconData(category.codePoint, fontFamily: "MaterialIcons"),
+          icon: category.icon,
           onPressed: () {
             controller.getTransactionsByCategory(category.name);
             Navigator.push(
@@ -47,7 +50,8 @@ class DetailCategoryPage extends StatelessWidget {
           },
         ));
       }
-      widgets.add(CategoryButton(
+      detailController.widgets.add(CategoryButton(
+        size: 42,
         paintBackground: true,
         name: 'Nova Categoria',
         color: colorScheme.brightness == Brightness.dark
@@ -58,7 +62,7 @@ class DetailCategoryPage extends StatelessWidget {
           Navigator.pushNamed(navigatorKey.currentContext!, '/addCategoryPage');
         },
       ));
-      return widgets;
+      return detailController.widgets;
     }
 
     return Scaffold(

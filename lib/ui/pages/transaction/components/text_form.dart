@@ -27,7 +27,7 @@ class TextForm extends StatelessWidget {
         child: TextFormField(
           onChanged: (value) => controller.description = value,
           validator: (value) {
-            if (value == null) {
+            if (value == '') {
               return 'O campo não pode ser vazio!';
             }
             return null;
@@ -37,8 +37,7 @@ class TextForm extends StatelessWidget {
           expands: true,
           maxLines: null,
           decoration: InputDecoration(
-            hintText: hint,
-          ),
+              hintText: hint, hintStyle: TextStyle(fontSize: hintFontSize)),
         ),
       ),
     );

@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 import 'package:planney/infra/repositories/transaction.repository.dart';
+import 'package:planney/model/api_response.model.dart';
 import 'package:planney/model/category.model.dart';
 import 'package:planney/model/transaction.model.dart';
 import 'package:planney/stores/transactions.store.dart';
@@ -20,12 +20,28 @@ abstract class TransactionControllerBase with Store {
 
   final _homeController = GetIt.instance.get<HomePageController>();
 
-  Future<bool> registerTransaction(bool isExpense) async {
+  Future<APIResponse<bool>> registerTransaction(bool isExpense) async {
+    if (transactionValue == 0) {
+      return APIResponse.error('O valor da Transição é obrigatório.');
+    }
+
+    if (selectedCategory == null) {
+      return APIResponse.error('Selecione uma categoria.');
+    }
+
+    if (description == '') {
+      return APIResponse.error('O campo de descrição é obrigatório.');
+    }
+
+    if (formattedDate == '') {
+      return APIResponse.error('Escolha uma data.');
+    }
+
     Transaction transaction = Transaction(
         date: selectedDate,
         description: description,
         value: transactionValue,
-        category: selectedCategory,
+        category: selectedCategory!,
         type: isExpense ? TransactionType.expence : TransactionType.receipt,
         userAccount: selectedUserAccount);
 
@@ -38,9 +54,9 @@ abstract class TransactionControllerBase with Store {
         _homeController.finalListReceipt.add(transaction);
       }
       dispose();
-      return true;
+      return APIResponse.success(true);
     } else {
-      return false;
+      return APIResponse.error('Algo deu errado');
     }
   }
 
@@ -51,11 +67,7 @@ abstract class TransactionControllerBase with Store {
     selectedUserAccount = UserAccounts.principal;
     description = '';
     formattedDate = '';
-    selectedCategory = Category(
-        name: '',
-        type: TransactionType.expence,
-        codePoint: 0,
-        color: Colors.black);
+    selectedCategory = null;
   }
 
   @observable
@@ -74,9 +86,5 @@ abstract class TransactionControllerBase with Store {
   double transactionValue = 0;
 
   @observable
-  Category selectedCategory = Category(
-      name: '',
-      type: TransactionType.expence,
-      codePoint: 0,
-      color: Colors.black);
+  Category? selectedCategory;
 }

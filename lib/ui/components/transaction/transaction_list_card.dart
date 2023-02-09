@@ -64,8 +64,7 @@ class TransactionListCard extends StatelessWidget {
                   radius: 24,
                   backgroundColor: transaction.category.color,
                   child: Icon(
-                    IconData(transaction.category.codePoint,
-                        fontFamily: 'MaterialIcons'),
+                    transaction.category.icon,
                     size: 16,
                   ),
                 )

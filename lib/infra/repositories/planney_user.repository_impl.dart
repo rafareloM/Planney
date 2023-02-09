@@ -12,10 +12,14 @@ class PlanneyUserRepositoryImpl implements PlanneyUserRepository {
   @override
   Future<APIResponse<PlanneyUser>> get() async {
     final documentSnapshot = await _service.get();
-    final planneyUser = PlanneyUser.fromFirestore(
-        documentSnapshot.data() as Map<String, dynamic>);
+    if (documentSnapshot != null) {
+      final planneyUser = PlanneyUser.fromFirestore(
+          documentSnapshot.data() as Map<String, dynamic>);
 
-    return APIResponse.success(planneyUser);
+      return APIResponse.success(planneyUser);
+    } else {
+      return APIResponse.error("Deu ruim mano");
+    }
   }
 
   @override
@@ -31,8 +35,12 @@ class PlanneyUserRepositoryImpl implements PlanneyUserRepository {
   @override
   Future<APIResponse<List<Category>>> getCategories() async {
     final documentSnapshot = await _service.get();
-    final planneyUser = PlanneyUser.fromFirestore(
-        documentSnapshot.data() as Map<String, dynamic>);
-    return APIResponse.success(planneyUser.categories);
+    if (documentSnapshot != null) {
+      final planneyUser = PlanneyUser.fromFirestore(
+          documentSnapshot.data() as Map<String, dynamic>);
+      return APIResponse.success(planneyUser.categories);
+    } else {
+      return APIResponse.error("Deu ruim mano");
+    }
   }
 }

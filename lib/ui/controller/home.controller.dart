@@ -58,9 +58,8 @@ abstract class HomePageControllerBase with Store {
   Future<APIResponse<List<Transaction>>> getTransactionsList() async {
     final response = await _transactionRepository.getMonth(_currentDateTime);
     if (response.isSuccess) {
-      final store = GetIt.instance.get<TransactionsStore>();
-      store.replaceList(response.data!);
-      for (var transaction in store.list) {
+      _transactionStore.replaceList(response.data!);
+      for (var transaction in _transactionStore.list) {
         if (transaction.type == TransactionType.expence) {
           finalListExpence.add(transaction);
         } else {
