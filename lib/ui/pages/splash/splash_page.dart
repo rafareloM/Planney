@@ -12,6 +12,8 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
+  final _controller = GetIt.instance.get<SplashController>();
+
   @override
   void initState() {
     super.initState();
@@ -21,8 +23,7 @@ class _SplashPageState extends State<SplashPage> {
   Future preload() async {
     final auth = FirebaseAuth.instance;
     if (auth.currentUser != null) {
-      final SplashController controller = GetIt.instance.get();
-      await controller.loadUser();
+      await _controller.loadUser();
       Navigator.pushReplacementNamed(navigatorKey.currentContext!, '/');
     } else {
       Navigator.pushReplacementNamed(
