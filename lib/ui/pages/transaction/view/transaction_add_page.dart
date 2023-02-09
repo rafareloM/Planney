@@ -172,21 +172,23 @@ class TransactionAddPage extends StatelessWidget {
                             ),
                             Padding(
                               padding: const EdgeInsets.fromLTRB(15, 5, 0, 0),
-                              child: Row(
-                                children: [
-                                  Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: DatePicker(
-                                      controller: controller,
-                                      color: colorScheme.tertiary,
+                              child: Observer(builder: (_) {
+                                return Row(
+                                  children: [
+                                    Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: DatePicker(
+                                        controller: controller,
+                                        color: colorScheme.tertiary,
+                                      ),
                                     ),
-                                  ),
-                                  Text(controller.formattedDate == ''
-                                      ? DateFormat('dd/MM/yyyy')
-                                          .format(DateTime.now())
-                                      : controller.formattedDate),
-                                ],
-                              ),
+                                    Text(controller.formattedDate == ''
+                                        ? DateFormat('dd/MM/yyyy')
+                                            .format(DateTime.now())
+                                        : controller.formattedDate),
+                                  ],
+                                );
+                              }),
                             ),
                             Padding(
                               padding: const EdgeInsets.fromLTRB(0, 0, 25, 16),

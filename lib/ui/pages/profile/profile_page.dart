@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:mask/mask/mask.dart';
 import 'package:planney/navigator_key.dart';
 import 'package:planney/stores/planney_user.store.dart';
+import 'package:planney/style/style.dart';
 import 'package:planney/ui/components/custom_alert_dialog.dart';
 import 'package:planney/ui/components/home/my_drawer.dart';
 import 'package:planney/ui/components/home/planney_logo.dart';
@@ -143,6 +144,9 @@ class ProfilePage extends StatelessWidget {
                 },
                 iconSize: 120,
                 icon: CircleAvatar(
+                    backgroundColor: colorScheme.brightness == Brightness.dark
+                        ? AppStyle.graytextbox
+                        : colorScheme.primary,
                     radius: 80,
                     child: userStore.user?.photoURL == null &&
                             _controller.profilePhoto == null
