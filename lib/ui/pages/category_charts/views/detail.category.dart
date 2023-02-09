@@ -5,7 +5,6 @@ import 'package:mobx/mobx.dart';
 import 'package:planney/model/category.model.dart';
 import 'package:planney/navigator_key.dart';
 import 'package:planney/stores/category.store.dart';
-import 'package:planney/ui/components/home/bottom_navigation_bar.dart';
 import 'package:planney/ui/components/home/my_drawer.dart';
 import 'package:planney/ui/components/transaction/list_view_button.dart';
 import 'package:planney/ui/controller/detail_category.controller.dart';
@@ -82,7 +81,6 @@ class DetailCategoryPage extends StatelessWidget {
         ),
         centerTitle: true,
       ),
-      bottomNavigationBar: const HomeBottomNavigationBar(),
       body: Container(
         margin: EdgeInsets.fromLTRB(16, 15, 16, deviceHeight * 0.15),
         padding: const EdgeInsets.fromLTRB(0, 34, 0, 0),

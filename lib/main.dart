@@ -20,6 +20,7 @@ import 'package:planney/ui/controller/register.controller.dart';
 import 'package:planney/ui/controller/splash.controller.dart';
 import 'package:planney/ui/controller/transaction.controller.dart';
 import 'package:planney/ui/pages/home/home_page.dart';
+import 'package:planney/ui/pages/home/profile_page.dart';
 import 'package:planney/ui/pages/login/login_page.dart';
 import 'package:planney/ui/pages/category_charts/views/detail.category.dart';
 import 'package:planney/ui/pages/onboarding/welcome_page.dart';
@@ -93,6 +94,7 @@ class MyApp extends StatelessWidget {
           '/registerPage': (context) => RegisterPage(),
           '/detailPage': ((context) => const DetailCategoryPage()),
           '/addCategoryPage': (context) => AddCategoryPage(),
+          '/profile': (context) => const ProfilePage(),
         },
       );
     });

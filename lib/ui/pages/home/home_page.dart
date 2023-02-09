@@ -4,7 +4,6 @@ import 'package:get_it/get_it.dart';
 import 'package:planney/model/transaction.model.dart';
 import 'package:planney/stores/planney_user.store.dart';
 import 'package:planney/ui/components/home/avatar.dart';
-import 'package:planney/ui/components/home/bottom_navigation_bar.dart';
 import 'package:planney/ui/components/home/my_drawer.dart';
 import 'package:planney/ui/components/home/planney_logo.dart';
 import 'package:planney/ui/components/transaction/transaction_chart_card.dart';
@@ -82,7 +81,6 @@ class _HomePageState extends State<HomePage> {
           ),
           centerTitle: true,
         ),
-        bottomNavigationBar: const HomeBottomNavigationBar(),
         body: _controller.isLoading
             ? const Center(child: CircularProgressIndicator())
             : Column(

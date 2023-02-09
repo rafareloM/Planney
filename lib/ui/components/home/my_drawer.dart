@@ -86,6 +86,19 @@ class _MyDrawerState extends State<MyDrawer> {
             },
           ),
           ListTile(
+            leading: Icon(
+              Icons.account_circle_rounded,
+              color: buttonColor,
+            ),
+            title: Text(
+              'Perfil',
+              style: TextStyle(color: buttonColor),
+            ),
+            onTap: () {
+              Navigator.popAndPushNamed(context, '/profile');
+            },
+          ),
+          ListTile(
             trailing: Switch(
               value: colorScheme.brightness == Brightness.dark,
               onChanged: (value) {
