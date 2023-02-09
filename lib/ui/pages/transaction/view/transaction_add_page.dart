@@ -231,6 +231,7 @@ class TransactionAddPage extends StatelessWidget {
     try {
       final response = await controller.registerTransaction(isExpense);
       if (response.isSuccess) {
+        _progressDialog.hide();
         Navigator.pop(
           navigatorKey.currentContext!,
         );
