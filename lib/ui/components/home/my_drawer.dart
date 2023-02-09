@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:planney/navigator_key.dart';
 import 'package:planney/stores/planney_user.store.dart';
+import 'package:planney/style/style.dart';
 import 'package:planney/ui/controller/home.controller.dart';
 import 'package:planney/ui/controller/profile_page.controller.dart';
 
@@ -36,6 +37,9 @@ class _MyDrawerState extends State<MyDrawer> {
                 Text(userStore.planneyUser?.fullName.split(' ').first ?? ''),
             currentAccountPicture: CircleAvatar(
                 radius: 40,
+                backgroundColor: colorScheme.brightness == Brightness.dark
+                    ? AppStyle.graytextbox
+                    : colorScheme.primary,
                 child: userStore.user?.photoURL == null &&
                         profilePageController.profilePhoto == null
                     ? const Icon(

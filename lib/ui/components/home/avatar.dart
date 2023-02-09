@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:planney/stores/planney_user.store.dart';
+import 'package:planney/style/style.dart';
 import 'package:planney/ui/controller/profile_page.controller.dart';
 
 class Avatar extends StatelessWidget {
@@ -38,6 +39,9 @@ class Avatar extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   CircleAvatar(
+                      backgroundColor: colorScheme.brightness == Brightness.dark
+                          ? AppStyle.graytextbox
+                          : colorScheme.primary,
                       radius: 40,
                       child: userStore.user?.photoURL == null &&
                               controller.profilePhoto == null

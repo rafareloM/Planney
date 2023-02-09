@@ -40,8 +40,23 @@ class CategoriesList extends StatelessWidget {
             return Row(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
-              children:
-                  createList(categoryStore.getCategoriesByType(isExpense)),
+              children: categoryStore
+                  .getCategoriesByType(isExpense)
+                  .map(
+                    (e) => CategoryButton(
+                      size: 42,
+                      paintBackground: paintBackground,
+                      name: e.name.toUpperCase(),
+                      color: controller.selectedCategory == e
+                          ? selectedColor
+                          : color,
+                      icon: e.icon,
+                      onPressed: () {
+                        controller.selectedCategory = e;
+                      },
+                    ),
+                  )
+                  .toList(),
             );
           }),
         ),
@@ -53,7 +68,8 @@ class CategoriesList extends StatelessWidget {
     List<Widget> widgets = [];
 
     for (var category in list) {
-      widgets.add(CategoryButton(
+      widgets.add(
+        CategoryButton(
           size: 42,
           paintBackground: paintBackground,
           name: category.name.toUpperCase(),
@@ -62,7 +78,9 @@ class CategoriesList extends StatelessWidget {
           icon: category.icon,
           onPressed: () {
             controller.selectedCategory = category;
-          }));
+          },
+        ),
+      );
     }
     widgets.add(CategoryButton(
       size: 42,
@@ -71,7 +89,7 @@ class CategoriesList extends StatelessWidget {
       color: color,
       icon: Icons.add_box_outlined,
       onPressed: () {
-        Navigator.pushNamed(navigatorKey.currentContext!, 'addCategoryPage');
+        Navigator.pushNamed(navigatorKey.currentContext!, '/addCategoryPage');
       },
     ));
     return widgets;
