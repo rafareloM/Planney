@@ -57,8 +57,8 @@ class _TransactionUpdatePageState extends State<TransactionUpdatePage> {
             borderRadius: const BorderRadius.vertical(top: Radius.circular(21)),
             child: Scaffold(
               resizeToAvoidBottomInset: true,
-              body: IntrinsicHeight(
-                child: SingleChildScrollView(
+              body: SingleChildScrollView(
+                child: IntrinsicHeight(
                   child: Column(
                     children: [
                       Container(
