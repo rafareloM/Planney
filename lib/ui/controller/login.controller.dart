@@ -31,8 +31,6 @@ abstract class LoginControllerBase with Store {
 
   Future<APIResponse<bool>> login() async {
     final userResponse = await _authRepository.login(_email, _password);
-    _email = '';
-    _password = '';
     if (userResponse.isSuccess) {
       planneyUserStore.setUser(
           userResponse.data!.uid, userResponse.data!.email!);

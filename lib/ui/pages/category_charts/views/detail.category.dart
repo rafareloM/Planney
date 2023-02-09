@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
-import 'package:mobx/mobx.dart';
 import 'package:planney/model/category.model.dart';
+import 'package:planney/model/transaction.model.dart';
 import 'package:planney/navigator_key.dart';
 import 'package:planney/stores/category.store.dart';
-import 'package:planney/ui/components/home/bottom_navigation_bar.dart';
 import 'package:planney/ui/components/home/my_drawer.dart';
 import 'package:planney/ui/components/transaction/list_view_button.dart';
-import 'package:planney/ui/controller/detail_category.controller.dart';
 import 'package:planney/ui/controller/home.controller.dart';
 import 'package:planney/ui/pages/category_charts/views/charts_page.dart';
 import 'package:planney/ui/pages/transaction/components/category_button.dart';
@@ -25,45 +23,6 @@ class DetailCategoryPage extends StatelessWidget {
         ? colorScheme.tertiary
         : colorScheme.primary;
     double deviceHeight = MediaQuery.of(context).size.height;
-    final detailController = GetIt.instance.get<DetailCategoryController>();
-    ObservableList createList(List<Category> list) {
-      detailController.widgets.clear();
-      for (var category in list) {
-        detailController.widgets.add(CategoryButton(
-          size: 42,
-          paintBackground: true,
-          name: category.name.toUpperCase(),
-          color: colorScheme.brightness == Brightness.dark
-              ? const Color(0xFF454545)
-              : colorScheme.secondaryContainer,
-          icon: category.icon,
-          onPressed: () {
-            controller.getTransactionsByCategory(category.name);
-            Navigator.push(
-                navigatorKey.currentContext!,
-                MaterialPageRoute(
-                  builder: (context) => CategoryChartsPage(
-                    categoryName: category.name,
-                    list: controller.filteredList,
-                  ),
-                ));
-          },
-        ));
-      }
-      detailController.widgets.add(CategoryButton(
-        size: 42,
-        paintBackground: true,
-        name: 'Nova Categoria',
-        color: colorScheme.brightness == Brightness.dark
-            ? const Color(0xFF454545)
-            : colorScheme.secondaryContainer,
-        icon: Icons.add_box_outlined,
-        onPressed: () {
-          Navigator.pushNamed(navigatorKey.currentContext!, '/addCategoryPage');
-        },
-      ));
-      return detailController.widgets;
-    }
 
     return Scaffold(
       extendBody: true,
@@ -82,7 +41,6 @@ class DetailCategoryPage extends StatelessWidget {
         ),
         centerTitle: true,
       ),
-      bottomNavigationBar: const HomeBottomNavigationBar(),
       body: Container(
         margin: EdgeInsets.fromLTRB(16, 15, 16, deviceHeight * 0.15),
         padding: const EdgeInsets.fromLTRB(0, 34, 0, 0),
@@ -150,13 +108,56 @@ class DetailCategoryPage extends StatelessWidget {
                             crossAxisCount: 3),
                     primary: false,
                     shrinkWrap: false,
-                    itemCount: categoryStore
-                            .getCategoriesByType(controller.isExpence)
-                            .length +
-                        1,
+                    itemCount: controller.isExpence
+                        ? categoryStore.getListExpence!.length + 1
+                        : categoryStore.getListReceipt!.length + 1,
                     itemBuilder: (context, index) {
-                      return createList(categoryStore
-                          .getCategoriesByType(controller.isExpence))[index];
+                      late final Category category;
+                      if (controller.isExpence) {
+                        if (index == categoryStore.getListExpence!.length) {
+                          category = Category(
+                              name: "Nova Categoria",
+                              type: TransactionType.operation,
+                              icon: Icons.add_box_outlined,
+                              color: const Color(0xFF454545));
+                        } else {
+                          category = categoryStore.getListExpence![index];
+                        }
+                      } else {
+                        if (index == categoryStore.getListReceipt!.length) {
+                          category = Category(
+                              name: "Nova Categoria",
+                              type: TransactionType.operation,
+                              icon: Icons.add_box_outlined,
+                              color: const Color(0xFF454545));
+                        } else {
+                          category = categoryStore.getListReceipt![index];
+                        }
+                      }
+                      return CategoryButton(
+                        size: 42,
+                        paintBackground: true,
+                        name: category.name.toUpperCase(),
+                        color: colorScheme.brightness == Brightness.dark
+                            ? const Color(0xFF454545)
+                            : colorScheme.secondaryContainer,
+                        icon: category.icon,
+                        onPressed: () {
+                          if (category.type == TransactionType.operation) {
+                            Navigator.pushNamed(navigatorKey.currentContext!,
+                                '/addCategoryPage');
+                          } else {
+                            Navigator.push(
+                                navigatorKey.currentContext!,
+                                MaterialPageRoute(
+                                  builder: (context) => CategoryChartsPage(
+                                    categoryName: category.name,
+                                    list: controller.filteredList,
+                                  ),
+                                ));
+                          }
+                        },
+                      );
                     },
                   ),
                 ),

@@ -1,5 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:planney/model/category.model.dart';
 import 'package:planney/model/transaction.model.dart';
 import 'package:planney/style/style.dart';
 import 'package:planney/ui/components/charts/charts_helper.dart';
@@ -57,7 +58,7 @@ class PieChartPlaneyState extends State<PieChartPlaney> {
 
   List<PieChartSectionData> showingSections(
       List<Transaction> transactionsList) {
-    List<String> categoryList = ChartsHelper.getCategoryNames(transactionsList);
+    List<Category> categoryList = ChartsHelper.getCategories(transactionsList);
     List<PieChartSectionData> sectionsList = [];
     int i = 0;
     double totalValue = ChartsHelper.getTotalValue(transactionsList);
@@ -68,10 +69,10 @@ class PieChartPlaneyState extends State<PieChartPlaney> {
       final widgetSize = isTouched ? 46.0 : 40.0;
 
       sectionsList.add(PieChartSectionData(
-        color: ChartsHelper.setColorByIndex(i),
-        value: ChartsHelper.totalCategoryValue(transactionsList, category),
+        color: category.color,
+        value: ChartsHelper.totalCategoryValue(transactionsList, category.name),
         title: isTouched
-            ? '${((ChartsHelper.totalCategoryValue(transactionsList, category) / totalValue) * 100).toStringAsFixed(1)}%'
+            ? '${((ChartsHelper.totalCategoryValue(transactionsList, category.name) / totalValue) * 100).toStringAsFixed(1)}%'
             : '',
         radius: radius,
         titleStyle: TextStyle(
@@ -80,9 +81,9 @@ class PieChartPlaneyState extends State<PieChartPlaney> {
           color: AppStyle.fullWhite,
         ),
         badgeWidget: _Badge(
-          title: category,
+          title: category.name,
           icon: Icon(transactionsList
-              .firstWhere((element) => element.category.name == category)
+              .firstWhere((element) => element.category.name == category.name)
               .category
               .icon),
           size: widgetSize,

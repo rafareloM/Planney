@@ -1,3 +1,4 @@
+import 'package:planney/model/category.model.dart';
 import 'package:planney/model/transaction.model.dart';
 import 'package:planney/style/style.dart';
 
@@ -24,6 +25,20 @@ abstract class ChartsHelper {
     return totalValue;
   }
 
+  static double dayBalance(List<Transaction> list, int weekday) {
+    double result = 0;
+    for (var transaction in list) {
+      if (transaction.date.weekday == weekday) {
+        if (transaction.type == TransactionType.expence) {
+          result -= transaction.value;
+        } else if (transaction.type == TransactionType.receipt) {
+          result += transaction.value;
+        }
+      }
+    }
+    return result;
+  }
+
   static List<Transaction> getTransactionsByCategory(
       List<Transaction> lista, String category) {
     List<Transaction> filteredList = [];
@@ -36,21 +51,20 @@ abstract class ChartsHelper {
     return filteredList;
   }
 
-  static List<String> getCategoryNames(List<Transaction> transactionsList) {
-    transactionsList
-        .sort(((a, b) => a.category.name.compareTo(b.category.name)));
+  static List<Category> getCategories(List<Transaction> transactionsList) {
+    transactionsList.sort((a, b) => a.category.name.compareTo(b.category.name));
     var firstTransaction = transactionsList.first;
-    List<String> categoryNames = [];
-    String previewCategory = firstTransaction.category.name;
-
-    categoryNames.add(firstTransaction.category.name);
-    for (var item in transactionsList) {
-      if (item != firstTransaction && item.category.name != previewCategory) {
-        previewCategory = item.category.name;
-        categoryNames.add(previewCategory);
+    List<Category> categories = [];
+    Category previewCategory = firstTransaction.category;
+    categories.add(firstTransaction.category);
+    for (var transaction in transactionsList) {
+      if (transaction != firstTransaction &&
+          transaction.category.name != previewCategory.name) {
+        previewCategory = transaction.category;
+        categories.add(previewCategory);
       }
     }
-    return categoryNames;
+    return categories;
   }
 
   static setColorByIndex(int index) {
@@ -63,6 +77,12 @@ abstract class ChartsHelper {
         return AppStyle.chartcolor3;
       case 3:
         return AppStyle.chartcolor4;
+      case 4:
+        return AppStyle.primaryColor;
+      case 5:
+        return AppStyle.chartcolor5;
+      case 6:
+        return AppStyle.chartcolor6;
       default:
         return AppStyle.primaryColor;
     }
@@ -72,6 +92,15 @@ abstract class ChartsHelper {
     double result = 0;
     for (var weekday = 1; weekday < 8; weekday++) {
       double actualDayValue = totalDayValue(transactionsList, weekday);
+      actualDayValue > result ? result = actualDayValue : result;
+    }
+    return result;
+  }
+
+  static double getLowestDayValue(List<Transaction> transactionsList) {
+    double result = 0;
+    for (var weekday = 1; weekday < 8; weekday++) {
+      double actualDayValue = dayBalance(transactionsList, weekday);
       actualDayValue > result ? result = actualDayValue : result;
     }
     return result;

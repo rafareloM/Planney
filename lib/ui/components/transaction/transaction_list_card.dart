@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:planney/model/transaction.model.dart';
 import 'package:planney/style/style.dart';
 import 'package:planney/ui/components/custom_alert_dialog.dart';
+import 'package:planney/ui/pages/transaction/view/transaction_update_page.dart';
 
 class TransactionListCard extends StatelessWidget {
   final Transaction transaction;
@@ -21,6 +22,7 @@ class TransactionListCard extends StatelessWidget {
   Widget build(BuildContext context) {
     CustomAlertDialog dialog = CustomAlertDialog();
     ColorScheme colorScheme = Theme.of(context).colorScheme;
+    double deviceHeight = MediaQuery.of(context).size.height;
 
     return Card(
       child: Slidable(
@@ -28,7 +30,21 @@ class TransactionListCard extends StatelessWidget {
           motion: const ScrollMotion(),
           children: [
             SlidableAction(
-              onPressed: (context) {},
+              onPressed: (context) {
+                showModalBottomSheet(
+                  isDismissible: true,
+                  isScrollControlled: true,
+                  constraints: BoxConstraints(maxHeight: deviceHeight * 0.9),
+                  context: context,
+                  builder: ((context) => TransactionUpdatePage(
+                        transaction: transaction,
+                        type: transaction.type,
+                      )),
+                  shape: const RoundedRectangleBorder(
+                      borderRadius:
+                          BorderRadius.vertical(top: Radius.circular(21))),
+                );
+              },
               backgroundColor: AppStyle.primaryColor,
               foregroundColor: Colors.white,
               icon: Icons.edit,

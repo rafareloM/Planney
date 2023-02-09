@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mobx/mobx.dart';
 import 'package:planney/model/planney_user.dart';
 part 'planney_user.store.g.dart';
@@ -13,6 +14,9 @@ abstract class PlanneyUserStoreBase with Store {
 
   @readonly
   PlanneyUser? _planneyUser;
+
+  @computed
+  User? get user => FirebaseAuth.instance.currentUser;
 
   @action
   void setUser(String uid, String email) {

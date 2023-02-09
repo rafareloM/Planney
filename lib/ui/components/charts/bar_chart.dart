@@ -45,7 +45,7 @@ class _BarChart extends StatelessWidget {
             int rodIndex,
           ) {
             return BarTooltipItem(
-              rod.toY.round().toStringAsFixed(2),
+              rod.toY.round().toString(),
               TextStyle(
                 color: textColor,
               ),

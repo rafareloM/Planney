@@ -1,13 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:planney/stores/planney_user.store.dart';
+import 'package:planney/ui/controller/profile_page.controller.dart';
 
 class Avatar extends StatelessWidget {
   final String? userName;
   final double userBalance;
-  const Avatar({super.key, required this.userName, required this.userBalance});
+  final String? path;
+  const Avatar(
+      {super.key,
+      required this.userName,
+      required this.userBalance,
+      required this.path});
 
   @override
   Widget build(BuildContext context) {
     var colorScheme = Theme.of(context).colorScheme;
+    final userStore = GetIt.instance.get<PlanneyUserStore>();
+    final ProfilePageController controller = GetIt.instance.get();
 
     Color spanTextColor = colorScheme.tertiary;
 
@@ -28,14 +38,32 @@ class Avatar extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   CircleAvatar(
-                    radius: 40,
-                    child: ClipOval(
-                        child: Image.asset(
-                      'lib/style/assets/img/userprofile.png',
-                      width: 80,
-                      height: 80,
-                    )),
-                  ),
+                      radius: 40,
+                      child: userStore.user?.photoURL == null &&
+                              controller.profilePhoto == null
+                          ? const Icon(
+                              Icons.person,
+                              size: 100,
+                              color: Color.fromARGB(255, 211, 209, 209),
+                            )
+                          : userStore.user?.photoURL == null &&
+                                      controller.profilePhoto != null ||
+                                  controller.profilePhoto != null &&
+                                      controller.profilePhoto != null
+                              ? ClipOval(
+                                  child: Image.file(
+                                  controller.profilePhoto!,
+                                  fit: BoxFit.fill,
+                                  height: 150,
+                                  width: 150,
+                                ))
+                              : ClipOval(
+                                  child: Image.network(
+                                  userStore.user!.photoURL!,
+                                  fit: BoxFit.fill,
+                                  height: 150,
+                                  width: 150,
+                                ))),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [

@@ -1,29 +1,46 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
-import 'package:intl/intl.dart';
 import 'package:planney/model/transaction.model.dart';
 import 'package:planney/navigator_key.dart';
 import 'package:planney/ui/components/custom_alert_dialog.dart';
 import 'package:planney/ui/components/transaction/date_picker.dart';
 import 'package:planney/ui/controller/transaction.controller.dart';
 import 'package:planney/ui/pages/transaction/components/account_select_radio.dart';
+import 'package:planney/ui/pages/transaction/components/categories_list.dart';
 import 'package:planney/ui/pages/transaction/components/text_form.dart';
 import 'package:planney/ui/pages/transaction/components/value_form.dart';
 
-import '../components/categories_list.dart';
-
-class TransactionAddPage extends StatelessWidget {
+class TransactionUpdatePage extends StatefulWidget {
   final TransactionType type;
-  final bool isExpense;
-  TransactionAddPage({Key? key, required this.type, required this.isExpense})
+  final Transaction transaction;
+  const TransactionUpdatePage(
+      {Key? key, required this.type, required this.transaction})
       : super(key: key);
 
-  final _alertDialog = CustomAlertDialog();
+  @override
+  State<TransactionUpdatePage> createState() => _TransactionUpdatePageState();
+}
+
+class _TransactionUpdatePageState extends State<TransactionUpdatePage> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => preload());
+  }
+
   final controller = GetIt.instance.get<TransactionController>();
+
+  Future preload() async {
+    controller.setTransaction(widget.transaction);
+  }
+
+  final _alertDialog = CustomAlertDialog();
 
   @override
   Widget build(BuildContext context) {
+    final bool isExpense =
+        widget.transaction.type == TransactionType.expence ? true : false;
     ColorScheme colorScheme = Theme.of(context).colorScheme;
     Color onSurface = Theme.of(context).brightness == Brightness.dark
         ? colorScheme.onPrimary
@@ -56,8 +73,8 @@ class TransactionAddPage extends StatelessWidget {
                         children: [
                           Text(
                             isExpense
-                                ? 'ADICIONAR DESPESA'
-                                : 'ADICIONAR RECEITA',
+                                ? 'MODIFICAR DESPESA'
+                                : 'MODIFICAR RECEITA',
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
@@ -130,18 +147,17 @@ class TransactionAddPage extends StatelessWidget {
                                       colorScheme.brightness == Brightness.dark
                                           ? onSurface
                                           : colorScheme.tertiary,
-                                  selectedColor:
-                                      controller.selectedCategory!.color,
+                                  selectedColor: colorScheme.primary,
                                   controller: controller,
                                   height: deviceHeight * 1,
                                   width: deviceWidth * 1,
                                 ),
                                 const Padding(
-                                  padding: EdgeInsets.fromLTRB(24, 17, 0, 0),
+                                  padding: EdgeInsets.fromLTRB(32, 17, 0, 0),
                                   child: Align(
                                     alignment: Alignment.centerLeft,
                                     child: Text(
-                                      'DESCRIÇÃO',
+                                      'COMENTÁRIO',
                                       style: TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.bold,
@@ -183,10 +199,7 @@ class TransactionAddPage extends StatelessWidget {
                                           color: colorScheme.tertiary,
                                         ),
                                       ),
-                                      Text(controller.formattedDate == ''
-                                          ? DateFormat('dd/MM/yyyy')
-                                              .format(DateTime.now())
-                                          : controller.formattedDate),
+                                      Text(controller.formattedDate),
                                     ],
                                   ),
                                 ),
@@ -200,14 +213,14 @@ class TransactionAddPage extends StatelessWidget {
                                           shape: MaterialStateProperty.all(
                                               const StadiumBorder())),
                                       onPressed: () async {
-                                        await registerTransaction();
+                                        await updateTransaction();
                                       },
                                       child: Padding(
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 25, vertical: 9),
                                         child: Text(isExpense
-                                            ? 'Adicionar Despesa'
-                                            : 'Adicionar Renda'),
+                                            ? 'Modficar Despesa'
+                                            : 'Modficar Renda'),
                                       ),
                                     ),
                                   ),
@@ -228,9 +241,9 @@ class TransactionAddPage extends StatelessWidget {
     );
   }
 
-  registerTransaction() async {
+  updateTransaction() async {
     try {
-      final response = await controller.registerTransaction(isExpense);
+      final response = await controller.updateTransaction(widget.transaction);
       if (response.isSuccess) {
         Navigator.pop(
           navigatorKey.currentContext!,

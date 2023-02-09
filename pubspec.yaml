@@ -51,6 +51,10 @@ dependencies:
   flutter_colorpicker: ^1.0.3
   firebase_auth_mocks: ^0.10.3
   fake_cloud_firestore: ^2.3.0+3
+  firebase_storage: ^11.0.11
+  path: ^1.8.2
+  image_picker: ^0.8.6+1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

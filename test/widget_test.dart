@@ -3,7 +3,11 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:planney/ui/components/home/avatar.dart';
 
 void main() {
-  const avatar = Avatar(userName: 'Rafael Morais', userBalance: 200);
+  const avatar = Avatar(
+    userName: 'Rafael Morais',
+    userBalance: 200,
+    path: '',
+  );
 
   testWidgets(
     'Test Avatar',

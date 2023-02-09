@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:planney/navigator_key.dart';
-import 'package:planney/stores/category.store.dart';
 import 'package:planney/stores/planney_user.store.dart';
 import 'package:planney/ui/controller/home.controller.dart';
+import 'package:planney/ui/controller/profile_page.controller.dart';
 
 class MyDrawer extends StatefulWidget {
   const MyDrawer({super.key});
@@ -18,8 +18,8 @@ class _MyDrawerState extends State<MyDrawer> {
   @override
   Widget build(BuildContext context) {
     final userStore = GetIt.instance.get<PlanneyUserStore>();
-    final store = GetIt.instance.get<CategoryStore>();
     final controller = GetIt.instance.get<HomePageController>();
+    final ProfilePageController profilePageController = GetIt.instance.get();
     ColorScheme colorScheme = Theme.of(context).colorScheme;
     Color buttonColor =
         Theme.of(context).colorScheme.brightness == Brightness.dark
@@ -34,12 +34,33 @@ class _MyDrawerState extends State<MyDrawer> {
             accountEmail: Text(userStore.email ?? ''),
             accountName:
                 Text(userStore.planneyUser?.fullName.split(' ').first ?? ''),
-            currentAccountPicture: ClipOval(
-                child: Image.asset(
-              'lib/style/assets/img/userprofile.png',
-              width: 20,
-              height: 20,
-            )),
+            currentAccountPicture: CircleAvatar(
+                radius: 40,
+                child: userStore.user?.photoURL == null &&
+                        profilePageController.profilePhoto == null
+                    ? const Icon(
+                        Icons.person,
+                        size: 100,
+                        color: Color.fromARGB(255, 211, 209, 209),
+                      )
+                    : userStore.user?.photoURL == null &&
+                                profilePageController.profilePhoto != null ||
+                            profilePageController.profilePhoto != null &&
+                                profilePageController.profilePhoto != null
+                        ? ClipOval(
+                            child: Image.file(
+                            profilePageController.profilePhoto!,
+                            fit: BoxFit.fill,
+                            height: 150,
+                            width: 150,
+                          ))
+                        : ClipOval(
+                            child: Image.network(
+                            userStore.user!.photoURL!,
+                            fit: BoxFit.fill,
+                            height: 150,
+                            width: 150,
+                          ))),
           ),
           ListTile(
             leading: Icon(
@@ -51,11 +72,9 @@ class _MyDrawerState extends State<MyDrawer> {
               style: TextStyle(color: buttonColor),
             ),
             onTap: () {
-              store.getCategoriesByType(false);
-              Navigator.pushNamedAndRemoveUntil(
+              Navigator.pushReplacementNamed(
                 navigatorKey.currentContext!,
                 '/',
-                (route) => false,
               );
             },
           ),
@@ -69,7 +88,7 @@ class _MyDrawerState extends State<MyDrawer> {
               style: TextStyle(color: buttonColor),
             ),
             onTap: () {
-              Navigator.pop(context);
+              Navigator.popAndPushNamed(context, '/relatory');
             },
           ),
           ListTile(
@@ -83,6 +102,19 @@ class _MyDrawerState extends State<MyDrawer> {
             ),
             onTap: () {
               Navigator.popAndPushNamed(context, '/detailPage');
+            },
+          ),
+          ListTile(
+            leading: Icon(
+              Icons.account_circle_rounded,
+              color: buttonColor,
+            ),
+            title: Text(
+              'Perfil',
+              style: TextStyle(color: buttonColor),
+            ),
+            onTap: () {
+              Navigator.popAndPushNamed(context, '/profile');
             },
           ),
           ListTile(
