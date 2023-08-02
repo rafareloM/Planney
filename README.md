@@ -5,4 +5,8 @@ Por trabalhar com geração de código, após rodar o pub get, deve-se rodar o s
 ```bash
 flutter packages pub run build_runner build
 ```
-Após o comando rodar e gerar os códigos necessários o app está pronto para rodar.
+Após o comando, caso um arquivo gerado apresente o erro
+```bash
+error: [dart] The argument type 'Context' can't be assigned to the parameter type 'BuildContext'. [argument_type_not_assignable]
+```
+Vá aos locais onde o context está sendo chamado e troque por ````dart this.context```
