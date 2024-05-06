@@ -4,11 +4,11 @@ import 'package:get_it/get_it.dart';
 import 'package:planney/stores/planney_user.store.dart';
 import 'package:planney/stores/transactions.store.dart';
 import 'package:planney/style/style.dart';
+import 'package:planney/ui/components/adaptative/adaptative_app_bar.dart';
 import 'package:planney/ui/components/charts/bar_chart.dart';
 import 'package:planney/ui/components/home/avatar.dart';
 import 'package:planney/ui/components/home/info_card.dart';
 import 'package:planney/ui/components/home/my_drawer.dart';
-import 'package:planney/ui/components/home/planney_logo.dart';
 import 'package:planney/ui/components/transaction/transaction_list_card.dart';
 import 'package:planney/ui/controller/home.controller.dart';
 
@@ -24,25 +24,13 @@ class RelatoryPage extends StatelessWidget {
     double deviceHeight = MediaQuery.of(context).size.height;
     double deviceWidth = MediaQuery.of(context).size.width;
 
-    Color textColor = colorScheme.brightness == Brightness.dark
-        ? colorScheme.onSurface
-        : colorScheme.primary;
+    Color textColor =
+        colorScheme.brightness == Brightness.dark ? colorScheme.onSurface : colorScheme.primary;
 
     return Observer(builder: (context) {
       return Scaffold(
         drawer: const MyDrawer(),
-        appBar: AppBar(
-          backgroundColor: colorScheme.brightness == Brightness.dark
-              ? colorScheme.background
-              : colorScheme.primary,
-          title: LayoutBuilder(
-            builder: (context, constraints) => SizedBox(
-              width: constraints.maxWidth,
-              child: const PlanneyLogo(size: 24),
-            ),
-          ),
-          centerTitle: true,
-        ),
+        appBar: AdaptativeAppBar.fromBrightness(colorScheme.brightness),
         body: ListView(
           children: [
             Padding(
@@ -61,16 +49,12 @@ class RelatoryPage extends StatelessWidget {
                 alignment: Alignment.centerLeft,
                 child: Text(
                   'Fluxo do Saldo',
-                  style: TextStyle(
-                      color: textColor,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18),
+                  style: TextStyle(color: textColor, fontWeight: FontWeight.bold, fontSize: 18),
                 ),
               ),
             ),
             Padding(
-              padding: EdgeInsets.fromLTRB(
-                  deviceWidth * 0.015, 8, deviceWidth * 0.015, 0),
+              padding: EdgeInsets.fromLTRB(deviceWidth * 0.015, 8, deviceWidth * 0.015, 0),
               child: Observer(builder: (_) {
                 return _controller.finalListReceipt.isEmpty
                     ? InfoCard(
@@ -112,9 +96,8 @@ class RelatoryPage extends StatelessWidget {
                         content: BarChartSample3(
                           textColor: textColor,
                           transactions: _controller.finalListReceipt
-                              .takeWhile((value) => value.date.isAfter(
-                                  DateTime.now()
-                                      .subtract(const Duration(days: 8))))
+                              .takeWhile((value) => value.date
+                                  .isAfter(DateTime.now().subtract(const Duration(days: 8))))
                               .toList(),
                         ),
                         onPressed: null,
@@ -128,16 +111,12 @@ class RelatoryPage extends StatelessWidget {
                 alignment: Alignment.centerLeft,
                 child: Text(
                   'Fluxo de Gasto',
-                  style: TextStyle(
-                      color: textColor,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18),
+                  style: TextStyle(color: textColor, fontWeight: FontWeight.bold, fontSize: 18),
                 ),
               ),
             ),
             Padding(
-              padding: EdgeInsets.fromLTRB(
-                  deviceWidth * 0.015, 8, deviceWidth * 0.015, 0),
+              padding: EdgeInsets.fromLTRB(deviceWidth * 0.015, 8, deviceWidth * 0.015, 0),
               child: Observer(builder: (_) {
                 return _controller.finalListExpence.isEmpty
                     ? InfoCard(
@@ -179,9 +158,8 @@ class RelatoryPage extends StatelessWidget {
                         content: BarChartSample3(
                           textColor: textColor,
                           transactions: _controller.finalListExpence
-                              .takeWhile((value) => value.date.isAfter(
-                                  DateTime.now()
-                                      .subtract(const Duration(days: 8))))
+                              .takeWhile((value) => value.date
+                                  .isAfter(DateTime.now().subtract(const Duration(days: 8))))
                               .toList(),
                         ),
                         onPressed: null,
@@ -201,9 +179,7 @@ class RelatoryPage extends StatelessWidget {
                           alignment: Alignment.centerLeft,
                           child: Text('DETALHAMENTO',
                               style: TextStyle(
-                                  color: textColor,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18)),
+                                  color: textColor, fontWeight: FontWeight.bold, fontSize: 18)),
                         ),
                       ),
                       Card(

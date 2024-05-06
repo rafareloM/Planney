@@ -14,7 +14,6 @@ class WelcomePageState extends State<WelcomePage> {
     double deviceWidht = MediaQuery.of(context).size.width;
     double deviceHeight = MediaQuery.of(context).size.height;
     return Material(
-      color: Theme.of(context).backgroundColor,
       child: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(
@@ -38,8 +37,7 @@ class WelcomePageState extends State<WelcomePage> {
                     width: 56,
                     decoration: BoxDecoration(
                       color: AppStyle.fullWhite,
-                      borderRadius:
-                          const BorderRadius.all(Radius.circular(100)),
+                      borderRadius: const BorderRadius.all(Radius.circular(100)),
                     ),
                   ),
                   Padding(
@@ -49,8 +47,7 @@ class WelcomePageState extends State<WelcomePage> {
                       width: 56,
                       decoration: BoxDecoration(
                         color: AppStyle.primaryColor,
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(100)),
+                        borderRadius: const BorderRadius.all(Radius.circular(100)),
                       ),
                     ),
                   ),

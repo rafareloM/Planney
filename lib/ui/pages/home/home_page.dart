@@ -3,9 +3,9 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:planney/model/transaction.model.dart';
 import 'package:planney/stores/planney_user.store.dart';
+import 'package:planney/ui/components/adaptative/adaptative_app_bar.dart';
 import 'package:planney/ui/components/home/avatar.dart';
 import 'package:planney/ui/components/home/my_drawer.dart';
-import 'package:planney/ui/components/home/planney_logo.dart';
 import 'package:planney/ui/components/transaction/transaction_chart_card.dart';
 import 'package:planney/ui/controller/home.controller.dart';
 import 'package:planney/ui/pages/transaction/view/transaction_add_page.dart';
@@ -18,7 +18,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final _controller = GetIt.instance.get<HomePageController>();
+  final HomePageController _controller = GetIt.instance.get();
   final _userStore = GetIt.instance.get<PlanneyUserStore>();
 
   @override
@@ -37,7 +37,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     ColorScheme colorScheme = Theme.of(context).colorScheme;
-    double deviceHeight = MediaQuery.of(context).size.height;
     return Observer(builder: (context) {
       return Scaffold(
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -52,14 +51,11 @@ class _HomePageState extends State<HomePage> {
               isScrollControlled: true,
               context: context,
               builder: ((context) => TransactionAddPage(
-                    type: _controller.isExpence
-                        ? TransactionType.expence
-                        : TransactionType.receipt,
+                    type: _controller.isExpence ? TransactionType.expence : TransactionType.receipt,
                     isExpense: _controller.isExpence,
                   )),
               shape: const RoundedRectangleBorder(
-                  borderRadius:
-                      BorderRadius.vertical(top: Radius.circular(21))),
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(21))),
             );
           },
           child: const Icon(
@@ -68,18 +64,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         drawer: const MyDrawer(),
-        appBar: AppBar(
-          backgroundColor: colorScheme.brightness == Brightness.dark
-              ? colorScheme.background
-              : colorScheme.primary,
-          title: LayoutBuilder(
-            builder: (context, constraints) => SizedBox(
-              width: constraints.maxWidth,
-              child: const PlanneyLogo(size: 24),
-            ),
-          ),
-          centerTitle: true,
-        ),
+        appBar: AdaptativeAppBar.fromBrightness(colorScheme.brightness),
         body: _controller.isLoading
             ? const Center(child: CircularProgressIndicator())
             : Column(

@@ -4,6 +4,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:planney/model/category.model.dart';
 import 'package:planney/navigator_key.dart';
+import 'package:planney/ui/components/adaptative/adaptative_app_bar.dart';
 import 'package:planney/ui/components/custom_alert_dialog.dart';
 import 'package:planney/ui/components/progress_dialog.dart';
 import 'package:planney/ui/controller/add_category.controller.dart';
@@ -21,14 +22,9 @@ class AddCategoryPage extends StatelessWidget {
     double deviceHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      appBar: AppBar(
-        toolbarHeight: 80,
-        backgroundColor: colorScheme.brightness == Brightness.dark
-            ? colorScheme.background
-            : colorScheme.primary,
-        foregroundColor: colorScheme.onPrimary,
-        title: const Text('NOVA CATEGORIA'),
-        centerTitle: true,
+      appBar: AdaptativeAppBar.fromBrightness(
+        colorScheme.brightness,
+        title: "NOVA CATEGORIA",
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -45,12 +41,11 @@ class AddCategoryPage extends StatelessWidget {
                       child: GridView.builder(
                         primary: false,
                         shrinkWrap: true,
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 4,
-                                mainAxisSpacing: 8,
-                                crossAxisSpacing: 8,
-                                childAspectRatio: 2),
+                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 4,
+                            mainAxisSpacing: 8,
+                            crossAxisSpacing: 8,
+                            childAspectRatio: 2),
                         itemCount: CategoryHelper.icons.length,
                         itemBuilder: (context, index) {
                           return CategoryHelper.icons
@@ -65,8 +60,7 @@ class AddCategoryPage extends StatelessWidget {
                                       ),
                                       color: controller.selectedIcon == e
                                           ? controller.color
-                                          : colorScheme.brightness ==
-                                                  Brightness.dark
+                                          : colorScheme.brightness == Brightness.dark
                                               ? colorScheme.onBackground
                                               : colorScheme.tertiary,
                                     );
@@ -96,8 +90,7 @@ class AddCategoryPage extends StatelessWidget {
                         child: SizedBox(
                             height: deviceHeight * 0.025,
                             child: TextField(
-                                onChanged: (value) =>
-                                    controller.changeCategoryName(value),
+                                onChanged: (value) => controller.changeCategoryName(value),
                                 decoration: const InputDecoration(
                                     hintText: 'Escolha um nome',
                                     hintStyle: TextStyle(fontSize: 16)),
@@ -146,8 +139,7 @@ class AddCategoryPage extends StatelessWidget {
                               ),
                               iconSize: 42,
                               style: ButtonStyle(
-                                  shape: MaterialStateProperty.all(
-                                      const CircleBorder())),
+                                  shape: MaterialStateProperty.all(const CircleBorder())),
                               onPressed: () {
                                 showDialog(
                                   context: context,
@@ -157,8 +149,7 @@ class AddCategoryPage extends StatelessWidget {
                                       title: const Text('Escolha a cor'),
                                       content: IntrinsicHeight(
                                         child: BlockPicker(
-                                          pickerColor:
-                                              controller.color, //default color
+                                          pickerColor: controller.color, //default color
                                           onColorChanged: (Color color) {
                                             controller.selectColor(color);
                                           },
@@ -167,8 +158,7 @@ class AddCategoryPage extends StatelessWidget {
                                       actions: [
                                         OutlinedButton(
                                             onPressed: () {
-                                              Navigator.pop(
-                                                  navigatorKey.currentContext!);
+                                              Navigator.pop(navigatorKey.currentContext!);
                                             },
                                             child: const Text('Voltar'))
                                       ],
@@ -183,12 +173,10 @@ class AddCategoryPage extends StatelessWidget {
                       ElevatedButton(
                         style: ButtonStyle(
                             shape: MaterialStateProperty.all(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(29)))),
+                                RoundedRectangleBorder(borderRadius: BorderRadius.circular(29)))),
                         onPressed: () async {
-                          await controller.registerCategory(GetIt.instance
-                              .get<HomePageController>()
-                              .isExpence);
+                          await controller
+                              .registerCategory(GetIt.instance.get<HomePageController>().isExpence);
                           Navigator.pop(navigatorKey.currentContext!);
                         },
                         child: const Text('Adicionar Categoria'),
@@ -211,8 +199,8 @@ class AddCategoryPage extends StatelessWidget {
     _progressDialog.show("Salvando...");
 
     try {
-      final response = await controller
-          .registerCategory(GetIt.instance.get<HomePageController>().isExpence);
+      final response =
+          await controller.registerCategory(GetIt.instance.get<HomePageController>().isExpence);
       if (response.isSuccess) {
         Navigator.pop(
           navigatorKey.currentContext!,

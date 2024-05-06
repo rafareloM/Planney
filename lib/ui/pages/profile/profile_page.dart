@@ -5,9 +5,9 @@ import 'package:mask/mask/mask.dart';
 import 'package:planney/navigator_key.dart';
 import 'package:planney/stores/planney_user.store.dart';
 import 'package:planney/style/style.dart';
+import 'package:planney/ui/components/adaptative/adaptative_app_bar.dart';
 import 'package:planney/ui/components/custom_alert_dialog.dart';
 import 'package:planney/ui/components/home/my_drawer.dart';
-import 'package:planney/ui/components/home/planney_logo.dart';
 import 'package:planney/ui/components/progress_dialog.dart';
 import 'package:planney/ui/controller/profile_page.controller.dart';
 
@@ -26,18 +26,7 @@ class ProfilePage extends StatelessWidget {
     bool isDark = colorScheme.brightness == Brightness.dark ? true : false;
     return Scaffold(
       drawer: const MyDrawer(),
-      appBar: AppBar(
-        backgroundColor: colorScheme.brightness == Brightness.dark
-            ? colorScheme.background
-            : colorScheme.primary,
-        title: LayoutBuilder(
-          builder: (context, constraints) => SizedBox(
-            width: constraints.maxWidth,
-            child: const PlanneyLogo(size: 24),
-          ),
-        ),
-        centerTitle: true,
-      ),
+      appBar: AdaptativeAppBar.fromBrightness(colorScheme.brightness),
       body: Observer(builder: (context) {
         return SingleChildScrollView(
           child: Column(
@@ -64,9 +53,8 @@ class ProfilePage extends StatelessWidget {
                                   'Editar foto de Perfil:',
                                   style: TextStyle(
                                       fontSize: 18,
-                                      color: isDark
-                                          ? colorScheme.onBackground
-                                          : colorScheme.primary),
+                                      color:
+                                          isDark ? colorScheme.onBackground : colorScheme.primary),
                                 ),
                               ),
                             ),
@@ -81,8 +69,7 @@ class ProfilePage extends StatelessWidget {
                                           iconSize: 36,
                                           onPressed: () {
                                             _controller.galeryImage();
-                                            Navigator.pop(
-                                                navigatorKey.currentContext!);
+                                            Navigator.pop(navigatorKey.currentContext!);
                                           },
                                           icon: Icon(
                                             Icons.image,
@@ -111,8 +98,7 @@ class ProfilePage extends StatelessWidget {
                                           iconSize: 36,
                                           onPressed: () async {
                                             await _controller.cameraImage();
-                                            Navigator.pop(
-                                                navigatorKey.currentContext!);
+                                            Navigator.pop(navigatorKey.currentContext!);
                                           },
                                           icon: Icon(
                                             Icons.camera_alt,
@@ -148,17 +134,14 @@ class ProfilePage extends StatelessWidget {
                         ? AppStyle.graytextbox
                         : colorScheme.primary,
                     radius: 80,
-                    child: userStore.user?.photoURL == null &&
-                            _controller.profilePhoto == null
+                    child: userStore.user?.photoURL == null && _controller.profilePhoto == null
                         ? const Icon(
                             Icons.person,
                             size: 100,
                             color: Color.fromARGB(255, 211, 209, 209),
                           )
-                        : userStore.user?.photoURL == null &&
-                                    _controller.profilePhoto != null ||
-                                _controller.profilePhoto != null &&
-                                    _controller.profilePhoto != null
+                        : userStore.user?.photoURL == null && _controller.profilePhoto != null ||
+                                _controller.profilePhoto != null && _controller.profilePhoto != null
                             ? ClipOval(
                                 child: Image.file(
                                 _controller.profilePhoto!,
@@ -178,16 +161,13 @@ class ProfilePage extends StatelessWidget {
                 height: deviceHeight * 0.04,
               ),
               Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: deviceWidth * 0.05, vertical: 2),
+                padding: EdgeInsets.symmetric(horizontal: deviceWidth * 0.05, vertical: 2),
                 child: Align(
                   alignment: Alignment.topLeft,
                   child: Text(
                     'Nome',
                     style: TextStyle(
-                        color: isDark
-                            ? colorScheme.onBackground
-                            : colorScheme.tertiary,
+                        color: isDark ? colorScheme.onBackground : colorScheme.tertiary,
                         fontSize: 18,
                         fontWeight: FontWeight.bold),
                   ),
@@ -199,7 +179,7 @@ class ProfilePage extends StatelessWidget {
                 child: TextFormField(
                   onChanged: _controller.changeName,
                   decoration: InputDecoration(
-                    hintText: userStore.planneyUser!.fullName,
+                    hintText: userStore.planneyUser?.fullName ?? "",
                     border: const UnderlineInputBorder(
                       borderSide: BorderSide(width: 1, style: BorderStyle.none),
                     ),
@@ -214,16 +194,13 @@ class ProfilePage extends StatelessWidget {
                 height: deviceHeight * 0.02,
               ),
               Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: deviceWidth * 0.05, vertical: 2),
+                padding: EdgeInsets.symmetric(horizontal: deviceWidth * 0.05, vertical: 2),
                 child: Align(
                   alignment: Alignment.topLeft,
                   child: Text(
                     'Email',
                     style: TextStyle(
-                        color: isDark
-                            ? colorScheme.onBackground
-                            : colorScheme.tertiary,
+                        color: isDark ? colorScheme.onBackground : colorScheme.tertiary,
                         fontSize: 18,
                         fontWeight: FontWeight.bold),
                   ),
@@ -251,16 +228,13 @@ class ProfilePage extends StatelessWidget {
                 height: deviceHeight * 0.02,
               ),
               Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: deviceWidth * 0.05, vertical: 2),
+                padding: EdgeInsets.symmetric(horizontal: deviceWidth * 0.05, vertical: 2),
                 child: Align(
                   alignment: Alignment.topLeft,
                   child: Text(
                     'Senha',
                     style: TextStyle(
-                        color: isDark
-                            ? colorScheme.onBackground
-                            : colorScheme.tertiary,
+                        color: isDark ? colorScheme.onBackground : colorScheme.tertiary,
                         fontSize: 18,
                         fontWeight: FontWeight.bold),
                   ),
@@ -275,8 +249,7 @@ class ProfilePage extends StatelessWidget {
                     onChanged: _controller.changePassword,
                     decoration: InputDecoration(
                       border: const UnderlineInputBorder(
-                        borderSide:
-                            BorderSide(width: 1, style: BorderStyle.none),
+                        borderSide: BorderSide(width: 1, style: BorderStyle.none),
                       ),
                       errorStyle: const TextStyle(
                         fontSize: 14,
@@ -286,9 +259,8 @@ class ProfilePage extends StatelessWidget {
                         onPressed: () {
                           _controller.setShowPassword();
                         },
-                        icon: Icon(_controller.canShowPassword
-                            ? Icons.visibility
-                            : Icons.visibility_off),
+                        icon: Icon(
+                            _controller.canShowPassword ? Icons.visibility : Icons.visibility_off),
                       ),
                     ),
                   );
@@ -302,8 +274,7 @@ class ProfilePage extends StatelessWidget {
                     builder: (context) {
                       return TextButton(
                         onPressed: () {
-                          _controller.showChangePassword =
-                              !_controller.showChangePassword;
+                          _controller.showChangePassword = !_controller.showChangePassword;
                         },
                         child: const Text(
                           'Alterar Senha',
@@ -319,16 +290,13 @@ class ProfilePage extends StatelessWidget {
               ),
               _controller.showChangePassword
                   ? Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: deviceWidth * 0.05, vertical: 2),
+                      padding: EdgeInsets.symmetric(horizontal: deviceWidth * 0.05, vertical: 2),
                       child: Align(
                         alignment: Alignment.topLeft,
                         child: Text(
                           'Nova Senha',
                           style: TextStyle(
-                              color: isDark
-                                  ? colorScheme.onBackground
-                                  : colorScheme.tertiary,
+                              color: isDark ? colorScheme.onBackground : colorScheme.tertiary,
                               fontSize: 18,
                               fontWeight: FontWeight.bold),
                         ),
@@ -346,8 +314,7 @@ class ProfilePage extends StatelessWidget {
                           obscureText: _controller.canShowNewPassword,
                           decoration: InputDecoration(
                             border: const UnderlineInputBorder(
-                              borderSide:
-                                  BorderSide(width: 1, style: BorderStyle.none),
+                              borderSide: BorderSide(width: 1, style: BorderStyle.none),
                             ),
                             errorStyle: const TextStyle(
                               fontSize: 14,
@@ -370,25 +337,18 @@ class ProfilePage extends StatelessWidget {
                   : SizedBox(
                       height: deviceHeight * 0.1,
                     ),
-              Padding(
-                padding: EdgeInsets.only(left: deviceWidth * 0.1),
-                child: Align(
-                  alignment: Alignment.bottomRight,
-                  child: ElevatedButton(
-                    style: ButtonStyle(
-                        shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(29)))),
-                    onPressed: () async {
-                      await _updateUser();
-                    },
-                    child: const Padding(
-                      padding:
-                          EdgeInsets.symmetric(vertical: 8.0, horizontal: 36),
-                      child: Text(
-                        'Salvar',
-                        style: TextStyle(fontSize: 16),
-                      ),
-                    ),
+              ElevatedButton(
+                style: ButtonStyle(
+                    shape: MaterialStateProperty.all(
+                        RoundedRectangleBorder(borderRadius: BorderRadius.circular(29)))),
+                onPressed: () async {
+                  await _updateUser();
+                },
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 36),
+                  child: Text(
+                    'Salvar',
+                    style: TextStyle(fontSize: 16),
                   ),
                 ),
               ),

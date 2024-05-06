@@ -52,19 +52,19 @@ void main() async {
       AuthRepositoryImpl(AuthService()),
     ),
   );
-  getIt.registerLazySingleton(() =>
-      TransactionController(TransactionRepositoryImpl(TransactionService())));
+  getIt.registerLazySingleton(
+      () => TransactionController(TransactionRepositoryImpl(TransactionService())));
 
   getIt.registerFactory(
-    () => LoginController(AuthRepositoryImpl(AuthService()),
-        PlanneyUserRepositoryImpl(PlanneyUserService())),
+    () => LoginController(
+        AuthRepositoryImpl(AuthService()), PlanneyUserRepositoryImpl(PlanneyUserService())),
   );
   getIt.registerFactory(() => RegisterController(
         AuthRepositoryImpl(AuthService()),
       ));
 
-  getIt.registerSingleton(AddCategoryPageController(
-      PlanneyUserRepositoryImpl(PlanneyUserService())));
+  getIt.registerSingleton(
+      AddCategoryPageController(PlanneyUserRepositoryImpl(PlanneyUserService())));
 
   getIt.registerFactory<SplashController>(
       () => SplashController(PlanneyUserRepositoryImpl(PlanneyUserService())));

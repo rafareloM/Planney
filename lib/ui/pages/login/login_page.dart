@@ -43,8 +43,7 @@ class LoginPage extends StatelessWidget {
                   onChanged: _controller.changeEmail,
                   decoration: const InputDecoration(
                     border: UnderlineInputBorder(
-                      borderSide:
-                          BorderSide(width: 1, style: BorderStyle.solid),
+                      borderSide: BorderSide(width: 1, style: BorderStyle.solid),
                       borderRadius: BorderRadius.vertical(
                         top: Radius.circular(12.5),
                       ),
@@ -75,8 +74,7 @@ class LoginPage extends StatelessWidget {
                     obscureText: !_controller.canShowPassword,
                     decoration: InputDecoration(
                       border: const UnderlineInputBorder(
-                        borderSide:
-                            BorderSide(width: 1, style: BorderStyle.solid),
+                        borderSide: BorderSide(width: 1, style: BorderStyle.solid),
                         borderRadius: BorderRadius.vertical(
                           bottom: Radius.circular(12.5),
                         ),
@@ -95,12 +93,10 @@ class LoginPage extends StatelessWidget {
                       filled: true,
                       suffixIcon: IconButton(
                         onPressed: () {
-                          _controller.canShowPassword =
-                              !_controller.canShowPassword;
+                          _controller.canShowPassword = !_controller.canShowPassword;
                         },
-                        icon: Icon(_controller.canShowPassword
-                            ? Icons.visibility
-                            : Icons.visibility_off),
+                        icon: Icon(
+                            _controller.canShowPassword ? Icons.visibility : Icons.visibility_off),
                       ),
                     ),
                     validator: ((value) {
@@ -142,7 +138,7 @@ class LoginPage extends StatelessWidget {
                   ),
                 ],
               ),
-              const ThemeSelect(),
+              ThemeSelect.fromBrightness(Theme.of(context).colorScheme.brightness),
             ],
           ),
         ),
@@ -155,6 +151,7 @@ class LoginPage extends StatelessWidget {
 
     try {
       final response = await _controller.login();
+
       if (response.isSuccess) {
         Navigator.pushNamedAndRemoveUntil(
           navigatorKey.currentContext!,
