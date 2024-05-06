@@ -5,6 +5,7 @@ import 'package:planney/model/category.model.dart';
 import 'package:planney/model/transaction.model.dart';
 import 'package:planney/navigator_key.dart';
 import 'package:planney/stores/category.store.dart';
+import 'package:planney/ui/components/adaptative/adaptative_app_bar.dart';
 import 'package:planney/ui/components/home/my_drawer.dart';
 import 'package:planney/ui/components/transaction/list_view_button.dart';
 import 'package:planney/ui/controller/home.controller.dart';
@@ -27,19 +28,9 @@ class DetailCategoryPage extends StatelessWidget {
     return Scaffold(
       extendBody: true,
       drawer: const MyDrawer(),
-      appBar: AppBar(
-        toolbarHeight: 80,
-        backgroundColor: colorScheme.brightness == Brightness.dark
-            ? colorScheme.background
-            : colorScheme.primary,
-        foregroundColor: colorScheme.onPrimary,
-        title: ConstrainedBox(
-          constraints: BoxConstraints.tight(
-            const Size(150, 32),
-          ),
-          child: const Text("CATEGORIAS"),
-        ),
-        centerTitle: true,
+      appBar: AdaptativeAppBar.fromBrightness(
+        colorScheme.brightness,
+        title: "CATEGORIAS",
       ),
       body: Container(
         margin: EdgeInsets.fromLTRB(16, 15, 16, deviceHeight * 0.15),
@@ -104,8 +95,7 @@ class DetailCategoryPage extends StatelessWidget {
                   child: GridView.builder(
                     padding: const EdgeInsets.all(4),
                     gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 3),
+                        const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
                     primary: false,
                     shrinkWrap: false,
                     itemCount: controller.isExpence
@@ -144,8 +134,7 @@ class DetailCategoryPage extends StatelessWidget {
                         icon: category.icon,
                         onPressed: () {
                           if (category.type == TransactionType.operation) {
-                            Navigator.pushNamed(navigatorKey.currentContext!,
-                                '/addCategoryPage');
+                            Navigator.pushNamed(navigatorKey.currentContext!, '/addCategoryPage');
                           } else {
                             controller.getTransactionsByCategory(category.name);
 

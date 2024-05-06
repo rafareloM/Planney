@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:planney/model/transaction.model.dart';
+import 'package:planney/ui/components/adaptative/adaptative_app_bar.dart';
 import 'package:planney/ui/components/home/info_card.dart';
 import 'package:planney/ui/components/transaction/transaction_list_card.dart';
 import 'package:planney/ui/controller/home.controller.dart';
@@ -12,38 +13,22 @@ class CategoryDetailsPage extends StatelessWidget {
   final List<Transaction> transactionList;
 
   const CategoryDetailsPage(
-      {super.key,
-      required this.title,
-      required this.chart,
-      required this.transactionList});
+      {super.key, required this.title, required this.chart, required this.transactionList});
 
   @override
   Widget build(BuildContext context) {
     ColorScheme colorScheme = Theme.of(context).colorScheme;
-    Color textColor = colorScheme.brightness == Brightness.dark
-        ? colorScheme.onSurface
-        : colorScheme.primary;
+    Color textColor =
+        colorScheme.brightness == Brightness.dark ? colorScheme.onSurface : colorScheme.primary;
     double deviceHeight = MediaQuery.of(context).size.height;
-    TextStyle textStyle =
-        TextStyle(color: textColor, fontWeight: FontWeight.bold, fontSize: 18);
-    final HomePageController controller =
-        GetIt.instance.get<HomePageController>();
+    TextStyle textStyle = TextStyle(color: textColor, fontWeight: FontWeight.bold, fontSize: 18);
+    final HomePageController controller = GetIt.instance.get<HomePageController>();
 
     return Observer(builder: (context) {
       return Scaffold(
-          appBar: AppBar(
-            toolbarHeight: 80,
-            backgroundColor: colorScheme.brightness == Brightness.dark
-                ? colorScheme.background
-                : colorScheme.primary,
-            foregroundColor: colorScheme.onPrimary,
-            title: ConstrainedBox(
-              constraints: BoxConstraints.tight(
-                const Size(150, 32),
-              ),
-              child: const Text('DETALHES'),
-            ),
-            centerTitle: true,
+          appBar: AdaptativeAppBar.fromBrightness(
+            colorScheme.brightness,
+            title: "DETALHES",
           ),
           body: controller.isLoading
               ? const Center(

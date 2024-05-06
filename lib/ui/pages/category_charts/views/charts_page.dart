@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:planney/model/transaction.model.dart';
 import 'package:planney/navigator_key.dart';
 import 'package:planney/style/style.dart';
+import 'package:planney/ui/components/adaptative/adaptative_app_bar.dart';
 import 'package:planney/ui/components/charts/bar_chart.dart';
 import 'package:planney/ui/components/charts/pie_chart_category.dart';
 import 'package:planney/ui/components/home/info_card.dart';
@@ -21,13 +22,11 @@ class CategoryChartsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final HomePageController controller =
-        GetIt.instance.get<HomePageController>();
+    final HomePageController controller = GetIt.instance.get<HomePageController>();
 
     ColorScheme colorScheme = Theme.of(context).colorScheme;
-    Color textColor = colorScheme.brightness == Brightness.dark
-        ? colorScheme.onSurface
-        : colorScheme.primary;
+    Color textColor =
+        colorScheme.brightness == Brightness.dark ? colorScheme.onSurface : colorScheme.primary;
 
     TransactionType? type = controller.finalListExpence.isEmpty
         ? TransactionType.expence
@@ -37,8 +36,8 @@ class CategoryChartsPage extends StatelessWidget {
       return PieChartCategory(
         titleColor: textColor,
         transactionsList: controller.filteredList
-            .takeWhile((value) => value.date
-                .isAfter(DateTime.now().subtract(const Duration(days: 8))))
+            .takeWhile(
+                (value) => value.date.isAfter(DateTime.now().subtract(const Duration(days: 8))))
             .toList(),
       );
     });
@@ -47,34 +46,22 @@ class CategoryChartsPage extends StatelessWidget {
       return BarChartSample3(
         textColor: textColor,
         transactions: list
-            .takeWhile((value) => value.date
-                .isAfter(DateTime.now().subtract(const Duration(days: 8))))
+            .takeWhile(
+                (value) => value.date.isAfter(DateTime.now().subtract(const Duration(days: 8))))
             .toList(),
       );
     });
 
-    String pieChartTitle =
-        type == TransactionType.expence ? 'Despesa Semanal' : 'Receita Semanal';
+    String pieChartTitle = type == TransactionType.expence ? 'Despesa Semanal' : 'Receita Semanal';
 
-    String barChartTitle =
-        type == TransactionType.expence ? 'Fluxo de gasto' : 'Fluxo do saldo';
+    String barChartTitle = type == TransactionType.expence ? 'Fluxo de gasto' : 'Fluxo do saldo';
 
     double deviceHeight = MediaQuery.of(context).size.height;
     return Observer(builder: (context) {
       return Scaffold(
-        appBar: AppBar(
-          toolbarHeight: 80,
-          backgroundColor: colorScheme.brightness == Brightness.dark
-              ? colorScheme.background
-              : colorScheme.primary,
-          foregroundColor: colorScheme.onPrimary,
-          title: ConstrainedBox(
-            constraints: BoxConstraints.tight(
-              const Size(150, 32),
-            ),
-            child: Text(categoryName.toUpperCase()),
-          ),
-          centerTitle: true,
+        appBar: AdaptativeAppBar.fromBrightness(
+          colorScheme.brightness,
+          title: categoryName.toUpperCase(),
         ),
         body: Padding(
           padding: const EdgeInsets.all(8),
@@ -86,10 +73,7 @@ class CategoryChartsPage extends StatelessWidget {
                   alignment: Alignment.centerLeft,
                   child: Text(
                     pieChartTitle,
-                    style: TextStyle(
-                        color: textColor,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18),
+                    style: TextStyle(color: textColor, fontWeight: FontWeight.bold, fontSize: 18),
                   ),
                 ),
               ),
@@ -156,10 +140,7 @@ class CategoryChartsPage extends StatelessWidget {
                   alignment: Alignment.centerLeft,
                   child: Text(
                     barChartTitle,
-                    style: TextStyle(
-                        color: textColor,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18),
+                    style: TextStyle(color: textColor, fontWeight: FontWeight.bold, fontSize: 18),
                   ),
                 ),
               ),
